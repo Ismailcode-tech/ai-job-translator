@@ -23,6 +23,7 @@ export async function login(formData: FormData) {
         revalidatePath('/', 'layout')
         redirect('/dashboard')
     } catch (error: any) {
+        if (error.message === 'NEXT_REDIRECT') throw error;
         return { error: getUserFriendlyError(error.message || 'An unexpected error occurred') }
     }
 }
@@ -64,6 +65,9 @@ export async function signup(formData: FormData) {
                 data: {
                     full_name: fullName,
                 },
+                // IMPORTANT: This tells Supabase we want to handle the code manually if configured,
+                // but mostly it just registers the user.
+                // If "Confirm email" is on, Supabase sends the email automatically.
             },
         })
 
@@ -71,10 +75,50 @@ export async function signup(formData: FormData) {
             return { error: getUserFriendlyError(error.message) }
         }
 
-        revalidatePath('/', 'layout')
-        redirect('/dashboard')
+        // Redirect to verification page instead of dashboard
+        redirect(`/verify-email?email=${encodeURIComponent(email)}`)
     } catch (error: any) {
+        if (error.message === 'NEXT_REDIRECT') throw error;
         return { error: getUserFriendlyError(error.message || 'An unexpected error occurred') }
+    }
+}
+
+export async function verifyEmail(email: string, code: string) {
+    try {
+        const supabase = await createClient()
+
+        const { error } = await supabase.auth.verifyOtp({
+            email,
+            token: code,
+            type: 'signup'
+        })
+
+        if (error) {
+            return { error: error.message }
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { error: error.message || 'Verification failed' }
+    }
+}
+
+export async function resendVerificationEmail(email: string) {
+    try {
+        const supabase = await createClient()
+
+        const { error } = await supabase.auth.resend({
+            type: 'signup',
+            email,
+        })
+
+        if (error) {
+            return { error: error.message }
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        return { error: error.message || 'Failed to resend code' }
     }
 }
 
