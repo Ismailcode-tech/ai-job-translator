@@ -1,13 +1,47 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Upload, ArrowRight, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { getDashboardData } from './actions';
+
+interface DashboardData {
+    user: {
+        name: string;
+        email?: string;
+    };
+    recentJobs: {
+        id: string;
+        title: string;
+        company: string;
+        date: string;
+        score: number;
+        status: string;
+    }[];
+}
 
 export default function DashboardPage() {
     const router = useRouter();
     const [jobText, setJobText] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [data, setData] = useState<DashboardData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function loadData() {
+            try {
+                const dashboardData = await getDashboardData();
+                if (dashboardData) {
+                    setData(dashboardData);
+                }
+            } catch (error) {
+                console.error('Failed to load dashboard data:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadData();
+    }, []);
 
     const handleAnalyze = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -15,7 +49,6 @@ export default function DashboardPage() {
 
         setIsAnalyzing(true);
 
-        // Simulate API call
         try {
             const res = await fetch('/api/jobs', {
                 method: 'POST',
@@ -25,8 +58,6 @@ export default function DashboardPage() {
 
             if (res.ok) {
                 const data = await res.json();
-                // In a real app, we'd redirect to the new job ID
-                // For demo, we'll redirect to a mock ID or the one returned
                 router.push(`/dashboard/analysis/${data.id}`);
             }
         } catch (error) {
@@ -35,10 +66,14 @@ export default function DashboardPage() {
         }
     };
 
+    if (loading) {
+        return <div className="p-8 text-center text-slate-500">Loading dashboard...</div>;
+    }
+
     return (
         <div className="space-y-8">
             <div>
-                <h1 className="text-2xl font-bold text-slate-900">Welcome back, John</h1>
+                <h1 className="text-2xl font-bold text-slate-900">Welcome back, {data?.user.name}</h1>
                 <p className="text-slate-600">Ready to land your next role?</p>
             </div>
 
@@ -76,32 +111,34 @@ export default function DashboardPage() {
             {/* Recent Analyses */}
             <div>
                 <h2 className="mb-4 text-lg font-semibold text-slate-900">Recent Analyses</h2>
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {[
-                        { title: 'Senior Frontend Developer', company: 'TechCorp', date: '2h ago', score: 85, status: 'complete' },
-                        { title: 'Product Manager', company: 'StartupInc', date: '1d ago', score: 60, status: 'complete' },
-                        { title: 'Backend Engineer', company: 'CloudSys', date: '2d ago', score: 0, status: 'processing' },
-                    ].map((job, i) => (
-                        <div key={i} className="group cursor-pointer rounded-lg border border-slate-200 bg-white p-4 hover:border-teal-500 hover:shadow-md transition-all" onClick={() => router.push(`/dashboard/analysis/job_123`)}>
-                            <div className="mb-2 flex items-start justify-between">
-                                <div className="rounded bg-slate-100 p-2 group-hover:bg-teal-50">
-                                    <Clock className="h-5 w-5 text-slate-500 group-hover:text-teal-600" />
+                {data?.recentJobs && data.recentJobs.length > 0 ? (
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {data.recentJobs.map((job) => (
+                            <div key={job.id} className="group cursor-pointer rounded-lg border border-slate-200 bg-white p-4 hover:border-teal-500 hover:shadow-md transition-all" onClick={() => router.push(`/dashboard/analysis/${job.id}`)}>
+                                <div className="mb-2 flex items-start justify-between">
+                                    <div className="rounded bg-slate-100 p-2 group-hover:bg-teal-50">
+                                        <Clock className="h-5 w-5 text-slate-500 group-hover:text-teal-600" />
+                                    </div>
+                                    {job.status === 'complete' ? (
+                                        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${job.score >= 80 ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                                            {job.score}% Match
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
+                                            Processing
+                                        </span>
+                                    )}
                                 </div>
-                                {job.status === 'complete' ? (
-                                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${job.score >= 80 ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                                        {job.score}% Match
-                                    </span>
-                                ) : (
-                                    <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800">
-                                        Processing
-                                    </span>
-                                )}
+                                <h3 className="font-medium text-slate-900 truncate">{job.title}</h3>
+                                <p className="text-sm text-slate-500">{job.date}</p>
                             </div>
-                            <h3 className="font-medium text-slate-900 truncate">{job.title}</h3>
-                            <p className="text-sm text-slate-500">{job.company} • {job.date}</p>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="rounded-lg border border-slate-200 bg-white p-8 text-center">
+                        <p className="text-slate-500">No recent analyses found.</p>
+                    </div>
+                )}
             </div>
         </div>
     );

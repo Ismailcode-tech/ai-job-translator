@@ -1,11 +1,51 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FileText, Clock, ArrowRight, Search } from 'lucide-react';
+import { getAnalyses } from '../actions';
+
+interface Job {
+    id: string;
+    title: string;
+    company: string;
+    date: string;
+    score: number;
+    status: string;
+}
 
 export default function AnalysesPage() {
-    // TODO: Fetch real analyses from database
-    const analyses: any[] = [];
+    const [analyses, setAnalyses] = useState<Job[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [filter, setFilter] = useState('All Status');
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        async function loadAnalyses() {
+            try {
+                const data = await getAnalyses();
+                setAnalyses(data);
+            } catch (error) {
+                console.error('Failed to load analyses:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadAnalyses();
+    }, []);
+
+    const filteredAnalyses = analyses.filter(job => {
+        const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase()) ||
+            job.company.toLowerCase().includes(search.toLowerCase());
+        const matchesFilter = filter === 'All Status' ||
+            (filter === 'Complete' && job.status === 'complete') ||
+            (filter === 'Processing' && job.status !== 'complete');
+        return matchesSearch && matchesFilter;
+    });
+
+    if (loading) {
+        return <div className="p-8 text-center text-slate-500">Loading analyses...</div>;
+    }
 
     return (
         <div className="space-y-8">
@@ -27,9 +67,15 @@ export default function AnalysesPage() {
                         type="text"
                         placeholder="Search analyses..."
                         className="w-full rounded-lg border border-slate-200 pl-10 pr-4 py-2 text-sm focus:border-teal-500 focus:outline-none"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-                <select className="rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-teal-500 focus:outline-none">
+                <select
+                    className="rounded-lg border border-slate-200 px-4 py-2 text-sm focus:border-teal-500 focus:outline-none"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                >
                     <option>All Status</option>
                     <option>Complete</option>
                     <option>Processing</option>
@@ -37,11 +83,11 @@ export default function AnalysesPage() {
             </div>
 
             {/* List */}
-            {analyses.length === 0 ? (
+            {filteredAnalyses.length === 0 ? (
                 <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
                     <FileText className="mx-auto h-12 w-12 text-slate-300 mb-4" />
-                    <h3 className="text-lg font-medium text-slate-900 mb-2">No analyses yet</h3>
-                    <p className="text-slate-600 mb-6">Start analyzing job descriptions to see your match scores here.</p>
+                    <h3 className="text-lg font-medium text-slate-900 mb-2">No analyses found</h3>
+                    <p className="text-slate-600 mb-6">Try adjusting your search or create a new analysis.</p>
                     <Link href="/dashboard" className="inline-flex items-center rounded-lg bg-teal-600 px-6 py-3 text-sm font-medium text-white hover:bg-teal-700 transition-colors">
                         Create Your First Analysis
                     </Link>
@@ -60,7 +106,7 @@ export default function AnalysesPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
-                                {analyses.map((job) => (
+                                {filteredAnalyses.map((job) => (
                                     <tr key={job.id} className="hover:bg-slate-50 group">
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-slate-900">{job.title}</div>
