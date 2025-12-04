@@ -2,11 +2,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Initialize Gemini client
 const genAI = new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY || 'AIzaSyAoJu6gMzxomrMk5MTm3fMsJBPj3zOXWTQ'
+  process.env.GEMINI_API_KEY!
 );
 
 export async function analyzeJob(jobText: string) {
-  const apiKey = process.env.GEMINI_API_KEY || 'AIzaSyAoJu6gMzxomrMk5MTm3fMsJBPj3zOXWTQ';
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
     throw new Error('Missing GEMINI_API_KEY');
