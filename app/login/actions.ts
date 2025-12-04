@@ -86,7 +86,7 @@ export async function signup(formData: FormData) {
 export async function verifyEmail(email: string, code: string) {
     try {
         const supabase = await createClient()
-        const trimmedEmail = email.trim()
+        const trimmedEmail = email.trim().toLowerCase()
         const trimmedCode = code.trim()
 
         // First try 'signup' type (standard for new users)
@@ -120,10 +120,11 @@ export async function verifyEmail(email: string, code: string) {
 export async function resendVerificationEmail(email: string) {
     try {
         const supabase = await createClient()
+        const trimmedEmail = email.trim().toLowerCase()
 
         const { error } = await supabase.auth.resend({
             type: 'signup',
-            email,
+            email: trimmedEmail,
         })
 
         if (error) {
