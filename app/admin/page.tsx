@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Users, CreditCard, TrendingUp, Activity } from 'lucide-react';
+import { getAdminData } from './actions';
 
 interface User {
     id: string;
     email: string;
+    name: string;
     created_at: string;
     subscription_status: string | null;
     subscription_end_date: string | null;
@@ -21,9 +23,27 @@ export default function AdminPage() {
     });
 
     useEffect(() => {
-        // TODO: Fetch real data from Supabase
-        // For now, showing empty state
-        setLoading(false);
+        async function fetchData() {
+            try {
+                const data = await getAdminData();
+                if (data.error) {
+                    console.error(data.error);
+                    return;
+                }
+                if (data.users) {
+                    setUsers(data.users as any); // Type assertion to avoid strict checks for now
+                }
+                if (data.stats) {
+                    setStats(data.stats);
+                }
+            } catch (error) {
+                console.error('Failed to fetch admin data:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        fetchData();
     }, []);
 
     if (loading) {
@@ -96,7 +116,7 @@ export default function AdminPage() {
                                 <thead className="bg-slate-50">
                                     <tr>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                            Email
+                                            User
                                         </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                                             Joined
@@ -112,8 +132,9 @@ export default function AdminPage() {
                                 <tbody className="divide-y divide-slate-200">
                                     {users.map((user) => (
                                         <tr key={user.id} className="hover:bg-slate-50">
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
-                                                {user.email}
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="text-sm font-medium text-slate-900">{user.name}</div>
+                                                <div className="text-sm text-slate-500">{user.email}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                                                 {new Date(user.created_at).toLocaleDateString()}
