@@ -86,15 +86,29 @@ export async function signup(formData: FormData) {
 export async function verifyEmail(email: string, code: string) {
     try {
         const supabase = await createClient()
+        const trimmedEmail = email.trim()
+        const trimmedCode = code.trim()
 
-        const { error } = await supabase.auth.verifyOtp({
-            email,
-            token: code,
+        // First try 'signup' type (standard for new users)
+        let { error } = await supabase.auth.verifyOtp({
+            email: trimmedEmail,
+            token: trimmedCode,
             type: 'signup'
         })
 
         if (error) {
-            return { error: error.message }
+            console.log(`Signup verification failed for ${trimmedEmail}: ${error.message}. Retrying with 'email' type...`)
+            // Fallback: try 'email' type (sometimes needed if user state is different)
+            const { error: error2 } = await supabase.auth.verifyOtp({
+                email: trimmedEmail,
+                token: trimmedCode,
+                type: 'email'
+            })
+
+            if (error2) {
+                // If both fail, return the original error (or the second one)
+                return { error: error.message }
+            }
         }
 
         return { success: true }
