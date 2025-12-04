@@ -58,8 +58,7 @@ export async function signup(formData: FormData) {
         const password = formData.get('password') as string
         const fullName = formData.get('fullName') as string
 
-        // First, create the user account
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -70,25 +69,12 @@ export async function signup(formData: FormData) {
             },
         })
 
-        if (signUpError) {
-            return { error: getUserFriendlyError(signUpError.message) }
+        if (error) {
+            return { error: getUserFriendlyError(error.message) }
         }
 
-        // Then send a magic link OTP (this has a longer expiry time - 1 hour)
-        const { error: otpError } = await supabase.auth.signInWithOtp({
-            email,
-            options: {
-                shouldCreateUser: false, // User already created above
-            }
-        })
-
-        if (otpError) {
-            console.log('OTP send error:', otpError.message)
-            // Don't fail if OTP send fails, user can resend
-        }
-
-        // Redirect to verification page
-        redirect(`/verify-email?email=${encodeURIComponent(email)}`)
+        // Redirect to confirmation page
+        redirect(`/signup-confirmation?email=${encodeURIComponent(email)}`)
     } catch (error: any) {
         if (error.message === 'NEXT_REDIRECT') throw error;
         return { error: getUserFriendlyError(error.message || 'An unexpected error occurred') }
