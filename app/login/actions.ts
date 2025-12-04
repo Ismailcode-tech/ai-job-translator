@@ -16,7 +16,7 @@ export async function login(formData: FormData) {
     })
 
     if (error) {
-        return { error: error.message }
+        return { error: getUserFriendlyError(error.message) }
     }
 
     revalidatePath('/', 'layout')
@@ -25,17 +25,21 @@ export async function login(formData: FormData) {
 
 // Helper function to make error messages user-friendly
 function getUserFriendlyError(errorMessage: string): string {
-    if (errorMessage.includes('Invalid API key') || errorMessage.includes('API')) {
-        return 'Please fill in all fields correctly'
+    const lowerCaseError = errorMessage.toLowerCase()
+    if (lowerCaseError.includes('invalid api key') || lowerCaseError.includes('api key') || lowerCaseError.includes('apikey')) {
+        return 'Configuration error: Please contact support.'
     }
-    if (errorMessage.includes('already registered') || errorMessage.includes('already exists')) {
+    if (lowerCaseError.includes('already registered') || lowerCaseError.includes('already exists')) {
         return 'This email is already registered. Try logging in instead.'
     }
-    if (errorMessage.includes('Invalid email')) {
+    if (lowerCaseError.includes('invalid email')) {
         return 'Please enter a valid email address'
     }
-    if (errorMessage.includes('Password')) {
+    if (lowerCaseError.includes('password')) {
         return 'Password must be at least 6 characters long'
+    }
+    if (lowerCaseError.includes('invalid login credentials')) {
+        return 'Invalid email or password'
     }
     // Return the original message if we don't have a better one
     return errorMessage
