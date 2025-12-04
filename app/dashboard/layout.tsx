@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Menu, X, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
 import { signOut } from '@/app/login/actions';
@@ -51,6 +51,14 @@ export default async function DashboardLayout({
                         <Settings className="w-5 h-5 mr-3" />
                         Settings
                     </Link>
+
+                    {/* Admin Link - Only visible to specific emails */}
+                    {['ismailhadjlarbi71@gmail.com', 'ismailhadjlarbi2007@gmail.com'].includes(user.email || '') && (
+                        <Link href="/admin" className="flex items-center px-4 py-3 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20 rounded-lg transition-colors font-medium">
+                            <Shield className="w-5 h-5 mr-3" />
+                            Admin
+                        </Link>
+                    )}
                 </nav>
 
                 <div className="p-4 border-t border-gray-200 dark:border-gray-700">
