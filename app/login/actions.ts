@@ -89,29 +89,43 @@ export async function verifyEmail(email: string, code: string) {
         const trimmedEmail = email.trim().toLowerCase()
         const trimmedCode = code.trim()
 
-        // First try 'signup' type (standard for new users)
-        let { error } = await supabase.auth.verifyOtp({
+        console.log(`Attempting verification for ${trimmedEmail} with code ${trimmedCode}`)
+
+        // 1. Try 'signup'
+        let { error: signupError } = await supabase.auth.verifyOtp({
             email: trimmedEmail,
             token: trimmedCode,
             type: 'signup'
         })
 
-        if (error) {
-            console.log(`Signup verification failed for ${trimmedEmail}: ${error.message}. Retrying with 'email' type...`)
-            // Fallback: try 'email' type (sometimes needed if user state is different)
-            const { error: error2 } = await supabase.auth.verifyOtp({
-                email: trimmedEmail,
-                token: trimmedCode,
-                type: 'email'
-            })
+        if (!signupError) return { success: true }
 
-            if (error2) {
-                // If both fail, return the original error (or the second one)
-                return { error: error.message }
-            }
-        }
+        console.log(`Signup verification failed: ${signupError.message}`)
 
-        return { success: true }
+        // 2. Try 'email' (magic link / change email flow)
+        let { error: emailError } = await supabase.auth.verifyOtp({
+            email: trimmedEmail,
+            token: trimmedCode,
+            type: 'email'
+        })
+
+        if (!emailError) return { success: true }
+
+        console.log(`Email verification failed: ${emailError.message}`)
+
+        // 3. Try 'recovery' (just in case)
+        let { error: recoveryError } = await supabase.auth.verifyOtp({
+            email: trimmedEmail,
+            token: trimmedCode,
+            type: 'recovery'
+        })
+
+        if (!recoveryError) return { success: true }
+
+        console.log(`Recovery verification failed: ${recoveryError.message}`)
+
+        // Return a detailed error message for debugging
+        return { error: `Failed: ${signupError?.message} (Signup), ${emailError?.message} (Email)` }
     } catch (error: any) {
         return { error: error.message || 'Verification failed' }
     }
