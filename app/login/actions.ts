@@ -65,6 +65,7 @@ export async function signup(formData: FormData) {
                 data: {
                     full_name: fullName,
                 },
+                emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
             },
         })
 
@@ -72,9 +73,8 @@ export async function signup(formData: FormData) {
             return { error: getUserFriendlyError(error.message) }
         }
 
-        // Redirect directly to dashboard (email confirmation disabled)
-        revalidatePath('/', 'layout')
-        redirect('/dashboard')
+        // Redirect to confirmation page
+        redirect(`/signup-confirmation?email=${encodeURIComponent(email)}`)
     } catch (error: any) {
         if (error.message === 'NEXT_REDIRECT') throw error;
         return { error: getUserFriendlyError(error.message || 'An unexpected error occurred') }
