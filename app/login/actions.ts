@@ -58,24 +58,36 @@ export async function signup(formData: FormData) {
         const password = formData.get('password') as string
         const fullName = formData.get('fullName') as string
 
-        const { error } = await supabase.auth.signUp({
+        // First, create the user account
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
                     full_name: fullName,
                 },
-                // IMPORTANT: This tells Supabase we want to handle the code manually if configured,
-                // but mostly it just registers the user.
-                // If "Confirm email" is on, Supabase sends the email automatically.
+                emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
             },
         })
 
-        if (error) {
-            return { error: getUserFriendlyError(error.message) }
+        if (signUpError) {
+            return { error: getUserFriendlyError(signUpError.message) }
         }
 
-        // Redirect to verification page instead of dashboard
+        // Then send a magic link OTP (this has a longer expiry time - 1 hour)
+        const { error: otpError } = await supabase.auth.signInWithOtp({
+            email,
+            options: {
+                shouldCreateUser: false, // User already created above
+            }
+        })
+
+        if (otpError) {
+            console.log('OTP send error:', otpError.message)
+            // Don't fail if OTP send fails, user can resend
+        }
+
+        // Redirect to verification page
         redirect(`/verify-email?email=${encodeURIComponent(email)}`)
     } catch (error: any) {
         if (error.message === 'NEXT_REDIRECT') throw error;
@@ -91,18 +103,18 @@ export async function verifyEmail(email: string, code: string) {
 
         console.log(`Attempting verification for ${trimmedEmail} with code ${trimmedCode}`)
 
-        // 1. Try 'signup'
-        let { error: signupError } = await supabase.auth.verifyOtp({
+        // 1. Try 'magiclink' (used by signInWithOtp - has 1 hour expiry)
+        let { error: magiclinkError } = await supabase.auth.verifyOtp({
             email: trimmedEmail,
             token: trimmedCode,
-            type: 'signup'
+            type: 'magiclink'
         })
 
-        if (!signupError) return { success: true }
+        if (!magiclinkError) return { success: true }
 
-        console.log(`Signup verification failed: ${signupError.message}`)
+        console.log(`Magiclink verification failed: ${magiclinkError.message}`)
 
-        // 2. Try 'email' (magic link / change email flow)
+        // 2. Try 'email' (change email flow)
         let { error: emailError } = await supabase.auth.verifyOtp({
             email: trimmedEmail,
             token: trimmedCode,
@@ -113,19 +125,19 @@ export async function verifyEmail(email: string, code: string) {
 
         console.log(`Email verification failed: ${emailError.message}`)
 
-        // 3. Try 'recovery' (just in case)
-        let { error: recoveryError } = await supabase.auth.verifyOtp({
+        // 3. Try 'signup' (original flow - 60 second expiry)
+        let { error: signupError } = await supabase.auth.verifyOtp({
             email: trimmedEmail,
             token: trimmedCode,
-            type: 'recovery'
+            type: 'signup'
         })
 
-        if (!recoveryError) return { success: true }
+        if (!signupError) return { success: true }
 
-        console.log(`Recovery verification failed: ${recoveryError.message}`)
+        console.log(`Signup verification failed: ${signupError.message}`)
 
         // Return a detailed error message for debugging
-        return { error: `Failed: ${signupError?.message} (Signup), ${emailError?.message} (Email)` }
+        return { error: `Verification failed. Please request a new code. (${magiclinkError?.message})` }
     } catch (error: any) {
         return { error: error.message || 'Verification failed' }
     }
@@ -136,9 +148,12 @@ export async function resendVerificationEmail(email: string) {
         const supabase = await createClient()
         const trimmedEmail = email.trim().toLowerCase()
 
-        const { error } = await supabase.auth.resend({
-            type: 'signup',
+        // Use signInWithOtp which sends a code with 1 hour expiry
+        const { error } = await supabase.auth.signInWithOtp({
             email: trimmedEmail,
+            options: {
+                shouldCreateUser: false,
+            }
         })
 
         if (error) {
