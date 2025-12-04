@@ -23,6 +23,24 @@ export async function login(formData: FormData) {
     redirect('/dashboard')
 }
 
+// Helper function to make error messages user-friendly
+function getUserFriendlyError(errorMessage: string): string {
+    if (errorMessage.includes('Invalid API key') || errorMessage.includes('API')) {
+        return 'Please fill in all fields correctly'
+    }
+    if (errorMessage.includes('already registered') || errorMessage.includes('already exists')) {
+        return 'This email is already registered. Try logging in instead.'
+    }
+    if (errorMessage.includes('Invalid email')) {
+        return 'Please enter a valid email address'
+    }
+    if (errorMessage.includes('Password')) {
+        return 'Password must be at least 6 characters long'
+    }
+    // Return the original message if we don't have a better one
+    return errorMessage
+}
+
 export async function signup(formData: FormData) {
     const supabase = await createClient()
 
@@ -41,7 +59,7 @@ export async function signup(formData: FormData) {
     })
 
     if (error) {
-        return { error: error.message }
+        return { error: getUserFriendlyError(error.message) }
     }
 
     revalidatePath('/', 'layout')
