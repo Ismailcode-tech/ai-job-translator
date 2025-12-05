@@ -9,7 +9,7 @@ export async function analyzeJob(jobText: string) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
   const prompt = `
     You are an expert career coach and software engineer. Analyze the following job description and output JSON only.
