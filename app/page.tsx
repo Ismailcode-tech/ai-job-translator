@@ -147,6 +147,57 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* How it Works Section */}
+      <section id="demo" className="py-24 bg-muted/50 relative overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
+              From Job Ad to Interview in <span className="text-gradient">3 Steps</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Our AI handles the heavy lifting so you can focus on preparing for the interview.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {/* Connecting Line (Desktop) */}
+            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
+
+            {[
+              {
+                step: "01",
+                title: "Paste Job Description",
+                desc: "Copy the job ad from LinkedIn or Indeed and paste it into Talio.",
+                icon: <FileText className="h-6 w-6 text-indigo-500" />
+              },
+              {
+                step: "02",
+                title: "Get AI Analysis",
+                desc: "We extract keywords, identify gaps, and generate a learning plan.",
+                icon: <Sparkles className="h-6 w-6 text-purple-500" />
+              },
+              {
+                step: "03",
+                title: "Apply with Confidence",
+                desc: "Download a tailored CV and cover letter optimized for ATS.",
+                icon: <CheckCircle className="h-6 w-6 text-pink-500" />
+              }
+            ].map((item, i) => (
+              <div key={i} className="relative flex flex-col items-center text-center">
+                <div className="w-24 h-24 rounded-2xl bg-background border border-border shadow-lg flex items-center justify-center mb-6 relative group hover:scale-110 transition-transform duration-300">
+                  <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">
+                    {item.step}
+                  </div>
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                <p className="text-muted-foreground max-w-xs mx-auto">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-32 bg-muted/30 relative">
         <div className="container mx-auto px-6">
