@@ -41,7 +41,13 @@ export async function analyzeJob(jobText: string) {
     }
   `;
 
-  const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-flash-001', 'gemini-pro', 'gemini-1.0-pro'];
+  const modelsToTry = [
+    'gemini-2.0-flash-exp',
+    'gemini-1.5-flash',
+    'gemini-1.5-flash-latest',
+    'gemini-1.5-pro',
+    'gemini-pro'
+  ];
   let lastError = null;
 
   for (const modelName of modelsToTry) {
