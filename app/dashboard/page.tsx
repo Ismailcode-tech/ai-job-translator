@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Upload, ArrowRight, Clock, CheckCircle, AlertCircle, Sparkles, FileText } from 'lucide-react';
 import { getDashboardData } from './actions';
 
@@ -9,6 +10,10 @@ interface DashboardData {
     user: {
         name: string;
         email?: string;
+    };
+    stats?: {
+        totalAnalyses: number;
+        averageScore: number;
     };
     recentJobs: {
         id: string;
@@ -139,9 +144,9 @@ export default function DashboardPage() {
             <div>
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold text-foreground">Recent Analyses</h2>
-                    <button className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+                    <Link href="/dashboard/analyses" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                         View all
-                    </button>
+                    </Link>
                 </div>
 
                 {data?.recentJobs && data.recentJobs.length > 0 ? (
