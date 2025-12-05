@@ -7,6 +7,9 @@ import {
     FileText, ArrowRight, Briefcase, Calendar, Check, ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
+import { AnalysisReportPDF } from '@/components/pdf/AnalysisReportPDF';
+import { TailoredCVPDF } from '@/components/pdf/TailoredCVPDF';
+import PDFDownloadWrapper from '@/components/pdf/PDFDownloadWrapper';
 
 // Define types for our data
 interface Skill {
@@ -139,11 +142,7 @@ export default function AnalysisPage() {
                     </div>
                 </div>
 
-                import {AnalysisReportPDF} from '@/components/pdf/AnalysisReportPDF';
-                import {TailoredCVPDF} from '@/components/pdf/TailoredCVPDF';
-                import PDFDownloadWrapper from '@/components/pdf/PDFDownloadWrapper';
 
-                // ... inside the component ...
 
                 {/* Actions */}
                 <div className="relative z-10 mt-8 flex flex-wrap gap-3 pt-6 border-t border-slate-100">
