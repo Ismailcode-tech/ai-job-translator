@@ -27,7 +27,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
         skills: analysis.skills_found,
         gaps: analysis.gaps_found,
         roadmap: analysis.roadmap,
-        cv_suggestions: analysis.cv_suggestions
+        cv_suggestions: analysis.cv_suggestions,
+        category: job.category
     };
 
     return NextResponse.json(response);

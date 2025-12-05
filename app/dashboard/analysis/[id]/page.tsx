@@ -32,6 +32,7 @@ interface AnalysisData {
     gaps: Gap[];
     roadmap: Record<string, RoadmapTask[]>;
     cv_suggestions: string[];
+    category?: string;
 }
 
 export default function AnalysisPage() {
@@ -64,6 +65,12 @@ export default function AnalysisPage() {
                     <h1 className="text-2xl font-bold text-slate-900">{data.title}</h1>
                     <div className="flex items-center gap-2 text-sm text-slate-500">
                         <span>Job ID: {data.id}</span>
+                        {data.category && (
+                            <>
+                                <span>•</span>
+                                <span className="font-medium text-slate-700">{data.category}</span>
+                            </>
+                        )}
                         <span>•</span>
                         <span className="text-teal-600 font-medium">{data.match_score}% Match</span>
                     </div>
