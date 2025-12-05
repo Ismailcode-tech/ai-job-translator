@@ -145,7 +145,7 @@ export default function LandingPage() {
                 color: "purple"
               },
               {
-                icon: <Zap className="h-8 w-8 text-pink-500" />,
+                icon: <Sparkles className="h-8 w-8 text-pink-500" />,
                 title: "Tailored CVs",
                 desc: "Get bullet points rewritten to match the job description's keywords and tone.",
                 color: "pink"
