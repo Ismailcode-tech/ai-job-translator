@@ -6,22 +6,6 @@ export async function getDashboardData() {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) {
-        return null;
-    }
-
-    // 1. Fetch Profile for Name
-    const { data: profile } = await supabase
-        .from('profiles')
-        .select('first_name, last_name, name')
-        .eq('id', user.id)
-        .single();
-
-    // 2. Fetch Recent Analyses
-    const { data: recentJobs } = await supabase
-        .from('job_posts')
-        .select('*, analyses(match_score)')
-        .eq('user_id', user.id) // Ensure we only get this user's jobs
         .order('created_at', { ascending: false })
         .limit(3);
 
