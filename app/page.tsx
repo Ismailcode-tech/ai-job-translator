@@ -92,26 +92,51 @@ export default function LandingPage() {
 
                   {/* Mock UI Content */}
                   <div className="space-y-6 flex-1">
-                    <div className="space-y-3">
-                      <div className="h-4 w-3/4 rounded bg-muted animate-pulse" />
-                      <div className="h-4 w-full rounded bg-muted/60 animate-pulse delay-75" />
-                      <div className="h-4 w-5/6 rounded bg-muted/40 animate-pulse delay-150" />
+                    {/* Score Section */}
+                    <div className="flex items-center gap-8 mb-8">
+                      <div className="relative h-24 w-24 flex items-center justify-center">
+                        {/* Circular Progress Background */}
+                        <svg className="h-full w-full -rotate-90" viewBox="0 0 36 36">
+                          <path className="text-muted/20" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" />
+                          <path className="text-primary drop-shadow-[0_0_10px_rgba(124,58,237,0.5)]" strokeDasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                        </svg>
+                        <div className="absolute flex flex-col items-center">
+                          <span className="text-2xl font-bold text-foreground">85%</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-muted-foreground mb-1">Match Score</div>
+                        <div className="text-2xl font-bold text-foreground">Excellent</div>
+                        <p className="text-xs text-muted-foreground mt-1">You're a strong candidate!</p>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4 mt-8">
-                      <div className="rounded-xl bg-primary/5 p-4 border border-primary/10">
-                        <div className="h-10 w-10 rounded-lg bg-primary/20 text-primary flex items-center justify-center mb-3">
-                          <CheckCircle className="h-6 w-6" />
+                    {/* Skills Section */}
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between text-sm mb-2">
+                          <span className="font-medium text-muted-foreground">Key Skills Found</span>
+                          <span className="text-primary">4/5</span>
                         </div>
-                        <div className="h-3 w-20 rounded bg-primary/20 mb-2" />
-                        <div className="h-2 w-full rounded bg-primary/10" />
+                        <div className="flex flex-wrap gap-2">
+                          {['React', 'TypeScript', 'Tailwind', 'Next.js'].map((skill) => (
+                            <span key={skill} className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium border border-primary/20 flex items-center gap-1">
+                              <CheckCircle className="h-3 w-3" /> {skill}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                      <div className="rounded-xl bg-purple-500/5 p-4 border border-purple-500/10">
-                        <div className="h-10 w-10 rounded-lg bg-purple-500/20 text-purple-500 flex items-center justify-center mb-3">
-                          <BarChart className="h-6 w-6" />
+
+                      <div className="pt-4 border-t border-border">
+                        <div className="flex justify-between text-sm mb-2">
+                          <span className="font-medium text-muted-foreground">Missing Keywords</span>
+                          <span className="text-red-500">1 Critical</span>
                         </div>
-                        <div className="h-3 w-20 rounded bg-purple-500/20 mb-2" />
-                        <div className="h-2 w-full rounded bg-purple-500/10" />
+                        <div className="flex gap-2">
+                          <span className="px-2 py-1 rounded-md bg-red-500/10 text-red-500 text-xs font-medium border border-red-500/20 flex items-center gap-1">
+                            <Sparkles className="h-3 w-3" /> GraphQL
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
