@@ -78,13 +78,16 @@ export default function LandingPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-2xl pointer-events-none" />
                 <div className="rounded-xl bg-background/80 p-6 h-[400px] flex flex-col">
                   {/* Mock UI Header */}
-                  <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
-                    <div className="flex items-center gap-2">
-                      <div className="h-3 w-3 rounded-full bg-red-500/80" />
-                      <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
-                      <div className="h-3 w-3 rounded-full bg-green-500/80" />
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-8 border-b border-border pb-4">
+                    <div>
+                      <h3 className="font-bold text-lg text-foreground">Senior Frontend Developer</h3>
+                      <p className="text-sm text-muted-foreground">TechCorp Inc.</p>
                     </div>
-                    <div className="h-2 w-20 rounded-full bg-muted" />
+                    <div className="flex items-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                      <span className="text-xs font-medium text-green-500">Live Analysis</span>
+                    </div>
                   </div>
 
                   {/* Mock UI Content */}
