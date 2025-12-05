@@ -72,7 +72,8 @@ export async function getDashboardData() {
             company: 'Unknown Company', // We don't extract company yet, maybe add this later
             date: new Date(job.created_at).toLocaleDateString(),
             score: job.analyses?.[0]?.match_score || 0,
-            status: job.status
+            status: job.status,
+            category: job.category
         })) || []
     };
 }

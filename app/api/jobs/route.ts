@@ -59,11 +59,12 @@ export async function POST(request: Request) {
             console.error('Supabase Analysis Error:', analysisError);
         }
 
-        // 4. Update Job Post with Title and Status
+        // 4. Update Job Post with Title, Status, and Category
         await supabase
             .from('job_posts')
             .update({
                 title: analysis.title || 'Job Analysis',
+                category: analysis.category || 'General',
                 status: 'complete'
             })
             .eq('id', jobData.id);

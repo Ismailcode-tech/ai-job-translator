@@ -22,6 +22,7 @@ interface DashboardData {
         date: string;
         score: number;
         status: string;
+        category?: string;
     }[];
 }
 
@@ -177,7 +178,15 @@ export default function DashboardPage() {
                                     )}
                                 </div>
                                 <h3 className="font-semibold text-foreground truncate mb-1">{job.title}</h3>
-                                <p className="text-sm text-muted-foreground">{job.date}</p>
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <span>{job.date}</span>
+                                    {job.category && (
+                                        <>
+                                            <span>•</span>
+                                            <span className="text-primary/80">{job.category}</span>
+                                        </>
+                                    )}
+                                </div>
 
                                 <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                             </div>
