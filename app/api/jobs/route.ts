@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server';
 import { analyzeJob } from '@/lib/gemini';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server';
 
 export async function POST(request: Request) {
     try {
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+
+        if (!user) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
         const body = await request.json();
         const { text } = body;
 
@@ -15,6 +22,7 @@ export async function POST(request: Request) {
         const { data: jobData, error: jobError } = await supabase
             .from('job_posts')
             .insert([{
+                user_id: user.id,
                 title: 'New Analysis', // Temporary title, will be updated by AI
                 original_text: text,
                 source: 'manual',
@@ -82,10 +90,18 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     // Fetch recent analyses
     const { data, error } = await supabase
         .from('job_posts')
         .select('*, analyses(*)')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10);
 

@@ -65,9 +65,15 @@ export default function DashboardPage() {
             if (res.ok) {
                 const data = await res.json();
                 router.push(`/dashboard/analysis/${data.id}`);
+            } else {
+                const errorData = await res.json();
+                console.error('Analysis API Error:', errorData);
+                alert(`Analysis failed: ${errorData.error || 'Unknown error'}`);
+                setIsAnalyzing(false);
             }
         } catch (error) {
             console.error('Analysis failed', error);
+            alert('An unexpected error occurred. Please try again.');
             setIsAnalyzing(false);
         }
     };
