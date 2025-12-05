@@ -41,23 +41,26 @@ export async function analyzeJob(jobText: string) {
     }
   `;
 
-  // Try Gemini 1.5 Flash first
-  try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    return parseResponse(response.text());
-  } catch (error: any) {
-    // Fallback to Gemini Pro if 1.5 Flash is not found (404)
-    if (error.message?.includes('404') || error.message?.includes('not found')) {
-      console.warn('Gemini 1.5 Flash not found, falling back to gemini-pro');
-      const fallbackModel = genAI.getGenerativeModel({ model: 'gemini-pro' });
-      const result = await fallbackModel.generateContent(prompt);
+  const modelsToTry = ['gemini-1.5-flash', 'gemini-1.5-flash-001', 'gemini-pro', 'gemini-1.0-pro'];
+  let lastError = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      console.log(`Attempting analysis with model: ${modelName}`);
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
       const response = await result.response;
       return parseResponse(response.text());
+    } catch (error: any) {
+      console.warn(`Model ${modelName} failed:`, error.message);
+      lastError = error;
+      // Continue to next model
     }
-    throw error;
   }
+
+  // If we get here, all models failed
+  console.error('All Gemini models failed. Last error:', lastError);
+  throw lastError || new Error('All Gemini models failed to generate content');
 }
 
 function parseResponse(text: string) {

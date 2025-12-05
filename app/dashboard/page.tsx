@@ -73,7 +73,8 @@ export default function DashboardPage() {
             } else {
                 const errorData = await res.json();
                 console.error('Analysis API Error:', errorData);
-                alert(`Analysis failed: ${errorData.error || 'Unknown error'}\nDetails: ${errorData.details || ''}`);
+                const errorDetails = typeof errorData.details === 'object' ? JSON.stringify(errorData.details) : errorData.details;
+                alert(`Analysis failed: ${errorData.error || 'Unknown error'}\nDetails: ${errorDetails || ''}`);
                 setIsAnalyzing(false);
             }
         } catch (error) {
