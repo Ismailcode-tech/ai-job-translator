@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Shield } from 'lucide-react';
+import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
 import { signOut } from '@/app/login/actions';
@@ -24,10 +24,10 @@ export default async function DashboardLayout({
             <aside className="hidden md:flex flex-col w-64 bg-card border-r border-border fixed h-full z-30">
                 <div className="p-6 border-b border-border">
                     <Link href="/dashboard" className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-                            <span className="text-white font-bold text-xl">S</span>
+                        <div className="w-8 h-8 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                            <Sparkles className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-xl font-bold text-foreground">SilentShepard</span>
+                        <span className="text-xl font-bold text-foreground tracking-tight">Talio</span>
                     </Link>
                 </div>
 
@@ -90,10 +90,10 @@ export default async function DashboardLayout({
                 {/* Mobile Header */}
                 <header className="md:hidden sticky top-0 z-20 bg-background/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">S</span>
+                        <div className="w-8 h-8 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                            <Sparkles className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-lg font-bold text-foreground">SilentShepard</span>
+                        <span className="text-lg font-bold text-foreground tracking-tight">Talio</span>
                     </div>
                     <MobileNav userEmail={user.email || ''} />
                 </header>

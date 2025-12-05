@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu } from "lucide-react";
+import { Menu, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
@@ -20,10 +20,10 @@ export function MobileNav({ userEmail }: { userEmail: string }) {
             <SheetContent side="left" className="w-64 p-0">
                 <div className="p-6 border-b border-border">
                     <Link href="/dashboard" className="flex items-center space-x-2" onClick={() => setOpen(false)}>
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">S</span>
+                        <div className="w-8 h-8 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+                            <Sparkles className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-xl font-bold text-foreground">SilentShepard</span>
+                        <span className="text-xl font-bold text-foreground tracking-tight">Talio</span>
                     </Link>
                 </div>
                 <nav className="flex-1 p-4 space-y-1">
