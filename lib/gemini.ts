@@ -12,7 +12,7 @@ export async function analyzeJob(jobText: string) {
     throw new Error('Missing GEMINI_API_KEY');
   }
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const prompt = `
     You are an expert career coach and software engineer. Analyze the following job description and output JSON only.

@@ -51,29 +51,34 @@ export default function DashboardPage() {
 
     const handleAnalyze = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log('Analyze submitted');
         if (!jobText.trim()) return;
 
         setIsAnalyzing(true);
 
         try {
+            console.log('Sending request to /api/jobs...');
             const res = await fetch('/api/jobs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text: jobText }),
             });
 
+            console.log('Response status:', res.status);
+
             if (res.ok) {
                 const data = await res.json();
+                console.log('Analysis success, redirecting to:', data.id);
                 router.push(`/dashboard/analysis/${data.id}`);
             } else {
                 const errorData = await res.json();
                 console.error('Analysis API Error:', errorData);
-                alert(`Analysis failed: ${errorData.error || 'Unknown error'}`);
+                alert(`Analysis failed: ${errorData.error || 'Unknown error'}\nDetails: ${errorData.details || ''}`);
                 setIsAnalyzing(false);
             }
         } catch (error) {
             console.error('Analysis failed', error);
-            alert('An unexpected error occurred. Please try again.');
+            alert('An unexpected error occurred. Please check the console for details.');
             setIsAnalyzing(false);
         }
     };
