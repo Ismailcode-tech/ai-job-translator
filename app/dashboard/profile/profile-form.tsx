@@ -69,25 +69,31 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                         <div className="space-y-6">
                             <div className="grid gap-6 md:grid-cols-2">
                                 <div className="space-y-2">
-                                    <Label htmlFor="firstName" className="text-slate-700 font-medium">First Name</Label>
-                                    <div className="relative">
+                                    <Label htmlFor="firstName">First Name</Label>
+                                    <div className="relative mt-1">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <User className="h-5 w-5 text-gray-400" />
+                                        </div>
                                         <Input
                                             id="firstName"
                                             name="firstName"
                                             defaultValue={profile?.first_name || ''}
-                                            className="h-11 border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"
+                                            className="pl-10"
                                             placeholder="John"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="lastName" className="text-slate-700 font-medium">Last Name</Label>
-                                    <div className="relative">
+                                    <Label htmlFor="lastName">Last Name</Label>
+                                    <div className="relative mt-1">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <User className="h-5 w-5 text-gray-400" />
+                                        </div>
                                         <Input
                                             id="lastName"
                                             name="lastName"
                                             defaultValue={profile?.last_name || ''}
-                                            className="h-11 border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"
+                                            className="pl-10"
                                             placeholder="Doe"
                                         />
                                     </div>
@@ -95,28 +101,32 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="email" className="text-slate-700 font-medium">Email Address</Label>
-                                <div className="relative">
-                                    <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                                <Label htmlFor="email">Email Address</Label>
+                                <div className="relative mt-1">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <Mail className="h-5 w-5 text-gray-400" />
+                                    </div>
                                     <Input
                                         id="email"
                                         type="email"
                                         defaultValue={user?.email || ''}
-                                        className="pl-10 h-11 bg-slate-50 border-slate-200 text-slate-500"
+                                        className="pl-10 bg-gray-50 text-gray-500"
                                         disabled
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="location" className="text-slate-700 font-medium">Location</Label>
-                                <div className="relative">
-                                    <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                                <Label htmlFor="location">Location</Label>
+                                <div className="relative mt-1">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <MapPin className="h-5 w-5 text-gray-400" />
+                                    </div>
                                     <Input
                                         id="location"
                                         name="location"
                                         defaultValue={profile?.location || ''}
-                                        className="pl-10 h-11 border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"
+                                        className="pl-10"
                                         placeholder="e.g. New York, USA"
                                     />
                                 </div>
@@ -135,14 +145,19 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
 
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <Label htmlFor="targetRole" className="text-slate-700 font-medium">Target Role</Label>
-                                <Input
-                                    id="targetRole"
-                                    name="targetRole"
-                                    defaultValue={profile?.target_role || ''}
-                                    className="h-11 border-slate-200 focus:border-teal-500 focus:ring-teal-500/20"
-                                    placeholder="e.g. Senior Frontend Developer"
-                                />
+                                <Label htmlFor="targetRole">Target Role</Label>
+                                <div className="relative mt-1">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <Briefcase className="h-5 w-5 text-gray-400" />
+                                    </div>
+                                    <Input
+                                        id="targetRole"
+                                        name="targetRole"
+                                        defaultValue={profile?.target_role || ''}
+                                        className="pl-10"
+                                        placeholder="e.g. Senior Frontend Developer"
+                                    />
+                                </div>
                                 <p className="text-xs text-slate-500">Also used as your default job search title.</p>
                             </div>
 
