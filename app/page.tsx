@@ -229,9 +229,11 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <button className={`mt-10 w-full rounded-xl px-4 py-4 text-base font-bold transition-all duration-300 ${plan.popular ? 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25' : 'bg-white dark:bg-white/10 text-foreground border border-border hover:bg-muted'}`}>
-                  {plan.name === 'Free' ? 'Get Started' : 'Subscribe'}
-                </button>
+                <Link href="/signup" className="w-full">
+                  <button className={`mt-10 w-full rounded-xl px-4 py-4 text-base font-bold transition-all duration-300 ${plan.popular ? 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25' : 'bg-white dark:bg-white/10 text-foreground border border-border hover:bg-muted'}`}>
+                    {plan.name === 'Free' ? 'Get Started' : 'Subscribe'}
+                  </button>
+                </Link>
               </div>
             ))}
           </div>
