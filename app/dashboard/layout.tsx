@@ -18,6 +18,18 @@ export default async function DashboardLayout({
         redirect('/login');
     }
 
+    // Fetch profile for sidebar
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('first_name, last_name, name')
+        .eq('id', user.id)
+        .single();
+
+    const fullName = profile?.name ||
+        (profile?.first_name ? `${profile.first_name} ${profile.last_name || ''}` : '') ||
+        user.user_metadata?.full_name ||
+        'User';
+
     return (
         <div className="min-h-screen bg-background flex">
             {/* Sidebar (Desktop) */}
@@ -64,12 +76,12 @@ export default async function DashboardLayout({
 
                 <div className="p-4 border-t border-border bg-muted/20">
                     <div className="flex items-center mb-4 px-2">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mr-3 border border-primary/20">
-                            {user.email?.[0].toUpperCase()}
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold mr-3 shadow-md">
+                            {fullName[0]?.toUpperCase() || 'U'}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-foreground truncate">
-                                User
+                                {fullName}
                             </p>
                             <p className="text-xs text-muted-foreground truncate">
                                 {user.email}
