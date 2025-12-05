@@ -77,37 +77,46 @@ export default function DashboardPage() {
 
     return (
         <div className="space-y-8">
-            {/* Welcome Section */}
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 md:p-12 text-white shadow-2xl">
-                <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-white/10 blur-3xl animate-pulse" />
-                <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+            {/* Header & Stats */}
+            <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome back, {data?.user.name}</h1>
+                    <p className="text-muted-foreground mt-1">Here's what's happening with your job search.</p>
+                </div>
 
-                <div className="relative z-10">
-                    <h1 className="text-3xl font-bold tracking-tight sm:text-4xl mb-2">
-                        Welcome back, {data?.user.name}
-                    </h1>
-                    <p className="text-indigo-100 text-lg max-w-xl">
-                        Ready to land your next role? Paste a job description below to get started with your AI-powered analysis.
-                    </p>
+                <div className="flex gap-4 w-full md:w-auto">
+                    <div className="flex-1 md:w-40 rounded-xl border border-border bg-card p-4 shadow-sm">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                            <FileText className="h-4 w-4" /> Total Analyses
+                        </div>
+                        <div className="text-2xl font-bold text-foreground">{data?.stats?.totalAnalyses || 0}</div>
+                    </div>
+                    <div className="flex-1 md:w-40 rounded-xl border border-border bg-card p-4 shadow-sm">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                            <Sparkles className="h-4 w-4" /> Avg. Match
+                        </div>
+                        <div className="text-2xl font-bold text-foreground">{data?.stats?.averageScore || 0}%</div>
+                    </div>
                 </div>
             </div>
 
             {/* New Analysis Widget */}
-            <div className="relative rounded-2xl border border-border bg-card p-1 shadow-sm">
-                <div className="rounded-xl bg-background p-6 md:p-8">
+            <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+                <div className="p-6 md:p-8">
                     <div className="flex items-center gap-3 mb-6">
-                        <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                        <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
                             <Sparkles className="h-5 w-5" />
                         </div>
-                        <h2 className="text-xl font-semibold text-foreground">New Job Analysis</h2>
+                        <div>
+                            <h2 className="text-lg font-semibold text-foreground">New Job Analysis</h2>
+                            <p className="text-sm text-muted-foreground">Paste a job description to get AI-powered insights.</p>
+                        </div>
                     </div>
 
                     <form onSubmit={handleAnalyze}>
-                        <div className="mb-4 relative group">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl opacity-20 group-hover:opacity-40 transition duration-500 blur"></div>
+                        <div className="mb-4">
                             <textarea
-                                className="relative w-full rounded-xl border border-input bg-background p-4 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none transition-all"
-                                rows={6}
+                                className="w-full rounded-xl border border-input bg-background p-4 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none transition-all min-h-[150px]"
                                 placeholder="Paste the job description here (e.g. from LinkedIn, Indeed)..."
                                 value={jobText}
                                 onChange={(e) => setJobText(e.target.value)}
@@ -122,7 +131,7 @@ export default function DashboardPage() {
                             <button
                                 type="submit"
                                 disabled={isAnalyzing || !jobText}
-                                className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-3 text-sm font-medium text-white shadow-lg shadow-primary/25 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 transition-all duration-200"
+                                className="inline-flex items-center justify-center rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-white shadow-md hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100 transition-all duration-200"
                             >
                                 {isAnalyzing ? (
                                     <>
