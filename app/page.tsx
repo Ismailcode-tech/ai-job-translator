@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, CheckCircle, FileText, Zap, BarChart, Menu } from 'lucide-react';
+import { ArrowRight, CheckCircle, FileText, Sparkles, BarChart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function LandingPage() {
@@ -8,11 +8,11 @@ export default function LandingPage() {
       {/* Navbar */}
       <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-6">
-          <div className="flex items-center gap-2 font-bold text-xl text-primary">
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <Zap className="h-5 w-5" />
+          <div className="flex items-center gap-2 font-bold text-2xl tracking-tighter text-primary">
+            <div className="bg-gradient-to-tr from-indigo-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-primary/20">
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">JobTranslator.ai</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">Talio</span>
           </div>
 
           {/* Desktop Menu */}
@@ -69,16 +69,7 @@ export default function LandingPage() {
                   See how it works
                 </Link>
               </div>
-              <div className="mt-10 flex items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-10 w-10 rounded-full bg-muted border-2 border-background flex items-center justify-center text-xs font-bold">
-                      {i}
-                    </div>
-                  ))}
-                </div>
-                <p>Trusted by <span className="font-bold text-foreground">1,000+</span> job seekers</p>
-              </div>
+
             </div>
 
             {/* Glassmorphism Card Preview */}
@@ -186,8 +177,8 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               { name: "Free", price: "$0", features: ["3 Analyses / month", "Basic CV suggestions", "Standard support"] },
-              { name: "Pro", price: "$9", features: ["30 Analyses / month", "Full Learning Roadmap", "PDF Downloads", "Priority support"], popular: true },
-              { name: "Teams", price: "$49", features: ["Shared workspace", "Bulk uploads", "CSV Export", "API Access"] }
+              { name: "Starter", price: "$5", features: ["15 Analyses / month", "Full Learning Roadmap", "PDF Downloads", "Priority support"], popular: true },
+              { name: "Pro", price: "$10", features: ["Unlimited Analyses", "Bulk uploads", "CSV Export", "API Access"] }
             ].map((plan, i) => (
               <div key={i} className={`relative rounded-3xl p-10 transition-all duration-300 ${plan.popular ? 'bg-background border-2 border-primary shadow-2xl shadow-primary/10 scale-105 z-10' : 'bg-muted/30 border border-border hover:bg-muted/50'}`}>
                 {plan.popular && (
@@ -223,13 +214,13 @@ export default function LandingPage() {
       <footer className="bg-background border-t border-border py-16">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2 font-bold text-xl text-foreground">
-            <div className="bg-primary/10 p-2 rounded-lg">
-              <Zap className="h-5 w-5 text-primary" />
+            <div className="bg-gradient-to-tr from-indigo-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-primary/20">
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
-            <span>JobTranslator.ai</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">Talio</span>
           </div>
           <div className="text-sm text-muted-foreground">
-            © 2024 JobTranslator.ai. All rights reserved.
+            © 2024 Talio. All rights reserved.
           </div>
           <div className="flex gap-8 text-sm font-medium text-muted-foreground">
             <Link href="#" className="hover:text-primary transition-colors">Privacy</Link>
