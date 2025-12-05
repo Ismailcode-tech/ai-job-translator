@@ -9,7 +9,6 @@ export async function analyzeJob(jobText: string) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-001' });
 
   const prompt = `
     You are an expert career coach and software engineer. Analyze the following job description and output JSON only.
@@ -42,10 +41,26 @@ export async function analyzeJob(jobText: string) {
     }
   `;
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = response.text();
+  // Try Gemini 1.5 Flash first
+  try {
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return parseResponse(response.text());
+  } catch (error: any) {
+    // Fallback to Gemini Pro if 1.5 Flash is not found (404)
+    if (error.message?.includes('404') || error.message?.includes('not found')) {
+      console.warn('Gemini 1.5 Flash not found, falling back to gemini-pro');
+      const fallbackModel = genAI.getGenerativeModel({ model: 'gemini-pro' });
+      const result = await fallbackModel.generateContent(prompt);
+      const response = await result.response;
+      return parseResponse(response.text());
+    }
+    throw error;
+  }
+}
 
+function parseResponse(text: string) {
   // Clean up markdown code blocks if present (Gemini sometimes wraps JSON in ```json ... ```)
   const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
 
