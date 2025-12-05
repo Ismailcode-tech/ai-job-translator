@@ -139,18 +139,38 @@ export default function AnalysisPage() {
                     </div>
                 </div>
 
+                import {AnalysisReportPDF} from '@/components/pdf/AnalysisReportPDF';
+                import {TailoredCVPDF} from '@/components/pdf/TailoredCVPDF';
+                import PDFDownloadWrapper from '@/components/pdf/PDFDownloadWrapper';
+
+                // ... inside the component ...
+
                 {/* Actions */}
                 <div className="relative z-10 mt-8 flex flex-wrap gap-3 pt-6 border-t border-slate-100">
-                    <button onClick={() => window.print()} className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+                    <PDFDownloadWrapper
+                        document={<AnalysisReportPDF data={data} />}
+                        fileName={`Analysis-${data.id.slice(0, 8)}.pdf`}
+                        className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                    >
                         <Download className="mr-2 h-4 w-4" /> Save as PDF
-                    </button>
+                    </PDFDownloadWrapper>
+
                     <button className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
                         <Share2 className="mr-2 h-4 w-4" /> Share Report
                     </button>
                     <div className="flex-1" />
-                    <button className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-6 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm transition-all hover:shadow-md">
+
+                    <PDFDownloadWrapper
+                        document={<TailoredCVPDF data={{
+                            jobTitle: data.title,
+                            cv_suggestions: data.cv_suggestions,
+                            skills: data.skills
+                        }} />}
+                        fileName={`Tailored-CV-${data.id.slice(0, 8)}.pdf`}
+                        className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-6 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm transition-all hover:shadow-md"
+                    >
                         <FileText className="mr-2 h-4 w-4" /> Generate Tailored CV
-                    </button>
+                    </PDFDownloadWrapper>
                 </div>
             </div>
 
