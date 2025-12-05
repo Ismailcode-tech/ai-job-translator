@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { CheckCircle, AlertTriangle, BookOpen, Copy, Download, Share2, FileText } from 'lucide-react';
+import {
+    CheckCircle, AlertTriangle, BookOpen, Copy, Download, Share2,
+    FileText, ArrowRight, Briefcase, Calendar, Check, ExternalLink
+} from 'lucide-react';
+import Link from 'next/link';
 
 // Define types for our data
 interface Skill {
@@ -39,9 +43,10 @@ export default function AnalysisPage() {
     const params = useParams();
     const [data, setData] = useState<AnalysisData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
     useEffect(() => {
-        // Fetch mock data
+        // Fetch data
         fetch(`/api/jobs/${params.id}`)
             .then(res => res.json())
             .then(data => {
@@ -54,147 +59,238 @@ export default function AnalysisPage() {
             });
     }, [params.id]);
 
-    if (loading) return <div className="p-12 text-center">Loading analysis...</div>;
-    if (!data) return <div className="p-12 text-center">Analysis not found</div>;
+    const handleCopy = (text: string, index: number) => {
+        navigator.clipboard.writeText(text);
+        setCopiedIndex(index);
+        setTimeout(() => setCopiedIndex(null), 2000);
+    };
+
+    if (loading) return (
+        <div className="min-h-[60vh] flex flex-col items-center justify-center">
+            <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-teal-600"></div>
+            <p className="mt-4 text-slate-500 font-medium">Analyzing job details...</p>
+        </div>
+    );
+
+    if (!data) return (
+        <div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
+            <div className="rounded-full bg-red-100 p-4 mb-4">
+                <AlertTriangle className="h-8 w-8 text-red-600" />
+            </div>
+            <h2 className="text-xl font-bold text-slate-900">Analysis Not Found</h2>
+            <p className="mt-2 text-slate-500">We couldn't find the analysis you're looking for.</p>
+            <Link href="/dashboard" className="mt-6 inline-flex items-center text-teal-600 hover:underline">
+                Return to Dashboard <ArrowRight className="ml-1 h-4 w-4" />
+            </Link>
+        </div>
+    );
+
+    // Circular Progress Component
+    const radius = 30;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (data.match_score / 100) * circumference;
 
     return (
-        <div className="space-y-8">
-            {/* Header */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900">{data.title}</h1>
-                    <div className="flex items-center gap-2 text-sm text-slate-500">
-                        <span>Job ID: {data.id}</span>
-                        {data.category && (
-                            <>
-                                <span>•</span>
-                                <span className="font-medium text-slate-700">{data.category}</span>
-                            </>
-                        )}
-                        <span>•</span>
-                        <span className="text-teal-600 font-medium">{data.match_score}% Match</span>
+        <div className="space-y-8 max-w-7xl mx-auto pb-12">
+            {/* Hero Header */}
+            <div className="relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm border border-slate-200">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                    <Briefcase className="h-64 w-64 text-teal-900" />
+                </div>
+
+                <div className="relative z-10 flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                    <div>
+                        <div className="flex items-center gap-2 text-sm font-medium text-teal-600 mb-2">
+                            <span className="px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-100">
+                                {data.category || 'General'}
+                            </span>
+                            <span className="text-slate-400">•</span>
+                            <span className="text-slate-500">Verified Analysis</span>
+                        </div>
+                        <h1 className="text-3xl font-bold text-slate-900 mb-2">{data.title}</h1>
+                        <p className="text-slate-500 max-w-2xl">
+                            AI-powered breakdown of requirements, gaps, and personalization strategy.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                        {/* Match Score Ring */}
+                        <div className="flex flex-col items-center">
+                            <div className="relative h-20 w-20">
+                                <svg className="h-full w-full -rotate-90 transform" viewBox="0 0 70 70">
+                                    <circle cx="35" cy="35" r={radius} stroke="#e2e8f0" strokeWidth="6" fill="transparent" />
+                                    <circle
+                                        cx="35" cy="35" r={radius}
+                                        stroke={data.match_score > 70 ? "#0d9488" : data.match_score > 40 ? "#f59e0b" : "#ef4444"}
+                                        strokeWidth="6"
+                                        strokeDasharray={circumference}
+                                        strokeDashoffset={strokeDashoffset}
+                                        strokeLinecap="round"
+                                        fill="transparent"
+                                        className="transition-all duration-1000 ease-out"
+                                    />
+                                </svg>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <span className="text-lg font-bold text-slate-900">{data.match_score}%</span>
+                                </div>
+                            </div>
+                            <span className="text-xs font-medium text-slate-500 mt-1">Match Score</span>
+                        </div>
                     </div>
                 </div>
-                <div className="flex gap-3">
-                    <button className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                        <Share2 className="mr-2 h-4 w-4" /> Share
+
+                {/* Actions */}
+                <div className="relative z-10 mt-8 flex flex-wrap gap-3 pt-6 border-t border-slate-100">
+                    <button onClick={() => window.print()} className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+                        <Download className="mr-2 h-4 w-4" /> Save as PDF
                     </button>
-                    <button className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                        <Download className="mr-2 h-4 w-4" /> PDF
+                    <button className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+                        <Share2 className="mr-2 h-4 w-4" /> Share Report
                     </button>
-                    <button className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm">
-                        <Copy className="mr-2 h-4 w-4" /> Generate CV
+                    <div className="flex-1" />
+                    <button className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-6 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm transition-all hover:shadow-md">
+                        <FileText className="mr-2 h-4 w-4" /> Generate Tailored CV
                     </button>
                 </div>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-3">
-                {/* Left Column: Skills & Gaps */}
-                <div className="lg:col-span-2 space-y-8">
-                    {/* Skills Table */}
-                    <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
-                        <div className="border-b border-slate-100 bg-slate-50 px-6 py-4">
-                            <h3 className="font-semibold text-slate-900">Extracted Skills</h3>
+            <div className="grid gap-8 lg:grid-cols-12">
+                {/* Main Content: Skills & Roadmap */}
+                <div className="lg:col-span-8 space-y-8">
+                    {/* Skills Section */}
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                            <h3 className="font-bold text-slate-900 flex items-center gap-2">
+                                <CheckCircle className="h-5 w-5 text-teal-600" />
+                                Required Skills Breakdown
+                            </h3>
+                            <span className="text-xs font-medium bg-white px-2 py-1 rounded border border-slate-200 text-slate-500">
+                                {data.skills.length} detected
+                            </span>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-sm text-left">
-                                <thead className="bg-slate-50 text-xs uppercase text-slate-500">
-                                    <tr>
-                                        <th className="px-6 py-3">Skill</th>
-                                        <th className="px-6 py-3">Priority</th>
-                                        <th className="px-6 py-3">Explanation</th>
-                                        <th className="px-6 py-3">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-slate-100">
-                                    {data.skills.map((skill, i) => (
-                                        <tr key={i} className="hover:bg-slate-50">
-                                            <td className="px-6 py-4 font-medium text-slate-900">{skill.name}</td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex gap-1">
-                                                    {[...Array(5)].map((_, j) => (
-                                                        <div key={j} className={`h-1.5 w-1.5 rounded-full ${j < skill.priority ? 'bg-teal-500' : 'bg-slate-200'}`} />
-                                                    ))}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-slate-600 max-w-xs truncate" title={skill.explanation}>{skill.explanation}</td>
-                                            <td className="px-6 py-4">
-                                                {skill.must ? (
-                                                    <span className="inline-flex items-center rounded-full bg-red-100 px-2 py-1 text-xs font-medium text-red-700">Must Have</span>
-                                                ) : (
-                                                    <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">Nice to Have</span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {/* Learning Roadmap */}
-                    <div className="rounded-xl border border-slate-200 bg-white p-6">
-                        <h3 className="mb-6 font-semibold text-slate-900 flex items-center gap-2">
-                            <BookOpen className="h-5 w-5 text-teal-600" />
-                            Learning Roadmap
-                        </h3>
-                        <div className="space-y-6">
-                            {Object.entries(data.roadmap).map(([topic, tasks], i) => (
-                                <div key={i} className="border-l-2 border-slate-200 pl-4">
-                                    <h4 className="font-medium text-slate-900 mb-2">{topic}</h4>
-                                    <ul className="space-y-3">
-                                        {tasks.map((task, j) => (
-                                            <li key={j} className="flex items-start gap-3 text-sm text-slate-600">
-                                                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-medium text-slate-500">
-                                                    {task.day}
+                        <div className="divide-y divide-slate-100">
+                            {data.skills.map((skill, i) => (
+                                <div key={i} className="p-4 hover:bg-slate-50 transition-colors group">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <div className="flex items-center gap-3">
+                                            <h4 className="font-semibold text-slate-900">{skill.name}</h4>
+                                            {skill.must && (
+                                                <span className="px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-bold uppercase tracking-wider border border-teal-100">
+                                                    Required
                                                 </span>
-                                                <span>{task.task}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                            )}
+                                        </div>
+                                        <div className="flex gap-0.5" title={`Priority: ${skill.priority}/5`}>
+                                            {[...Array(5)].map((_, j) => (
+                                                <div key={j} className={`h-1.5 w-3 rounded-full ${j < skill.priority ? 'bg-teal-500' : 'bg-slate-200'}`} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-slate-600 leading-relaxed">{skill.explanation}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </div>
 
-                {/* Right Column: Gaps & CV */}
-                <div className="space-y-8">
-                    {/* Gaps Summary */}
-                    <div className="rounded-xl border border-red-100 bg-red-50 p-6">
-                        <h3 className="mb-4 font-semibold text-red-900 flex items-center gap-2">
-                            <AlertTriangle className="h-5 w-5" />
-                            Missing Skills
+                    {/* Learning Roadmap - Timeline Style */}
+                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h3 className="font-bold text-slate-900 flex items-center gap-2 mb-6">
+                            <BookOpen className="h-5 w-5 text-indigo-600" />
+                            3-Day Learning Sprint
                         </h3>
-                        <div className="space-y-3">
-                            {data.gaps.map((gap, i) => (
-                                <div key={i} className="rounded-lg bg-white p-3 shadow-sm">
-                                    <div className="font-medium text-slate-900">{gap.skill}</div>
-                                    <div className="text-xs text-slate-500 mt-1">{gap.reason}</div>
-                                    <div className="mt-2 text-xs font-medium text-teal-600">
-                                        +{gap.recommended_days} days to learn
+
+                        <div className="relative pl-4 space-y-8 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
+                            {Object.entries(data.roadmap).map(([topic, tasks], i) => (
+                                <div key={i} className="relative pl-8 group">
+                                    <div className="absolute left-[10px] top-1.5 h-5 w-5 rounded-full border-2 border-indigo-600 bg-white group-hover:bg-indigo-50 transition-colors z-10" />
+
+                                    <h4 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+                                        {topic}
+                                    </h4>
+
+                                    <div className="bg-slate-50 rounded-lg p-4 border border-slate-100 space-y-3">
+                                        {tasks.map((task, j) => (
+                                            <div key={j} className="flex gap-3 text-sm">
+                                                <div className="flex-shrink-0 w-12 pt-0.5">
+                                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Day {task.day}</span>
+                                                </div>
+                                                <p className="text-slate-700">{task.task}</p>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
+                </div>
 
-                    {/* CV Suggestions */}
-                    <div className="rounded-xl border border-slate-200 bg-white p-6">
-                        <h3 className="mb-4 font-semibold text-slate-900 flex items-center gap-2">
-                            <FileText className="h-5 w-5 text-teal-600" />
-                            CV Bullet Points
-                        </h3>
-                        <p className="text-sm text-slate-500 mb-4">Copy these into your resume to highlight your match.</p>
-                        <div className="space-y-3">
-                            {data.cv_suggestions.map((suggestion, i) => (
-                                <div key={i} className="group relative rounded-lg bg-slate-50 p-3 text-sm text-slate-700 hover:bg-slate-100">
-                                    {suggestion}
-                                    <button className="absolute right-2 top-2 hidden text-slate-400 hover:text-teal-600 group-hover:block">
-                                        <Copy className="h-4 w-4" />
-                                    </button>
+                {/* Sidebar: Gaps & CV */}
+                <div className="lg:col-span-4 space-y-8">
+                    {/* Missing Skills */}
+                    <div className="bg-white rounded-xl shadow-sm border border-red-100 overflow-hidden">
+                        <div className="px-5 py-4 bg-red-50/50 border-b border-red-100">
+                            <h3 className="font-bold text-red-900 flex items-center gap-2">
+                                <AlertTriangle className="h-5 w-5 text-red-600" />
+                                Skill Gaps
+                            </h3>
+                        </div>
+                        <div className="p-5 space-y-4">
+                            {data.gaps.map((gap, i) => (
+                                <div key={i} className="bg-white rounded-lg border border-red-100 p-3 shadow-sm hover:shadow-md transition-shadow">
+                                    <div className="font-semibold text-slate-900 mb-1">{gap.skill}</div>
+                                    <p className="text-xs text-slate-500 mb-3">{gap.reason}</p>
+                                    <div className="flex items-center gap-1.5 text-xs font-medium text-red-600 bg-red-50 w-fit px-2 py-1 rounded">
+                                        <Calendar className="h-3 w-3" />
+                                        Expected: {gap.recommended_days} days
+                                    </div>
                                 </div>
                             ))}
+                            {data.gaps.length === 0 && (
+                                <div className="text-center py-4 text-green-600 bg-green-50 rounded-lg text-sm font-medium">
+                                    No major gaps detected! 🎉
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* CV Bullet Points */}
+                    <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl shadow-lg text-white overflow-hidden">
+                        <div className="px-5 py-4 border-b border-slate-700/50">
+                            <h3 className="font-bold flex items-center gap-2">
+                                <FileText className="h-5 w-5 text-teal-400" />
+                                Tailored CV Bullets
+                            </h3>
+                        </div>
+                        <div className="p-5 space-y-4">
+                            <p className="text-xs text-slate-400">
+                                Click to copy these enhancements for your resume:
+                            </p>
+                            {data.cv_suggestions.map((suggestion, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => handleCopy(suggestion, i)}
+                                    className="w-full text-left group relative bg-white/5 hover:bg-white/10 rounded-lg p-3 text-sm text-slate-200 transition-all border border-transparent hover:border-slate-600"
+                                >
+                                    <p className="pr-6">{suggestion}</p>
+                                    <div className="absolute top-3 right-3 text-slate-400 group-hover:text-white">
+                                        {copiedIndex === i ? (
+                                            <Check className="h-4 w-4 text-green-400" />
+                                        ) : (
+                                            <Copy className="h-4 w-4" />
+                                        )}
+                                    </div>
+                                </button>
+                            ))}
+                            <button
+                                onClick={() => {
+                                    navigator.clipboard.writeText(data.cv_suggestions.join('\n'));
+                                    setCopiedIndex(999);
+                                    setTimeout(() => setCopiedIndex(null), 2000);
+                                }}
+                                className="w-full mt-2 py-2 text-xs font-semibold text-center text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded hover:bg-teal-500/10 transition-colors"
+                            >
+                                {copiedIndex === 999 ? 'Copied All!' : 'Copy All Suggestions'}
+                            </button>
                         </div>
                     </div>
                 </div>
