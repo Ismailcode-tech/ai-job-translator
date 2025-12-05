@@ -68,7 +68,7 @@ export default function AnalysisPage() {
     if (loading) return (
         <div className="min-h-[60vh] flex flex-col items-center justify-center">
             <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-teal-600"></div>
-            <p className="mt-4 text-slate-500 font-medium">Analyzing job details...</p>
+            <p className="mt-4 text-slate-500 font-medium">Loading your personalized analysis...</p>
         </div>
     );
 
