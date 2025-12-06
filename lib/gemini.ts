@@ -60,7 +60,7 @@ export async function analyzeJob(jobText: string, userProfile?: any) {
     'gemini-2.0-flash',
     'gemini-2.0-flash-exp',
     'gemini-flash-latest',
-    'gemini-1.5-flash' // Keeping as fallback just in case
+    'gemini-1.5-flash'
   ];
   let lastError = null;
 
@@ -74,11 +74,9 @@ export async function analyzeJob(jobText: string, userProfile?: any) {
     } catch (error: any) {
       console.warn(`Model ${modelName} failed:`, error.message);
       lastError = error;
-      // Continue to next model
     }
   }
 
-  // If we get here, all models failed
   console.error('All Gemini models failed. Last error:', lastError);
   throw lastError || new Error('All Gemini models failed to generate content');
 }
@@ -125,6 +123,80 @@ export async function extractSkillsFromResume(resumeText: string) {
 
 export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
   const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error('GEMINI_API_KEY is not set');
+    throw new Error('GEMINI_API_KEY is not set');
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+
+  const modelsToTry = [
+    'gemini-1.5-flash-latest',
+    'gemini-1.5-flash-8b',
+    'models/gemini-1.5-flash',
+    'gemini-1.5-flash',
+  ];
+
+  const prompt = `
+    You are an expert recruiter. Analyze this resume PDF and extract key information. Output JSON only.
+
+    Tasks:
+    1. Extract a comprehensive list of technical and soft skills mentioned in the resume.
+    2. Identify the candidate's most likely target role / job title based on their experience.
+
+    Output Format (JSON):
+    {
+      "skills": ["Skill 1", "Skill 2", ...],
+      "target_role": "Senior Frontend Developer"
+    }
+  `;
+
+  let lastError = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      console.log(`=== TRYING MODEL: ${modelName} ===`);
+      const model = genAI.getGenerativeModel({ model: modelName });
+
+      console.log('PDF Buffer size:', pdfBuffer.byteLength, 'bytes');
+
+      const base64Data = Buffer.from(pdfBuffer).toString('base64');
+      console.log('Base64 data length:', base64Data.length);
+
+      const result = await model.generateContent([
+        prompt,
+        {
+          inlineData: {
+            data: base64Data,
+            mimeType: 'application/pdf'
+          }
+        }
+      ]);
+
+      console.log(`Model ${modelName} succeeded!`);
+      const response = await result.response;
+      const text = response.text();
+      console.log('Gemini PDF Analysis Response:', text.substring(0, 200));
+
+      const parsed = parseResponse(text);
+      console.log('Parsed result:', JSON.stringify(parsed));
+      console.log('=== EXTRACTION SUCCESSFUL ===');
+
+      return parsed;
+    } catch (error: any) {
+      console.warn(`Model ${modelName} failed:`, error.message);
+      lastError = error;
+    }
+  }
+
+  console.error('=== ALL MODELS FAILED ===');
+  console.error('Last error:', lastError);
+  return { skills: [], target_role: '' };
+}
+
+function parseResponse(text: string) {
+  const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
 
   try {
     return JSON.parse(jsonString);
