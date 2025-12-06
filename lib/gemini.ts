@@ -83,6 +83,44 @@ export async function analyzeJob(jobText: string, userProfile?: any) {
   throw lastError || new Error('All Gemini models failed to generate content');
 }
 
+export async function extractSkillsFromResume(resumeText: string) {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error('GEMINI_API_KEY is not set');
+    throw new Error('GEMINI_API_KEY is not set');
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+  const prompt = `
+    You are an expert recruiter. Extract key information from the following resume text and output JSON only.
+
+    Resume Text:
+    "${resumeText.slice(0, 10000)}"
+
+    Tasks:
+    1. Extract a list of comprehensive technical and soft skills.
+    2. Identify the candidate's most likely target role / job title.
+
+    Output Format (JSON):
+    {
+      "skills": ["Skill 1", "Skill 2", ...],
+      "target_role": "Senior Frontend Developer"
+    }
+  `;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return parseResponse(response.text());
+  } catch (error) {
+    console.error('Gemini Resume Extraction Failed:', error);
+    return { skills: [], target_role: '' };
+  }
+}
+
 function parseResponse(text: string) {
   // Clean up markdown code blocks if present (Gemini sometimes wraps JSON in ```json ... ```)
   const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
