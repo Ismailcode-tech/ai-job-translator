@@ -143,7 +143,52 @@ export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
 
     Output Format (JSON):
     {
-  const jsonString = text.replace(/```json\n?|\n ? ```/g, '').trim();
+      "skills": ["Skill 1", "Skill 2", ...],
+      "target_role": "Senior Frontend Developer"
+    }
+  `;
+
+  try {
+    console.log('=== GEMINI PDF EXTRACTION START ===');
+    console.log('PDF Buffer size:', pdfBuffer.byteLength, 'bytes');
+
+    // Convert ArrayBuffer to base64
+    const base64Data = Buffer.from(pdfBuffer).toString('base64');
+    console.log('Base64 data length:', base64Data.length);
+
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          data: base64Data,
+          mimeType: 'application/pdf'
+        }
+      }
+    ]);
+
+    console.log('Gemini API call successful');
+    const response = await result.response;
+    const text = response.text();
+    console.log('Gemini PDF Analysis Full Response:', text);
+
+    const parsed = parseResponse(text);
+    console.log('Parsed result:', JSON.stringify(parsed));
+    console.log('=== GEMINI PDF EXTRACTION END ===');
+
+    return parsed;
+  } catch (error: any) {
+    console.error('=== GEMINI PDF EXTRACTION FAILED ===');
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    console.error('Full error object:', JSON.stringify(error, null, 2));
+    return { skills: [], target_role: '' };
+  }
+}
+
+function parseResponse(text: string) {
+  // Clean up markdown code blocks if present (Gemini sometimes wraps JSON in ```json ... ```)
+  const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();
 
   try {
     return JSON.parse(jsonString);
