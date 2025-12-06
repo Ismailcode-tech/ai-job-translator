@@ -43,9 +43,12 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                 setMessage({ type: 'success', text: result.success });
                 setResumeUrl(result.url);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Upload failed:', error);
-            setMessage({ type: 'error', text: 'An unexpected error occurred. Please try again or use a smaller file.' });
+            setMessage({
+                type: 'error',
+                text: error.message || 'An unexpected error occurred. Please try again.'
+            });
         } finally {
             setIsUploading(false);
         }
