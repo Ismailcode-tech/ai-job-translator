@@ -56,56 +56,37 @@ export async function uploadResume(formData: FormData) {
     try {
         // Convert File to Buffer for pdf-parse
         const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-
-        // Extract text
-        const pdfData = await pdf(buffer);
-        const resumeText = pdfData.text;
-
-        if (resumeText && resumeText.length > 50) {
-            // Ask Gemini to extract skills
-            const extractedData = await extractSkillsFromResume(resumeText);
-
-            if (extractedData?.skills && extractedData.skills.length > 0) {
-                console.log('Extracted skills:', extractedData.skills.length);
-
-                // 3. Update Profile with Resume URL AND Extracted Data
-                const { error: updateError } = await supabase
-                    .from('profiles')
-                    .update({
-                        resume_url: publicUrl,
-                        skills: extractedData.skills,
-                        target_role: extractedData.target_role || undefined
-                    })
+        target_role: extractedData.target_role || undefined
+    })
                     .eq('id', user.id);
 
-                if (updateError) throw updateError;
-
-                revalidatePath('/dashboard/profile');
-                return {
-                    success: 'Resume uploaded & analyzed! Profile updated.',
-                    url: publicUrl
-                };
-            }
-        }
-    } catch (parseError) {
-        console.error('Resume Parsing Error:', parseError);
-        // Fallback: just save the URL if parsing fails
-    }
-
-    // Fallback Update (only URL)
-    const { error: updateError } = await supabase
-        .from('profiles')
-        .update({ resume_url: publicUrl })
-        .eq('id', user.id);
-
-    if (updateError) {
-        console.error('Profile update error:', updateError);
-        return { error: 'Failed to update profile' };
-    }
+    if (updateError) throw updateError;
 
     revalidatePath('/dashboard/profile');
-    return { success: 'Resume uploaded successfully', url: publicUrl };
+    return {
+        success: 'Resume uploaded & analyzed! Profile updated.',
+        url: publicUrl
+    };
+}
+        }
+    } catch (parseError) {
+    console.error('Resume Parsing Error:', parseError);
+    // Fallback: just save the URL if parsing fails
+}
+
+// Fallback Update (only URL)
+const { error: updateError } = await supabase
+    .from('profiles')
+    .update({ resume_url: publicUrl })
+    .eq('id', user.id);
+
+if (updateError) {
+    console.error('Profile update error:', updateError);
+    return { error: 'Failed to update profile' };
+}
+
+revalidatePath('/dashboard/profile');
+return { success: 'Resume uploaded successfully', url: publicUrl };
 }
 
 export async function deleteResume() {
