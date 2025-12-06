@@ -15,11 +15,14 @@ export async function uploadResume(formData: FormData) {
         return { error: 'Not authenticated' };
     }
 
+    console.log('Server Action: uploadResume started');
     const file = formData.get('resume') as File;
 
     if (!file) {
+        console.error('Server Action: No file found in FormData');
         return { error: 'No file provided' };
     }
+    console.log('Server Action: File received:', file.name, file.size, file.type);
 
     // Validate file type
     if (file.type !== 'application/pdf') {
@@ -33,6 +36,7 @@ export async function uploadResume(formData: FormData) {
 
     // Create file path: userId/resume.pdf
     const filePath = `${user.id}/resume.pdf`;
+    console.log('Server Action: Uploading to path:', filePath);
 
     // 1. Upload new file to Storage (Upsert handles overwrites)
     const { error: uploadError } = await supabase.storage
@@ -43,8 +47,8 @@ export async function uploadResume(formData: FormData) {
         });
 
     if (uploadError) {
-        console.error('Upload error:', uploadError);
-        return { error: 'Failed to upload resume' };
+        console.error('Server Action: Supabase Upload Check Error:', JSON.stringify(uploadError));
+        return { error: 'Failed to upload resume: ' + uploadError.message };
     }
 
     // Get public URL
