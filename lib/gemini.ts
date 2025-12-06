@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-export async function analyzeJob(jobText: string) {
+export async function analyzeJob(jobText: string, userProfile?: any) {
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -10,16 +10,30 @@ export async function analyzeJob(jobText: string) {
 
   const genAI = new GoogleGenerativeAI(apiKey);
 
+  const profileContext = userProfile ? `
+    CANDIDATE PROFILE:
+    - Skills: ${userProfile.skills?.join(', ') || 'None listed'}
+    - Target Role: ${userProfile.target_role || 'Not specified'}
+    - Location: ${userProfile.location || 'Not specified'}
+    
+    IMPORTANT: Compare the Job Description requirements against this specific Candidate Profile.
+    When identifying gaps, ONLY list skills that are required by the job but MISSING or weak in the candidate's profile.
+  ` : 'CANDIDATE PROFILE: Generic mid-level candidate (No specific profile provided).';
+
   const prompt = `
     You are an expert career coach and software engineer. Analyze the following job description and output JSON only.
     
+    ${profileContext}
+
     Job Description:
     "${jobText.slice(0, 5000)}"
 
     Tasks:
     1. Extract skills with levels (must/optional) and priority (1-5).
     2. For each skill give a 1-sentence simple explanation.
-    3. Identify potential gaps (assume a generic mid-level profile for now, or just list common hard skills as gaps).
+    3. Identify potential gaps based on the CANDIDATE PROFILE provided above. 
+       - If the candidate has the skill, do NOT list it as a gap.
+       - If the candidate is missing a critical skill found in the job description, list it as a gap.
     4. Output a 3-day learning roadmap for the top 3 hardest skills.
     5. Provide 3 CV bullet suggestions tailored to highlight match.
 
@@ -32,7 +46,7 @@ export async function analyzeJob(jobText: string) {
         {"name": "Skill Name", "must": true, "priority": 5, "explanation": "Simple explanation", "confidence": 0.9}
       ],
       "gaps": [
-        {"skill": "Skill Name", "reason": "Commonly missing", "recommended_days": 5}
+        {"skill": "Skill Name", "reason": "Missing from candidate profile but required for job", "recommended_days": 5}
       ],
       "roadmap": {
         "Skill Name": [{"day": 1, "task": "Task description"}]

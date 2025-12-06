@@ -36,10 +36,23 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Failed to save job' }, { status: 500 });
         }
 
+        // 1.5 Fetch User Profile for Analysis context
+        const { data: profile } = await supabase
+            .from('profiles')
+            .select('skills, preferred_job_categories, location')
+            .eq('id', user.id)
+            .single();
+
+        const userProfile = profile ? {
+            skills: profile.skills,
+            target_role: profile.preferred_job_categories?.[0],
+            location: profile.location
+        } : undefined;
+
         // 2. Call Gemini for Analysis
         let analysis;
         try {
-            analysis = await analyzeJob(text);
+            analysis = await analyzeJob(text, userProfile);
         } catch (error) {
             console.error('Gemini Error:', error);
             // Update job status to failed
