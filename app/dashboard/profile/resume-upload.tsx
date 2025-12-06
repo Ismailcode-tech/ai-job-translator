@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Upload, FileText, Trash2, Download, Loader2, X, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { uploadResume, deleteResume, getResumeUrl } from './upload-actions';
@@ -10,6 +11,7 @@ interface ResumeUploadProps {
 }
 
 export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
+    const router = useRouter();
     const [isUploading, setIsUploading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -42,6 +44,9 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
             } else if (result.success) {
                 setMessage({ type: 'success', text: result.success });
                 setResumeUrl(result.url);
+
+                // Force page refresh to show updated skills in the form
+                router.refresh();
             }
         } catch (error: any) {
             console.error('Upload failed:', error);
