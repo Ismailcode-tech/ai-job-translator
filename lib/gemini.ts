@@ -132,10 +132,10 @@ export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const modelsToTry = [
-    'gemini-1.5-flash-latest',
-    'gemini-1.5-flash-8b',
-    'models/gemini-1.5-flash',
-    'gemini-1.5-flash',
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-exp',
+    'gemini-flash-latest',
   ];
 
   const prompt = `
