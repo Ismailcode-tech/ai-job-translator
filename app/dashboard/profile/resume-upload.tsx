@@ -34,27 +34,34 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
         setMessage(null);
 
         try {
+            console.log('[Client] Creating FormData with file:', file.name, file.size);
             const formData = new FormData();
             formData.append('resume', file);
 
+            console.log('[Client] Calling uploadResume server action...');
             const result = await uploadResume(formData);
+            console.log('[Client] Server action returned:', result);
 
             if (result.error) {
+                console.error('[Client] Upload error:', result.error);
                 setMessage({ type: 'error', text: result.error });
             } else if (result.success) {
+                console.log('[Client] Upload success:', result.success);
                 setMessage({ type: 'success', text: result.success });
                 setResumeUrl(result.url);
 
                 // Force page refresh to show updated skills in the form
+                console.log('[Client] Refreshing page to show new skills...');
                 router.refresh();
             }
         } catch (error: any) {
-            console.error('Upload failed:', error);
+            console.error('[Client] Upload failed with exception:', error);
             setMessage({
                 type: 'error',
                 text: error.message || 'An unexpected error occurred. Please try again.'
             });
         } finally {
+            console.log('[Client] Upload process complete, resetting loading state');
             setIsUploading(false);
         }
     }
