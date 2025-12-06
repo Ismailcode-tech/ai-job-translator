@@ -114,7 +114,9 @@ export async function extractSkillsFromResume(resumeText: string) {
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    return parseResponse(response.text());
+    const text = response.text();
+    console.log('Gemini Raw Response:', text.substring(0, 100));
+    return parseResponse(text);
   } catch (error) {
     console.error('Gemini Resume Extraction Failed:', error);
     return { skills: [], target_role: '' };
