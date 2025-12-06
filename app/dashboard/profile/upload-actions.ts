@@ -56,17 +56,36 @@ export async function uploadResume(formData: FormData) {
         .from('resumes')
         .getPublicUrl(filePath);
 
-    /* 
-    // 2. PARSE RESUME & EXTRACT SKILLS (Temporarily Disabled for Debugging)
+    // 2. PARSE RESUME & EXTRACT SKILLS
     try {
+        console.log('Attempting to import pdf-parse dynamically...');
+        // Dynamic require to prevent top-level crashes
+        // @ts-ignore
+        const pdf = require('pdf-parse');
+
+        console.log('PDF Parse imported successfully');
+
+        // Convert File to Buffer for pdf-parse
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
+
+        // Extract text
+        console.log('Parsing PDF buffer...');
         const pdfData = await pdf(buffer);
         const resumeText = pdfData.text;
 
+        console.log('PDF Text extracted length:', resumeText?.length);
+
         if (resumeText && resumeText.length > 50) {
+            // Ask Gemini to extract skills
+            console.log('Calling Gemini for skills extraction...');
             const extractedData = await extractSkillsFromResume(resumeText);
+            console.log('Gemini Extracted Data:', JSON.stringify(extractedData));
+
             if (extractedData?.skills && extractedData.skills.length > 0) {
+                console.log('Extracted skills count:', extractedData.skills.length);
+
+                // 3. Update Profile with Resume URL AND Extracted Data
                 const { error: updateError } = await supabase
                     .from('profiles')
                     .update({
@@ -77,7 +96,7 @@ export async function uploadResume(formData: FormData) {
                     .eq('id', user.id);
 
                 if (updateError) throw updateError;
-                
+
                 revalidatePath('/dashboard/profile');
                 return {
                     success: 'Resume uploaded & analyzed! Profile updated.',
@@ -85,10 +104,11 @@ export async function uploadResume(formData: FormData) {
                 };
             }
         }
-    } catch (parseError) {
-         console.error('Resume Parsing Error:', parseError);
+    } catch (parseError: any) {
+        console.error('Resume Parsing Error:', parseError);
+        console.error('Stack:', parseError.stack);
+        // Continue to fallback if parsing fails
     }
-    */
 
     // Fallback Update (only URL)
     const { error: updateError } = await supabase
