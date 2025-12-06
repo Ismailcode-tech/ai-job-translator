@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 import { extractSkillsFromResume } from '@/lib/gemini';
 // @ts-ignore
-import pdf from 'pdf-parse';
+const pdf = require('pdf-parse');
 
 export async function uploadResume(formData: FormData) {
     const supabase = await createClient();
