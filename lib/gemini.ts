@@ -123,6 +123,57 @@ export async function extractSkillsFromResume(resumeText: string) {
   }
 }
 
+export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
+  const apiKey = process.env.GEMINI_API_KEY;
+
+  if (!apiKey) {
+    console.error('GEMINI_API_KEY is not set');
+    throw new Error('GEMINI_API_KEY is not set');
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+  const prompt = `
+    You are an expert recruiter. Analyze this resume PDF and extract key information. Output JSON only.
+
+    Tasks:
+    1. Extract a comprehensive list of technical and soft skills mentioned in the resume.
+    2. Identify the candidate's most likely target role / job title based on their experience.
+
+    Output Format (JSON):
+    {
+      "skills": ["Skill 1", "Skill 2", ...],
+      "target_role": "Senior Frontend Developer"
+    }
+  `;
+
+  try {
+    console.log('Sending PDF to Gemini for analysis...');
+
+    // Convert ArrayBuffer to base64
+    const base64Data = Buffer.from(pdfBuffer).toString('base64');
+
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          data: base64Data,
+          mimeType: 'application/pdf'
+        }
+      }
+    ]);
+
+    const response = await result.response;
+    const text = response.text();
+    console.log('Gemini PDF Analysis Response:', text.substring(0, 100));
+    return parseResponse(text);
+  } catch (error) {
+    console.error('Gemini PDF Extraction Failed:', error);
+    return { skills: [], target_role: '' };
+  }
+}
+
 function parseResponse(text: string) {
   // Clean up markdown code blocks if present (Gemini sometimes wraps JSON in ```json ... ```)
   const jsonString = text.replace(/```json\n?|\n?```/g, '').trim();

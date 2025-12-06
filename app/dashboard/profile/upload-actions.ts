@@ -3,9 +3,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-import { extractSkillsFromResume } from '@/lib/gemini';
-// @ts-ignore
-// const pdf = require('pdf-parse');
+import { extractSkillsFromPDF } from '@/lib/gemini';
 
 export async function uploadResume(formData: FormData) {
     const supabase = await createClient();
@@ -56,53 +54,37 @@ export async function uploadResume(formData: FormData) {
         .from('resumes')
         .getPublicUrl(filePath);
 
-    // 2. PARSE RESUME & EXTRACT SKILLS
+    // 2. EXTRACT SKILLS FROM PDF USING GEMINI MULTIMODAL
     try {
-        console.log('Attempting to import pdf-parse dynamically...');
-        // Dynamic require to prevent top-level crashes
-        // @ts-ignore
-        const pdf = require('pdf-parse');
-
-        console.log('PDF Parse imported successfully');
-
-        // Convert File to Buffer for pdf-parse
+        console.log('Converting PDF to buffer for Gemini analysis...');
         const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
 
-        // Extract text
-        console.log('Parsing PDF buffer...');
-        const pdfData = await pdf(buffer);
-        const resumeText = pdfData.text;
+        console.log('Calling Gemini PDF analysis...');
+        const extractedData = await extractSkillsFromPDF(arrayBuffer);
+        console.log('Gemini Extracted Data:', JSON.stringify(extractedData));
 
-        console.log('PDF Text extracted length:', resumeText?.length);
+        if (extractedData?.skills && extractedData.skills.length > 0) {
+            console.log('Extracted skills count:', extractedData.skills.length);
 
-        if (resumeText && resumeText.length > 50) {
-            // Ask Gemini to extract skills
-            console.log('Calling Gemini for skills extraction...');
-            const extractedData = await extractSkillsFromResume(resumeText);
-            console.log('Gemini Extracted Data:', JSON.stringify(extractedData));
+            // 3. Update Profile with Resume URL AND Extracted Data
+            const { error: updateError } = await supabase
+                .from('profiles')
+                .update({
+                    resume_url: publicUrl,
+                    skills: extractedData.skills,
+                    target_role: extractedData.target_role || undefined
+                })
+                .eq('id', user.id);
 
-            if (extractedData?.skills && extractedData.skills.length > 0) {
-                console.log('Extracted skills count:', extractedData.skills.length);
+            if (updateError) throw updateError;
 
-                // 3. Update Profile with Resume URL AND Extracted Data
-                const { error: updateError } = await supabase
-                    .from('profiles')
-                    .update({
-                        resume_url: publicUrl,
-                        skills: extractedData.skills,
-                        target_role: extractedData.target_role || undefined
-                    })
-                    .eq('id', user.id);
-
-                if (updateError) throw updateError;
-
-                revalidatePath('/dashboard/profile');
-                return {
-                    success: 'Resume uploaded & analyzed! Profile updated.',
-                    url: publicUrl
-                };
-            }
+            revalidatePath('/dashboard/profile');
+            return {
+                success: 'Resume uploaded & analyzed! Profile updated.',
+                url: publicUrl
+            };
+        } else {
+            console.log('No skills extracted, falling back to URL-only update');
         }
     } catch (parseError: any) {
         console.error('Resume Parsing Error:', parseError);
