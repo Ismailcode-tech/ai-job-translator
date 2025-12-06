@@ -17,22 +17,38 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
     const [isDragging, setIsDragging] = useState(false);
 
     async function handleUpload(file: File) {
+        // Client-side validation
+        if (file.size > 5 * 1024 * 1024) {
+            setMessage({ type: 'error', text: 'File size must be less than 5MB' });
+            return;
+        }
+
+        if (file.type !== 'application/pdf') {
+            setMessage({ type: 'error', text: 'Only PDF files are allowed' });
+            return;
+        }
+
         setIsUploading(true);
         setMessage(null);
 
-        const formData = new FormData();
-        formData.append('resume', file);
+        try {
+            const formData = new FormData();
+            formData.append('resume', file);
 
-        const result = await uploadResume(formData);
+            const result = await uploadResume(formData);
 
-        if (result.error) {
-            setMessage({ type: 'error', text: result.error });
-        } else if (result.success) {
-            setMessage({ type: 'success', text: result.success });
-            setResumeUrl(result.url);
+            if (result.error) {
+                setMessage({ type: 'error', text: result.error });
+            } else if (result.success) {
+                setMessage({ type: 'success', text: result.success });
+                setResumeUrl(result.url);
+            }
+        } catch (error) {
+            console.error('Upload failed:', error);
+            setMessage({ type: 'error', text: 'An unexpected error occurred. Please try again or use a smaller file.' });
+        } finally {
+            setIsUploading(false);
         }
-
-        setIsUploading(false);
     }
 
     async function handleDelete() {
