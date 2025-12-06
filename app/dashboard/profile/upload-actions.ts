@@ -22,71 +22,14 @@ export async function uploadResume(formData: FormData) {
     }
 
     // Validate file type
-    if (file.type !== 'application/pdf') {
-        return { error: 'Only PDF files are allowed' };
+
+    if (updateError) {
+        console.error('Profile update error:', updateError);
+        return { error: 'Failed to update profile' };
     }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-        return { error: 'File size must be less than 5MB' };
-    }
-
-    // Create file path: userId/resume.pdf
-    const filePath = `${user.id}/resume.pdf`;
-
-    // 1. Upload new file to Storage (Upsert handles overwrites)
-    const { error: uploadError } = await supabase.storage
-        .from('resumes')
-        .upload(filePath, file, {
-            cacheControl: '3600',
-            upsert: true
-        });
-
-    if (uploadError) {
-        console.error('Upload error:', uploadError);
-        return { error: 'Failed to upload resume' };
-    }
-
-    // Get public URL
-    const { data: { publicUrl } } = supabase.storage
-        .from('resumes')
-        .getPublicUrl(filePath);
-
-    // 2. PARSE RESUME & EXTRACT SKILLS
-    try {
-        // Convert File to Buffer for pdf-parse
-        const arrayBuffer = await file.arrayBuffer();
-        target_role: extractedData.target_role || undefined
-    })
-                    .eq('id', user.id);
-
-    if (updateError) throw updateError;
 
     revalidatePath('/dashboard/profile');
-    return {
-        success: 'Resume uploaded & analyzed! Profile updated.',
-        url: publicUrl
-    };
-}
-        }
-    } catch (parseError) {
-    console.error('Resume Parsing Error:', parseError);
-    // Fallback: just save the URL if parsing fails
-}
-
-// Fallback Update (only URL)
-const { error: updateError } = await supabase
-    .from('profiles')
-    .update({ resume_url: publicUrl })
-    .eq('id', user.id);
-
-if (updateError) {
-    console.error('Profile update error:', updateError);
-    return { error: 'Failed to update profile' };
-}
-
-revalidatePath('/dashboard/profile');
-return { success: 'Resume uploaded successfully', url: publicUrl };
+    return { success: 'Resume uploaded successfully', url: publicUrl };
 }
 
 export async function deleteResume() {
