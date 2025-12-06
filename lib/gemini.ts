@@ -132,7 +132,7 @@ export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
   const prompt = `
     You are an expert recruiter. Analyze this resume PDF and extract key information. Output JSON only.
