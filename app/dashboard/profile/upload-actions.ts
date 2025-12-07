@@ -56,14 +56,28 @@ export async function uploadResume(formData: FormData) {
 
     // 2. EXTRACT TEXT FROM PDF LOCALLY USING pdf-parse
     try {
-        console.log('Extracting text from PDF using pdf-parse...');
+        console.log('Extracting text from PDF using pdfjs-dist...');
         const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
 
-        // Import pdf-parse dynamically
-        const pdfParse = (await import('pdf-parse')).default;
-        const pdfData = await pdfParse(buffer);
-        const resumeText = pdfData.text;
+        // Import pdfjs-dist
+        const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+
+        // Load the PDF document
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+        const pdf = await loadingTask.promise;
+
+        console.log(`PDF loaded: ${pdf.numPages} pages`);
+
+        // Extract text from all pages
+        let resumeText = '';
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            const page = await pdf.getPage(pageNum);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items
+                .map((item: any) => item.str)
+                .join(' ');
+            resumeText += pageText + '\n';
+        }
 
         console.log('PDF text extracted, length:', resumeText.length);
         console.log('First 200 chars:', resumeText.substring(0, 200));
