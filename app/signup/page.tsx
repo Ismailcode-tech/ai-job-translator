@@ -7,8 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Github, Mail, Lock, User, ArrowRight, Loader2, MapPin } from 'lucide-react';
 import { signup } from '../login/actions';
 import { useState } from 'react';
+import { useTranslations } from '@/lib/i18n-client';
 
 export default function SignupPage() {
+    const t = useTranslations('auth.signup');
+    const tCommon = useTranslations('common');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -31,17 +34,17 @@ export default function SignupPage() {
             <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">
-                        Create an account
+                        {t('title')}
                     </h2>
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                        Start analyzing job descriptions with AI
+                        {t('subtitle')}
                     </p>
                 </div>
 
                 <form action={handleSubmit} className="mt-8 space-y-6">
                     <div className="space-y-4">
                         <div>
-                            <Label htmlFor="fullName">Full Name</Label>
+                            <Label htmlFor="fullName">{t('name')}</Label>
                             <div className="mt-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <User className="h-5 w-5 text-gray-400" />
@@ -77,7 +80,7 @@ export default function SignupPage() {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email address</Label>
+                            <Label htmlFor="email">{t('email')}</Label>
                             <div className="mt-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Mail className="h-5 w-5 text-gray-400" />
@@ -95,7 +98,7 @@ export default function SignupPage() {
                         </div>
 
                         <div>
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('password')}</Label>
                             <div className="mt-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Lock className="h-5 w-5 text-gray-400" />

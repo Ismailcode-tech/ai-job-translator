@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Upload, ArrowRight, Clock, CheckCircle, AlertCircle, Sparkles, FileText } from 'lucide-react';
 import { getDashboardData } from './actions';
+import { useTranslations } from '@/lib/i18n-client';
 
 interface DashboardData {
     user: {
@@ -27,6 +28,8 @@ interface DashboardData {
 }
 
 export default function DashboardPage() {
+    const t = useTranslations('dashboard');
+    const tCommon = useTranslations('common');
     const router = useRouter();
     const [jobText, setJobText] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
