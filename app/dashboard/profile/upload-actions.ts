@@ -54,19 +54,30 @@ export async function uploadResume(formData: FormData) {
         .from('resumes')
         .getPublicUrl(filePath);
 
-    // 2. EXTRACT SKILLS FROM PDF USING GEMINI MULTIMODAL
+    // 2. EXTRACT TEXT FROM PDF LOCALLY USING pdf-parse
     try {
-        console.log('Converting PDF to buffer for Gemini analysis...');
+        console.log('Extracting text from PDF using pdf-parse...');
         const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-        console.log('Calling Gemini PDF analysis...');
-        const extractedData = await extractSkillsFromPDF(arrayBuffer);
+        // Import pdf-parse dynamically
+        const pdfParse = (await import('pdf-parse')).default;
+        const pdfData = await pdfParse(buffer);
+        const resumeText = pdfData.text;
+
+        console.log('PDF text extracted, length:', resumeText.length);
+        console.log('First 200 chars:', resumeText.substring(0, 200));
+
+        // 3. ANALYZE TEXT WITH GEMINI (text-only, much more reliable)
+        console.log('Analyzing resume text with Gemini...');
+        const { extractSkillsFromResume } = await import('@/lib/gemini');
+        const extractedData = await extractSkillsFromResume(resumeText);
         console.log('Gemini Extracted Data:', JSON.stringify(extractedData));
 
         if (extractedData?.skills && extractedData.skills.length > 0) {
             console.log('Extracted skills count:', extractedData.skills.length);
 
-            // 3. Update Profile with Resume URL AND Extracted Data
+            // 4. Update Profile with Resume URL AND Extracted Data
             const { error: updateError } = await supabase
                 .from('profiles')
                 .update({
