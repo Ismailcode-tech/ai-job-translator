@@ -1,0 +1,157 @@
+{
+    "common": {
+        "signIn": "Sign In",
+        "signOut": "Sign Out",
+        "signUp": "Sign Up",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "close": "Close",
+        "loading": "Loading...",
+        "error": "Error",
+        "success": "Success"
+    },
+    "landing": {
+        "hero": {
+            "title": "Translate Job Descriptions to Your Perfect CV",
+            "subtitle": "AI-powered analysis that decodes job requirements, identifies skill gaps, and generates tailored CVs in seconds",
+            "cta": "Get Started Free",
+            "demo": "See Demo"
+        },
+        "features": {
+            "title": "How It Works",
+            "analysis": {
+                "title": "Smart Analysis",
+                "description": "Paste any job description and get instant AI-powered insights"
+            },
+            "gaps": {
+                "title": "Identify Gaps",
+                "description": "See exactly what skills you need to learn"
+            },
+            "roadmap": {
+                "title": "Learning Roadmap",
+                "description": "Get a personalized 3-day plan to close skill gaps"
+            },
+            "cv": {
+                "title": "Tailored CV",
+                "description": "Generate a perfectly matched CV in one click"
+            }
+        },
+        "pricing": {
+            "title": "Simple Pricing",
+            "free": {
+                "name": "Free",
+                "price": "$0",
+                "features": [
+                    "3 analyses per month",
+                    "Basic skill matching",
+                    "CV generation"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "$9.99",
+                "features": [
+                    "Unlimited analyses",
+                    "Advanced insights",
+                    "Priority support",
+                    "Export to PDF"
+                ]
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "welcome": "Welcome back",
+        "newAnalysis": "New Analysis",
+        "recentAnalyses": "Recent Analyses",
+        "noAnalyses": "No analyses yet. Start by analyzing your first job!",
+        "viewAll": "View All"
+    },
+    "settings": {
+        "title": "Settings",
+        "subtitle": "Manage your account preferences and settings",
+        "account": "Account",
+        "preferences": "Preferences",
+        "dataPrivacy": "Data & Privacy",
+        "email": {
+            "title": "Email Address",
+            "change": "Change"
+        },
+        "password": {
+            "title": "Password",
+            "lastChanged": "Last changed recently",
+            "change": "Change"
+        },
+        "notifications": {
+            "title": "Email Notifications",
+            "description": "Receive emails about your analysis results"
+        },
+        "language": {
+            "title": "Language",
+            "description": "Select your preferred language"
+        },
+        "darkMode": {
+            "title": "Dark Mode",
+            "description": "Switch between light and dark themes"
+        },
+        "exportData": {
+            "title": "Export Your Data",
+            "description": "Download all your data as JSON",
+            "button": "Export",
+            "exporting": "Exporting..."
+        },
+        "deleteAccount": {
+            "title": "Delete Account",
+            "description": "Permanently delete your account and all data",
+            "button": "Delete"
+        }
+    },
+    "profile": {
+        "title": "Profile",
+        "subtitle": "Manage your professional information",
+        "personalInfo": "Personal Information",
+        "professionalProfile": "Professional Profile",
+        "resume": "Resume / CV",
+        "name": "Full Name",
+        "email": "Email",
+        "location": "Location",
+        "targetRole": "Target Role",
+        "topSkills": "Top Skills",
+        "uploadResume": "Upload Resume",
+        "deleteResume": "Delete Resume",
+        "saveChanges": "Save Changes"
+    },
+    "auth": {
+        "login": {
+            "title": "Welcome Back",
+            "subtitle": "Sign in to your account",
+            "email": "Email",
+            "password": "Password",
+            "forgotPassword": "Forgot password?",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign up"
+        },
+        "signup": {
+            "title": "Create Account",
+            "subtitle": "Start analyzing jobs for free",
+            "name": "Full Name",
+            "email": "Email",
+            "password": "Password",
+            "hasAccount": "Already have an account?",
+            "signIn": "Sign in"
+        }
+    },
+    "analysis": {
+        "title": "Analysis Results",
+        "matchScore": "Match Score",
+        "skills": "Required Skills",
+        "gaps": "Skill Gaps",
+        "roadmap": "Learning Roadmap",
+        "cvSuggestions": "CV Suggestions",
+        "generateCV": "Generate Tailored CV",
+        "saveAsPDF": "Save as PDF",
+        "share": "Share"
+    }
+}

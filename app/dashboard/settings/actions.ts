@@ -193,6 +193,15 @@ export async function updateLanguage(language: string) {
         return { error: 'Failed to update language' };
     }
 
+    // Set locale cookie for i18n
+    const { cookies } = await import('next/headers');
+    const cookieStore = await cookies();
+    cookieStore.set('NEXT_LOCALE', language, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 365 // 1 year
+    });
+
     revalidatePath('/dashboard/settings');
     return { success: true };
 }
+

@@ -1,0 +1,157 @@
+{
+    "common": {
+        "signIn": "Se Connecter",
+        "signOut": "Se Déconnecter",
+        "signUp": "S'inscrire",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "close": "Fermer",
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "success": "Succès"
+    },
+    "landing": {
+        "hero": {
+            "title": "Traduisez les Descriptions d'Emploi en Votre CV Parfait",
+            "subtitle": "Analyse alimentée par l'IA qui décode les exigences du poste, identifie les lacunes en compétences et génère des CV personnalisés en quelques secondes",
+            "cta": "Commencer Gratuitement",
+            "demo": "Voir la Démo"
+        },
+        "features": {
+            "title": "Comment Ça Marche",
+            "analysis": {
+                "title": "Analyse Intelligente",
+                "description": "Collez n'importe quelle description d'emploi et obtenez des informations instantanées alimentées par l'IA"
+            },
+            "gaps": {
+                "title": "Identifier les Lacunes",
+                "description": "Voyez exactement quelles compétences vous devez apprendre"
+            },
+            "roadmap": {
+                "title": "Feuille de Route d'Apprentissage",
+                "description": "Obtenez un plan personnalisé de 3 jours pour combler les lacunes en compétences"
+            },
+            "cv": {
+                "title": "CV Personnalisé",
+                "description": "Générez un CV parfaitement adapté en un clic"
+            }
+        },
+        "pricing": {
+            "title": "Tarification Simple",
+            "free": {
+                "name": "Gratuit",
+                "price": "0€",
+                "features": [
+                    "3 analyses par mois",
+                    "Correspondance de compétences de base",
+                    "Génération de CV"
+                ]
+            },
+            "pro": {
+                "name": "Pro",
+                "price": "9,99€",
+                "features": [
+                    "Analyses illimitées",
+                    "Informations avancées",
+                    "Support prioritaire",
+                    "Exporter en PDF"
+                ]
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Tableau de Bord",
+        "welcome": "Bon retour",
+        "newAnalysis": "Nouvelle Analyse",
+        "recentAnalyses": "Analyses Récentes",
+        "noAnalyses": "Aucune analyse pour le moment. Commencez par analyser votre premier emploi!",
+        "viewAll": "Voir Tout"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "subtitle": "Gérez vos préférences et paramètres de compte",
+        "account": "Compte",
+        "preferences": "Préférences",
+        "dataPrivacy": "Données et Confidentialité",
+        "email": {
+            "title": "Adresse E-mail",
+            "change": "Modifier"
+        },
+        "password": {
+            "title": "Mot de Passe",
+            "lastChanged": "Modifié récemment",
+            "change": "Modifier"
+        },
+        "notifications": {
+            "title": "Notifications par E-mail",
+            "description": "Recevez des e-mails sur les résultats de vos analyses"
+        },
+        "language": {
+            "title": "Langue",
+            "description": "Sélectionnez votre langue préférée"
+        },
+        "darkMode": {
+            "title": "Mode Sombre",
+            "description": "Basculer entre les thèmes clair et sombre"
+        },
+        "exportData": {
+            "title": "Exporter Vos Données",
+            "description": "Téléchargez toutes vos données au format JSON",
+            "button": "Exporter",
+            "exporting": "Exportation..."
+        },
+        "deleteAccount": {
+            "title": "Supprimer le Compte",
+            "description": "Supprimez définitivement votre compte et toutes les données",
+            "button": "Supprimer"
+        }
+    },
+    "profile": {
+        "title": "Profil",
+        "subtitle": "Gérez vos informations professionnelles",
+        "personalInfo": "Informations Personnelles",
+        "professionalProfile": "Profil Professionnel",
+        "resume": "CV",
+        "name": "Nom Complet",
+        "email": "E-mail",
+        "location": "Localisation",
+        "targetRole": "Rôle Cible",
+        "topSkills": "Compétences Principales",
+        "uploadResume": "Télécharger le CV",
+        "deleteResume": "Supprimer le CV",
+        "saveChanges": "Enregistrer les Modifications"
+    },
+    "auth": {
+        "login": {
+            "title": "Bon Retour",
+            "subtitle": "Connectez-vous à votre compte",
+            "email": "E-mail",
+            "password": "Mot de Passe",
+            "forgotPassword": "Mot de passe oublié?",
+            "noAccount": "Vous n'avez pas de compte?",
+            "signUp": "S'inscrire"
+        },
+        "signup": {
+            "title": "Créer un Compte",
+            "subtitle": "Commencez à analyser des emplois gratuitement",
+            "name": "Nom Complet",
+            "email": "E-mail",
+            "password": "Mot de Passe",
+            "hasAccount": "Vous avez déjà un compte?",
+            "signIn": "Se connecter"
+        }
+    },
+    "analysis": {
+        "title": "Résultats de l'Analyse",
+        "matchScore": "Score de Correspondance",
+        "skills": "Compétences Requises",
+        "gaps": "Lacunes en Compétences",
+        "roadmap": "Feuille de Route d'Apprentissage",
+        "cvSuggestions": "Suggestions de CV",
+        "generateCV": "Générer un CV Personnalisé",
+        "saveAsPDF": "Enregistrer en PDF",
+        "share": "Partager"
+    }
+}
