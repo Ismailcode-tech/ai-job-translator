@@ -1,8 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, FileText, Sparkles, BarChart, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from '@/lib/i18n-client';
 
 export default function LandingPage() {
+  const t = useTranslations('landing');
+  const tCommon = useTranslations('common');
   return (
     <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary/30">
       {/* Navbar */}
@@ -53,20 +58,19 @@ export default function LandingPage() {
                 Now using Gemini 1.5 Pro
               </div>
               <h1 className="text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl mb-8 leading-[1.1]">
-                Understand any <br />
-                <span className="text-gradient">Job Ad in 60s</span>
+                {t('hero.title').split(' ').slice(0, 2).join(' ')} <br />
+                <span className="text-gradient">{t('hero.title').split(' ').slice(2).join(' ')}</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-lg">
-                Paste a job description and get a clear roadmap to apply and win the interview.
-                We extract skills, identify gaps, and tailor your CV automatically.
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/dashboard" className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary/20 hover:bg-primary/90 hover:scale-105 transition-all duration-300">
-                  Analyze a Job — Free
+                  {t('hero.cta')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link href="#demo" className="inline-flex items-center justify-center rounded-full border border-border bg-background/50 backdrop-blur-sm px-8 py-4 text-base font-semibold text-foreground hover:bg-muted transition-all">
-                  See how it works
+                  {t('hero.demo')}
                 </Link>
               </div>
 

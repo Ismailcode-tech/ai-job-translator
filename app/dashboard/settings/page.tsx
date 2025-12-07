@@ -131,13 +131,13 @@ export default function SettingsPage() {
 
             <div className="max-w-3xl space-y-8">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">Settings</h1>
-                    <p className="text-slate-600">Manage your account preferences and settings</p>
+                    <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
+                    <p className="text-slate-600">{t('subtitle')}</p>
                 </div>
 
                 {/* Account Section */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">Account</h2>
+                    <h2 className="text-lg font-semibold text-slate-900">{t('account')}</h2>
                     <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
                         {/* Email */}
                         <div className="p-6 flex items-start justify-between">
@@ -146,7 +146,7 @@ export default function SettingsPage() {
                                     <Mail className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Email Address</h3>
+                                    <h3 className="font-medium text-slate-900">{t('email.title')}</h3>
                                     <p className="text-sm text-slate-500">{user.email}</p>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@ export default function SettingsPage() {
                                 onClick={() => setIsEmailModalOpen(true)}
                                 className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                             >
-                                Change
+                                {t('email.change')}
                             </button>
                         </div>
 
@@ -165,15 +165,15 @@ export default function SettingsPage() {
                                     <Lock className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Password</h3>
-                                    <p className="text-sm text-slate-500">Last changed recently</p>
+                                    <h3 className="font-medium text-slate-900">{t('password.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('password.lastChanged')}</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setIsPasswordModalOpen(true)}
                                 className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                             >
-                                Change
+                                {t('password.change')}
                             </button>
                         </div>
                     </div>
@@ -181,7 +181,7 @@ export default function SettingsPage() {
 
                 {/* Preferences Section */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">Preferences</h2>
+                    <h2 className="text-lg font-semibold text-slate-900">{t('preferences')}</h2>
                     <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
                         {/* Email Notifications */}
                         <div className="p-6 flex items-start justify-between">
@@ -190,8 +190,8 @@ export default function SettingsPage() {
                                     <Bell className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Email Notifications</h3>
-                                    <p className="text-sm text-slate-500">Receive emails about your analysis results</p>
+                                    <h3 className="font-medium text-slate-900">{t('notifications.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('notifications.description')}</p>
                                 </div>
                             </div>
                             <button
@@ -213,8 +213,8 @@ export default function SettingsPage() {
                                     <Globe className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Language</h3>
-                                    <p className="text-sm text-slate-500">Select your preferred language</p>
+                                    <h3 className="font-medium text-slate-900">{t('language.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('language.description')}</p>
                                 </div>
                             </div>
                             <select
@@ -236,8 +236,8 @@ export default function SettingsPage() {
                                     {darkMode ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Dark Mode</h3>
-                                    <p className="text-sm text-slate-500">Switch between light and dark themes</p>
+                                    <h3 className="font-medium text-slate-900">{t('darkMode.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('darkMode.description')}</p>
                                 </div>
                             </div>
                             <button
@@ -256,7 +256,7 @@ export default function SettingsPage() {
 
                 {/* Data & Privacy Section */}
                 <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">Data & Privacy</h2>
+                    <h2 className="text-lg font-semibold text-slate-900">{t('dataPrivacy')}</h2>
                     <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
                         {/* Export Data */}
                         <div className="p-6 flex items-start justify-between">
@@ -265,8 +265,8 @@ export default function SettingsPage() {
                                     <Download className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Export Your Data</h3>
-                                    <p className="text-sm text-slate-500">Download all your data as JSON</p>
+                                    <h3 className="font-medium text-slate-900">{t('exportData.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('exportData.description')}</p>
                                 </div>
                             </div>
                             <button
@@ -274,7 +274,7 @@ export default function SettingsPage() {
                                 disabled={isExporting}
                                 className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             >
-                                {isExporting ? 'Exporting...' : 'Export'}
+                                {isExporting ? t('exportData.exporting') : t('exportData.button')}
                             </button>
                         </div>
 
@@ -285,15 +285,15 @@ export default function SettingsPage() {
                                     <Trash2 className="h-5 w-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-medium text-slate-900">Delete Account</h3>
-                                    <p className="text-sm text-slate-500">Permanently delete your account and all data</p>
+                                    <h3 className="font-medium text-slate-900">{t('deleteAccount.title')}</h3>
+                                    <p className="text-sm text-slate-500">{t('deleteAccount.description')}</p>
                                 </div>
                             </div>
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
                                 className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
                             >
-                                Delete
+                                {t('deleteAccount.button')}
                             </button>
                         </div>
                     </div>

@@ -7,8 +7,11 @@ import { Label } from '@/components/ui/label';
 import { Github, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
 import { login } from './actions';
 import { useState } from 'react';
+import { useTranslations } from '@/lib/i18n-client';
 
 export default function LoginPage() {
+    const t = useTranslations('auth.login');
+    const tCommon = useTranslations('common');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -30,17 +33,17 @@ export default function LoginPage() {
             <div className="max-w-md w-full space-y-8 bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
                 <div className="text-center">
                     <h2 className="mt-6 text-3xl font-bold text-gray-900 dark:text-white">
-                        Welcome back
+                        {t('title')}
                     </h2>
                     <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                        Sign in to your account to continue
+                        {t('subtitle')}
                     </p>
                 </div>
 
                 <form action={handleSubmit} className="mt-8 space-y-6">
                     <div className="space-y-4">
                         <div>
-                            <Label htmlFor="email">Email address</Label>
+                            <Label htmlFor="email">{t('email')}</Label>
                             <div className="mt-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Mail className="h-5 w-5 text-gray-400" />
@@ -58,7 +61,7 @@ export default function LoginPage() {
                         </div>
 
                         <div>
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">{t('password')}</Label>
                             <div className="mt-1 relative">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Lock className="h-5 w-5 text-gray-400" />
@@ -86,11 +89,11 @@ export default function LoginPage() {
                         {isLoading ? (
                             <>
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Signing in...
+                                {tCommon('loading')}
                             </>
                         ) : (
                             <>
-                                Sign in
+                                {tCommon('signIn')}
                                 <ArrowRight className="ml-2 h-4 w-4" />
                             </>
                         )}
