@@ -137,168 +137,29 @@
             "title": "Crear Cuenta",
             "subtitle": "Comienza a analizar trabajos gratis",
             "name": "Nombre Completo",
-            {
-                "common": {
-                    "signIn": "Iniciar Sesión",
-                    "signOut": "Cerrar Sesión",
-                    "signUp": "Registrarse",
-                    "save": "Guardar",
-                    "cancel": "Cancelar",
-                    "delete": "Eliminar",
-                    "edit": "Editar",
-                    "close": "Cerrar",
-                    "loading": "Cargando...",
-                    "error": "Error",
-                    "success": "Éxito"
-                },
-                "landing": {
-                    "hero": {
-                        "title": "Traduce Descripciones de Trabajo a tu CV Perfecto",
-                        "subtitle": "Análisis impulsado por IA que decodifica requisitos laborales, identifica brechas de habilidades y genera CVs personalizados en segundos",
-                        "cta": "Comenzar Gratis",
-                        "demo": "Ver Demo"
-                    },
-                    "features": {
-                        "title": "Cómo Funciona",
-                        "analysis": {
-                            "title": "Análisis Inteligente",
-                            "description": "Pega cualquier descripción de trabajo y obtén información instantánea impulsada por IA"
-                        },
-                        "gaps": {
-                            "title": "Identificar Brechas",
-                            "description": "Ve exactamente qué habilidades necesitas aprender"
-                        },
-                        "roadmap": {
-                            "title": "Hoja de Ruta de Aprendizaje",
-                            "description": "Obtén un plan personalizado de 3 días para cerrar brechas de habilidades"
-                        },
-                        "cv": {
-                            "title": "CV Personalizado",
-                            "description": "Genera un CV perfectamente adaptado en un clic"
-                        }
-                    },
-                    "pricing": {
-                        "title": "Precios Simples",
-                        "free": {
-                            "name": "Gratis",
-                            "price": "$0",
-                            "features": [
-                                "3 análisis por mes",
-                                "Coincidencia básica de habilidades",
-                                "Generación de CV"
-                            ]
-                        },
-                        "pro": {
-                            "name": "Pro",
-                            "price": "$9.99",
-                            "features": [
-                                "Análisis ilimitados",
-                                "Información avanzada",
-                                "Soporte prioritario",
-                                "Exportar a PDF"
-                            ]
-                        }
-                    }
-                },
-                "dashboard": {
-                    "title": "Panel",
-                    "welcome": "Bienvenido de nuevo",
-                    "newAnalysis": "Nuevo Análisis",
-                    "recentAnalyses": "Análisis Recientes",
-                    "noAnalyses": "Aún no hay análisis. ¡Comienza analizando tu primer trabajo!",
-                    "viewAll": "Ver Todo"
-                },
-                "settings": {
-                    "title": "Configuración",
-                    "subtitle": "Administra las preferencias y configuración de tu cuenta",
-                    "account": "Cuenta",
-                    "preferences": "Preferencias",
-                    "dataPrivacy": "Datos y Privacidad",
-                    "email": {
-                        "title": "Dirección de Correo",
-                        "change": "Cambiar"
-                    },
-                    "password": {
-                        "title": "Contraseña",
-                        "lastChanged": "Cambiada recientemente",
-                        "change": "Cambiar"
-                    },
-                    "notifications": {
-                        "title": "Notificaciones por Correo",
-                        "description": "Recibe correos sobre los resultados de tus análisis"
-                    },
-                    "language": {
-                        "title": "Idioma",
-                        "description": "Selecciona tu idioma preferido"
-                    },
-                    "darkMode": {
-                        "title": "Modo Oscuro",
-                        "description": "Cambia entre temas claro y oscuro"
-                    },
-                    "exportData": {
-                        "title": "Exportar tus Datos",
-                        "description": "Descarga todos tus datos como JSON",
-                        "button": "Exportar",
-                        "exporting": "Exportando..."
-                    },
-                    "deleteAccount": {
-                        "title": "Eliminar Cuenta",
-                        "description": "Elimina permanentemente tu cuenta y todos los datos",
-                        "button": "Eliminar"
-                    }
-                },
-                "profile": {
-                    "title": "Perfil",
-                    "subtitle": "Administra tu información profesional",
-                    "personalInfo": "Información Personal",
-                    "professionalProfile": "Perfil Profesional",
-                    "resume": "Currículum / CV",
-                    "name": "Nombre Completo",
-                    "email": "Correo",
-                    "location": "Ubicación",
-                    "targetRole": "Rol Objetivo",
-                    "topSkills": "Habilidades Principales",
-                    "uploadResume": "Subir Currículum",
-                    "deleteResume": "Eliminar Currículum",
-                    "saveChanges": "Guardar Cambios"
-                },
-                "auth": {
-                    "login": {
-                        "title": "Bienvenido de Nuevo",
-                        "subtitle": "Inicia sesión en tu cuenta",
-                        "email": "Correo",
-                        "password": "Contraseña",
-                        "forgotPassword": "¿Olvidaste tu contraseña?",
-                        "noAccount": "¿No tienes cuenta?",
-                        "signUp": "Regístrate"
-                    },
-                    "signup": {
-                        "title": "Crear Cuenta",
-                        "subtitle": "Comienza a analizar trabajos gratis",
-                        "name": "Nombre Completo",
-                        "email": "Correo",
-                        "password": "Contraseña",
-                        "hasAccount": "¿Ya tienes cuenta?",
-                        "signIn": "Iniciar sesión"
-                    }
-                },
-                "analysis": {
-                    "title": "Resultados del Análisis",
-                    "matchScore": "Puntuación de Coincidencia",
-                    "skills": "Habilidades Requeridas",
-                    "gaps": "Brechas de Habilidades",
-                    "roadmap": "Hoja de Ruta de Aprendizaje",
-                    "cvSuggestions": "Sugerencias de CV",
-                    "generateCV": "Generar CV Personalizado",
-                    "saveAsPDF": "Guardar como PDF",
-                    "share": "Compartir"
-                },
-                "billing": {
-                    "title": "Facturación y Suscripción",
-                    "subtitle": "Administra tu plan y detalles de pago",
-                    "currentPlan": "Plan Actual",
-                    "perMonth": "/ mes",
-                    "upgrade": "Actualizar",
-                    "features": "Características"
-                }
-            }
+            "email": "Correo",
+            "password": "Contraseña",
+            "hasAccount": "¿Ya tienes cuenta?",
+            "signIn": "Iniciar sesión"
+        }
+    },
+    "analysis": {
+        "title": "Resultados del Análisis",
+        "matchScore": "Puntuación de Coincidencia",
+        "skills": "Habilidades Requeridas",
+        "gaps": "Brechas de Habilidades",
+        "roadmap": "Hoja de Ruta de Aprendizaje",
+        "cvSuggestions": "Sugerencias de CV",
+        "generateCV": "Generar CV Personalizado",
+        "saveAsPDF": "Guardar como PDF",
+        "share": "Compartir"
+    },
+    "billing": {
+        "title": "Facturación y Suscripción",
+        "subtitle": "Administra tu plan y detalles de pago",
+        "currentPlan": "Plan Actual",
+        "perMonth": "/ mes",
+        "upgrade": "Actualizar",
+        "features": "Características"
+    }
+}
