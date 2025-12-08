@@ -3,8 +3,11 @@
 import { useState } from 'react';
 import { CheckCircle, Zap, Loader2, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useTranslations } from '@/lib/i18n-client';
 
 export default function BillingPage() {
+    const t = useTranslations('billing');
+    const tCommon = useTranslations('common');
     const [isLoading, setIsLoading] = useState<string | null>(null);
 
     async function handleUpgrade(priceId: string, planName: string) {
@@ -35,15 +38,15 @@ export default function BillingPage() {
     return (
         <div className="max-w-6xl space-y-8">
             <div>
-                <h1 className="text-2xl font-bold text-foreground">Billing & Subscription</h1>
-                <p className="text-muted-foreground">Manage your plan and payment details</p>
+                <h1 className="text-2xl font-bold text-foreground">{t('title')}</h1>
+                <p className="text-muted-foreground">{t('subtitle')}</p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
                 {/* Free Plan */}
                 <div className="rounded-xl border border-border bg-card p-6 shadow-sm flex flex-col">
                     <div className="mb-4">
-                        <p className="text-sm font-medium text-muted-foreground mb-1">Current Plan</p>
+                        <p className="text-sm font-medium text-muted-foreground mb-1">{t('currentPlan')}</p>
                         <h2 className="text-2xl font-bold text-foreground">Free</h2>
                         <p className="text-sm text-muted-foreground mt-1">$0.00 / month</p>
                     </div>

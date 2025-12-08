@@ -137,21 +137,168 @@
             "title": "Konto Erstellen",
             "subtitle": "Beginnen Sie kostenlos mit der Analyse von Jobs",
             "name": "Vollständiger Name",
-            "email": "E-Mail",
-            "password": "Passwort",
-            "hasAccount": "Haben Sie bereits ein Konto?",
-            "signIn": "Anmelden"
-        }
-    },
-    "analysis": {
-        "title": "Analyseergebnisse",
-        "matchScore": "Übereinstimmungswert",
-        "skills": "Erforderliche Fähigkeiten",
-        "gaps": "Kompetenzlücken",
-        "roadmap": "Lern-Roadmap",
-        "cvSuggestions": "Lebenslauf-Vorschläge",
-        "generateCV": "Maßgeschneiderten Lebenslauf Generieren",
-        "saveAsPDF": "Als PDF Speichern",
-        "share": "Teilen"
-    }
-}
+            {
+                "common": {
+                    "signIn": "Anmelden",
+                    "signOut": "Abmelden",
+                    "signUp": "Registrieren",
+                    "save": "Speichern",
+                    "cancel": "Abbrechen",
+                    "delete": "Löschen",
+                    "edit": "Bearbeiten",
+                    "close": "Schließen",
+                    "loading": "Laden...",
+                    "error": "Fehler",
+                    "success": "Erfolg"
+                },
+                "landing": {
+                    "hero": {
+                        "title": "Übersetzen Sie Stellenbeschreibungen in Ihren Perfekten Lebenslauf",
+                        "subtitle": "KI-gestützte Analyse, die Stellenanforderungen entschlüsselt, Kompetenzlücken identifiziert und maßgeschneiderte Lebensläufe in Sekunden generiert",
+                        "cta": "Kostenlos Starten",
+                        "demo": "Demo Ansehen"
+                    },
+                    "features": {
+                        "title": "Wie Es Funktioniert",
+                        "analysis": {
+                            "title": "Intelligente Analyse",
+                            "description": "Fügen Sie eine beliebige Stellenbeschreibung ein und erhalten Sie sofortige KI-gestützte Einblicke"
+                        },
+                        "gaps": {
+                            "title": "Lücken Identifizieren",
+                            "description": "Sehen Sie genau, welche Fähigkeiten Sie lernen müssen"
+                        },
+                        "roadmap": {
+                            "title": "Lern-Roadmap",
+                            "description": "Erhalten Sie einen personalisierten 3-Tage-Plan zum Schließen von Kompetenzlücken"
+                        },
+                        "cv": {
+                            "title": "Maßgeschneiderter Lebenslauf",
+                            "description": "Generieren Sie einen perfekt passenden Lebenslauf mit einem Klick"
+                        }
+                    },
+                    "pricing": {
+                        "title": "Einfache Preise",
+                        "free": {
+                            "name": "Kostenlos",
+                            "price": "0€",
+                            "features": [
+                                "3 Analysen pro Monat",
+                                "Grundlegende Kompetenzabgleichung",
+                                "Lebenslauf-Generierung"
+                            ]
+                        },
+                        "pro": {
+                            "name": "Pro",
+                            "price": "9,99€",
+                            "features": [
+                                "Unbegrenzte Analysen",
+                                "Erweiterte Einblicke",
+                                "Prioritäts-Support",
+                                "Als PDF exportieren"
+                            ]
+                        }
+                    }
+                },
+                "dashboard": {
+                    "title": "Dashboard",
+                    "welcome": "Willkommen zurück",
+                    "newAnalysis": "Neue Analyse",
+                    "recentAnalyses": "Letzte Analysen",
+                    "noAnalyses": "Noch keine Analysen. Beginnen Sie mit der Analyse Ihres ersten Jobs!",
+                    "viewAll": "Alle Anzeigen"
+                },
+                "settings": {
+                    "title": "Einstellungen",
+                    "subtitle": "Verwalten Sie Ihre Kontoeinstellungen und Präferenzen",
+                    "account": "Konto",
+                    "preferences": "Präferenzen",
+                    "dataPrivacy": "Daten & Datenschutz",
+                    "email": {
+                        "title": "E-Mail-Adresse",
+                        "change": "Ändern"
+                    },
+                    "password": {
+                        "title": "Passwort",
+                        "lastChanged": "Kürzlich geändert",
+                        "change": "Ändern"
+                    },
+                    "notifications": {
+                        "title": "E-Mail-Benachrichtigungen",
+                        "description": "Erhalten Sie E-Mails über Ihre Analyseergebnisse"
+                    },
+                    "language": {
+                        "title": "Sprache",
+                        "description": "Wählen Sie Ihre bevorzugte Sprache"
+                    },
+                    "darkMode": {
+                        "title": "Dunkler Modus",
+                        "description": "Zwischen hellen und dunklen Themen wechseln"
+                    },
+                    "exportData": {
+                        "title": "Ihre Daten Exportieren",
+                        "description": "Laden Sie alle Ihre Daten als JSON herunter",
+                        "button": "Exportieren",
+                        "exporting": "Exportieren..."
+                    },
+                    "deleteAccount": {
+                        "title": "Konto Löschen",
+                        "description": "Löschen Sie Ihr Konto und alle Daten dauerhaft",
+                        "button": "Löschen"
+                    }
+                },
+                "profile": {
+                    "title": "Profil",
+                    "subtitle": "Verwalten Sie Ihre beruflichen Informationen",
+                    "personalInfo": "Persönliche Informationen",
+                    "professionalProfile": "Berufliches Profil",
+                    "resume": "Lebenslauf",
+                    "name": "Vollständiger Name",
+                    "email": "E-Mail",
+                    "location": "Standort",
+                    "targetRole": "Zielrolle",
+                    "topSkills": "Top-Fähigkeiten",
+                    "uploadResume": "Lebenslauf Hochladen",
+                    "deleteResume": "Lebenslauf Löschen",
+                    "saveChanges": "Änderungen Speichern"
+                },
+                "auth": {
+                    "login": {
+                        "title": "Willkommen Zurück",
+                        "subtitle": "Melden Sie sich bei Ihrem Konto an",
+                        "email": "E-Mail",
+                        "password": "Passwort",
+                        "forgotPassword": "Passwort vergessen?",
+                        "noAccount": "Noch kein Konto?",
+                        "signUp": "Registrieren"
+                    },
+                    "signup": {
+                        "title": "Konto Erstellen",
+                        "subtitle": "Beginnen Sie kostenlos mit der Analyse von Jobs",
+                        "name": "Vollständiger Name",
+                        "email": "E-Mail",
+                        "password": "Passwort",
+                        "hasAccount": "Haben Sie bereits ein Konto?",
+                        "signIn": "Anmelden"
+                    }
+                },
+                "analysis": {
+                    "title": "Analyseergebnisse",
+                    "matchScore": "Übereinstimmungswert",
+                    "skills": "Erforderliche Fähigkeiten",
+                    "gaps": "Kompetenzlücken",
+                    "roadmap": "Lern-Roadmap",
+                    "cvSuggestions": "Lebenslauf-Vorschläge",
+                    "generateCV": "Maßgeschneiderten Lebenslauf Generieren",
+                    "saveAsPDF": "Als PDF Speichern",
+                    "share": "Teilen"
+                },
+                "billing": {
+                    "title": "Abrechnung und Abonnement",
+                    "subtitle": "Verwalten Sie Ihren Plan und Zahlungsdetails",
+                    "currentPlan": "Aktueller Plan",
+                    "perMonth": "/ Monat",
+                    "upgrade": "Upgrade",
+                    "features": "Funktionen"
+                }
+            }

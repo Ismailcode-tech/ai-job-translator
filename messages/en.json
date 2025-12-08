@@ -153,5 +153,13 @@
         "generateCV": "Generate Tailored CV",
         "saveAsPDF": "Save as PDF",
         "share": "Share"
+    },
+    "billing": {
+        "title": "Billing & Subscription",
+        "subtitle": "Manage your plan and payment details",
+        "currentPlan": "Current Plan",
+        "perMonth": "/ month",
+        "upgrade": "Upgrade",
+        "features": "Features"
     }
 }
