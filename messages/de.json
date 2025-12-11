@@ -64,10 +64,22 @@
     "dashboard": {
         "title": "Dashboard",
         "welcome": "Willkommen zurück",
-        "newAnalysis": "Neue Analyse",
+        "subtitle": "Hier ist, was mit Ihrer Jobsuche passiert.",
+        "totalAnalyses": "Gesamtanalysen",
+        "avgMatch": "Durchschn. Übereinstimmung",
+        "newJobAnalysis": "Neue Jobanalyse",
+        "newJobSubtitle": "Fügen Sie eine Stellenbeschreibung ein, um KI-gestützte Einblicke zu erhalten.",
+        "placeholder": "Fügen Sie die Stellenbeschreibung hier ein (z.B. von LinkedIn, Indeed)...",
+        "autoDetect": "Kategorie automatisch erkennen",
+        "analyzeJob": "Job Analysieren",
+        "analyzing": "Analysieren...",
         "recentAnalyses": "Letzte Analysen",
-        "noAnalyses": "Noch keine Analysen. Beginnen Sie mit der Analyse Ihres ersten Jobs!",
-        "viewAll": "Alle Anzeigen"
+        "viewAll": "Alle anzeigen",
+        "match": "Übereinstimmung",
+        "processing": "Verarbeitung",
+        "noAnalyses": "Noch keine Analysen",
+        "noAnalysesSubtitle": "Fügen Sie oben eine Stellenbeschreibung ein, um Ihre erste Analyse zu erstellen.",
+        "loadingDashboard": "Dashboard wird geladen..."
     },
     "settings": {
         "title": "Einstellungen",

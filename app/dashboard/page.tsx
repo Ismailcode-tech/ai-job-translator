@@ -88,7 +88,7 @@ export default function DashboardPage() {
     };
 
     if (loading) {
-        return <div className="p-8 text-center text-slate-500">Loading dashboard...</div>;
+        return <div className="p-8 text-center text-slate-500">{t('loadingDashboard')}</div>;
     }
 
     return (
@@ -96,20 +96,20 @@ export default function DashboardPage() {
             {/* Header & Stats */}
             <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome back, {data?.user.name}</h1>
-                    <p className="text-muted-foreground mt-1">Here's what's happening with your job search.</p>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">{t('welcome')}, {data?.user.name}</h1>
+                    <p className="text-muted-foreground mt-1">{t('subtitle')}</p>
                 </div>
 
                 <div className="flex gap-4 w-full md:w-auto">
                     <div className="flex-1 md:w-40 rounded-xl border border-border bg-card p-4 shadow-sm">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                            <FileText className="h-4 w-4" /> Total Analyses
+                            <FileText className="h-4 w-4" /> {t('totalAnalyses')}
                         </div>
                         <div className="text-2xl font-bold text-foreground">{data?.stats?.totalAnalyses || 0}</div>
                     </div>
                     <div className="flex-1 md:w-40 rounded-xl border border-border bg-card p-4 shadow-sm">
                         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                            <Sparkles className="h-4 w-4" /> Avg. Match
+                            <Sparkles className="h-4 w-4" /> {t('avgMatch')}
                         </div>
                         <div className="text-2xl font-bold text-foreground">{data?.stats?.averageScore || 0}%</div>
                     </div>
@@ -124,8 +124,8 @@ export default function DashboardPage() {
                             <Sparkles className="h-5 w-5" />
                         </div>
                         <div>
-                            <h2 className="text-lg font-semibold text-foreground">New Job Analysis</h2>
-                            <p className="text-sm text-muted-foreground">Paste a job description to get AI-powered insights.</p>
+                            <h2 className="text-lg font-semibold text-foreground">{t('newJobAnalysis')}</h2>
+                            <p className="text-sm text-muted-foreground">{t('newJobSubtitle')}</p>
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@ export default function DashboardPage() {
                         <div className="mb-4">
                             <textarea
                                 className="w-full rounded-xl border border-input bg-background p-4 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none transition-all min-h-[150px]"
-                                placeholder="Paste the job description here (e.g. from LinkedIn, Indeed)..."
+                                placeholder={t('placeholder')}
                                 value={jobText}
                                 onChange={(e) => setJobText(e.target.value)}
                             />
@@ -141,7 +141,7 @@ export default function DashboardPage() {
                         <div className="flex items-center justify-between pt-2">
                             <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                 <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted/50 border border-border">
-                                    <Upload className="h-3.5 w-3.5" /> Auto-detect category
+                                    <Upload className="h-3.5 w-3.5" /> {t('autoDetect')}
                                 </span>
                             </div>
                             <button
@@ -152,11 +152,11 @@ export default function DashboardPage() {
                                 {isAnalyzing ? (
                                     <>
                                         <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                                        Analyzing...
+                                        {t('analyzing')}
                                     </>
                                 ) : (
                                     <>
-                                        Analyze Job <ArrowRight className="ml-2 h-4 w-4" />
+                                        {t('analyzeJob')} <ArrowRight className="ml-2 h-4 w-4" />
                                     </>
                                 )}
                             </button>
@@ -168,9 +168,9 @@ export default function DashboardPage() {
             {/* Recent Analyses */}
             <div>
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold text-foreground">Recent Analyses</h2>
+                    <h2 className="text-xl font-bold text-foreground">{t('recentAnalyses')}</h2>
                     <Link href="/dashboard/analyses" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-                        View all
+                        {t('viewAll')}
                     </Link>
                 </div>
 
@@ -184,11 +184,11 @@ export default function DashboardPage() {
                                     </div>
                                     {job.status === 'complete' ? (
                                         <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium border ${job.score >= 80 ? 'bg-green-500/10 text-green-600 border-green-500/20' : 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20'}`}>
-                                            {job.score}% Match
+                                            {job.score}% {t('match')}
                                         </span>
                                     ) : (
                                         <span className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-600 border border-blue-500/20">
-                                            Processing
+                                            {t('processing')}
                                         </span>
                                     )}
                                 </div>
@@ -212,8 +212,8 @@ export default function DashboardPage() {
                         <div className="mx-auto h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
                             <FileText className="h-6 w-6 text-muted-foreground" />
                         </div>
-                        <h3 className="text-lg font-medium text-foreground mb-1">No analyses yet</h3>
-                        <p className="text-muted-foreground">Paste a job description above to create your first analysis.</p>
+                        <h3 className="text-lg font-medium text-foreground mb-1">{t('noAnalyses')}</h3>
+                        <p className="text-muted-foreground">{t('noAnalysesSubtitle')}</p>
                     </div>
                 )}
             </div>

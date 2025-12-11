@@ -64,10 +64,22 @@
     "dashboard": {
         "title": "Panel",
         "welcome": "Bienvenido de nuevo",
-        "newAnalysis": "Nuevo Análisis",
+        "subtitle": "Esto es lo que está pasando con tu búsqueda de empleo.",
+        "totalAnalyses": "Análisis Totales",
+        "avgMatch": "Coincidencia Promedio",
+        "newJobAnalysis": "Nuevo Análisis de Trabajo",
+        "newJobSubtitle": "Pega una descripción de trabajo para obtener información impulsada por IA.",
+        "placeholder": "Pega la descripción del trabajo aquí (ej. de LinkedIn, Indeed)...",
+        "autoDetect": "Detectar categoría automáticamente",
+        "analyzeJob": "Analizar Trabajo",
+        "analyzing": "Analizando...",
         "recentAnalyses": "Análisis Recientes",
-        "noAnalyses": "Aún no hay análisis. ¡Comienza analizando tu primer trabajo!",
-        "viewAll": "Ver Todo"
+        "viewAll": "Ver todo",
+        "match": "Coincidencia",
+        "processing": "Procesando",
+        "noAnalyses": "Aún no hay análisis",
+        "noAnalysesSubtitle": "Pega una descripción de trabajo arriba para crear tu primer análisis.",
+        "loadingDashboard": "Cargando panel..."
     },
     "settings": {
         "title": "Configuración",

@@ -64,10 +64,22 @@
     "dashboard": {
         "title": "Dashboard",
         "welcome": "Welcome back",
-        "newAnalysis": "New Analysis",
+        "subtitle": "Here's what's happening with your job search.",
+        "totalAnalyses": "Total Analyses",
+        "avgMatch": "Avg. Match",
+        "newJobAnalysis": "New Job Analysis",
+        "newJobSubtitle": "Paste a job description to get AI-powered insights.",
+        "placeholder": "Paste the job description here (e.g. from LinkedIn, Indeed)...",
+        "autoDetect": "Auto-detect category",
+        "analyzeJob": "Analyze Job",
+        "analyzing": "Analyzing...",
         "recentAnalyses": "Recent Analyses",
-        "noAnalyses": "No analyses yet. Start by analyzing your first job!",
-        "viewAll": "View All"
+        "viewAll": "View all",
+        "match": "Match",
+        "processing": "Processing",
+        "noAnalyses": "No analyses yet",
+        "noAnalysesSubtitle": "Paste a job description above to create your first analysis.",
+        "loadingDashboard": "Loading dashboard..."
     },
     "settings": {
         "title": "Settings",

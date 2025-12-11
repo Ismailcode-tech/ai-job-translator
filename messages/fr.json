@@ -64,10 +64,22 @@
     "dashboard": {
         "title": "Tableau de Bord",
         "welcome": "Bon retour",
-        "newAnalysis": "Nouvelle Analyse",
+        "subtitle": "Voici ce qui se passe avec votre recherche d'emploi.",
+        "totalAnalyses": "Analyses Totales",
+        "avgMatch": "Correspondance Moyenne",
+        "newJobAnalysis": "Nouvelle Analyse d'Emploi",
+        "newJobSubtitle": "Collez une description d'emploi pour obtenir des informations alimentées par l'IA.",
+        "placeholder": "Collez la description de l'emploi ici (par ex. de LinkedIn, Indeed)...",
+        "autoDetect": "Détecter automatiquement la catégorie",
+        "analyzeJob": "Analyser l'Emploi",
+        "analyzing": "Analyse en cours...",
         "recentAnalyses": "Analyses Récentes",
-        "noAnalyses": "Aucune analyse pour le moment. Commencez par analyser votre premier emploi!",
-        "viewAll": "Voir Tout"
+        "viewAll": "Voir tout",
+        "match": "Correspondance",
+        "processing": "En cours de traitement",
+        "noAnalyses": "Aucune analyse pour le moment",
+        "noAnalysesSubtitle": "Collez une description d'emploi ci-dessus pour créer votre première analyse.",
+        "loadingDashboard": "Chargement du tableau de bord..."
     },
     "settings": {
         "title": "Paramètres",
