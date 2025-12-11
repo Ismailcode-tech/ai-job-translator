@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ResumeUpload from './resume-upload';
+import { useTranslations } from '@/lib/i18n-client';
 
 interface ProfileFormProps {
     user: any;
@@ -14,6 +15,8 @@ interface ProfileFormProps {
 }
 
 export default function ProfileForm({ user, profile }: ProfileFormProps) {
+    const t = useTranslations('profile');
+    const tCommon = useTranslations('common');
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
@@ -63,13 +66,13 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
                                 <User className="h-5 w-5" />
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900">Personal Information</h3>
+                            <h3 className="text-lg font-bold text-slate-900">{t('personalInfo')}</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div className="grid gap-6 md:grid-cols-2">
                                 <div className="space-y-2">
-                                    <Label htmlFor="firstName">First Name</Label>
+                                    <Label htmlFor="firstName">{t('firstName')}</Label>
                                     <div className="relative mt-1">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <User className="h-5 w-5 text-gray-400" />
@@ -84,7 +87,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                                     </div>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="lastName">Last Name</Label>
+                                    <Label htmlFor="lastName">{t('lastName')}</Label>
                                     <div className="relative mt-1">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <User className="h-5 w-5 text-gray-400" />
@@ -101,7 +104,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email Address</Label>
+                                <Label htmlFor="email">{t('emailAddress')}</Label>
                                 <div className="relative mt-1">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <Mail className="h-5 w-5 text-gray-400" />
@@ -117,7 +120,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="location">Location</Label>
+                                <Label htmlFor="location">{t('location')}</Label>
                                 <div className="relative mt-1">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <MapPin className="h-5 w-5 text-gray-400" />
@@ -140,12 +143,12 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             <div className="p-2 bg-purple-50 text-purple-600 rounded-lg">
                                 <Briefcase className="h-5 w-5" />
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900">Professional Profile</h3>
+                            <h3 className="text-lg font-bold text-slate-900">{t('professionalProfile')}</h3>
                         </div>
 
                         <div className="space-y-6">
                             <div className="space-y-2">
-                                <Label htmlFor="targetRole">Target Role</Label>
+                                <Label htmlFor="targetRole">{t('targetRole')}</Label>
                                 <div className="relative mt-1">
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <Briefcase className="h-5 w-5 text-gray-400" />
@@ -158,11 +161,11 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                                         placeholder="e.g. Senior Frontend Developer"
                                     />
                                 </div>
-                                <p className="text-xs text-slate-500">Also used as your default job search title.</p>
+                                <p className="text-xs text-slate-500">{t('targetRoleHelper')}</p>
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="skills" className="text-slate-700 font-medium">Top Skills</Label>
+                                <Label htmlFor="skills" className="text-slate-700 font-medium">{t('topSkills')}</Label>
                                 <textarea
                                     id="skills"
                                     name="skills"
@@ -171,7 +174,7 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                                     className="w-full rounded-lg border border-slate-200 p-3 text-sm focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 focus:outline-none transition-all resize-none"
                                     placeholder="e.g. React, TypeScript, Node.js, AWS..."
                                 />
-                                <p className="text-xs text-slate-500">Separate skills with commas. These help prioritize analysis results.</p>
+                                <p className="text-xs text-slate-500">{t('topSkillsHelper')}</p>
                             </div>
                         </div>
                     </div>
@@ -195,12 +198,12 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
                             {isLoading ? (
                                 <>
                                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    Saving Changes...
+                                    {tCommon('loading')}
                                 </>
                             ) : (
                                 <>
                                     <Save className="mr-2 h-5 w-5" />
-                                    Save Profile Changes
+                                    {t('saveChanges')}
                                 </>
                             )}
                         </Button>
