@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { AnalysisReportPDF } from '@/components/pdf/AnalysisReportPDF';
 import { TailoredCVPDF } from '@/components/pdf/TailoredCVPDF';
 import PDFDownloadWrapper from '@/components/pdf/PDFDownloadWrapper';
+import { useTranslations } from '@/lib/i18n-client';
 
 // Define types for our data
 interface Skill {
@@ -43,6 +44,7 @@ interface AnalysisData {
 }
 
 export default function AnalysisPage() {
+    const t = useTranslations('analysis');
     const params = useParams();
     const [data, setData] = useState<AnalysisData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -72,8 +74,8 @@ export default function AnalysisPage() {
         if (!data) return;
 
         const shareData = {
-            title: `Talio Analysis: ${data.title}`,
-            text: `Check out my job analysis for ${data.title}. Match Score: ${data.match_score}%`,
+            title: `${t('shareTitle')}: ${data.title}`,
+            text: t('shareText', { title: data.title, score: data.match_score }),
             url: window.location.href,
         };
 
@@ -89,10 +91,10 @@ export default function AnalysisPage() {
             const btn = document.getElementById('share-btn');
             if (btn) {
                 const originalText = btn.innerText;
-                btn.innerText = 'Copied!';
+                btn.innerText = t('copied');
                 setTimeout(() => btn.innerText = originalText, 2000);
             } else {
-                alert('Link copied to clipboard!');
+                alert(t('clipboard'));
             }
         }
     };
@@ -100,7 +102,7 @@ export default function AnalysisPage() {
     if (loading) return (
         <div className="min-h-[60vh] flex flex-col items-center justify-center">
             <div className="h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-teal-600"></div>
-            <p className="mt-4 text-slate-500 font-medium">Loading your personalized analysis...</p>
+            <p className="mt-4 text-slate-500 font-medium">{t('loading')}</p>
         </div>
     );
 
@@ -109,10 +111,10 @@ export default function AnalysisPage() {
             <div className="rounded-full bg-red-100 p-4 mb-4">
                 <AlertTriangle className="h-8 w-8 text-red-600" />
             </div>
-            <h2 className="text-xl font-bold text-slate-900">Analysis Not Found</h2>
-            <p className="mt-2 text-slate-500">We couldn't find the analysis you're looking for.</p>
+            <h2 className="text-xl font-bold text-slate-900">{t('notFound')}</h2>
+            <p className="mt-2 text-slate-500">{t('notFoundDesc')}</p>
             <Link href="/dashboard" className="mt-6 inline-flex items-center text-teal-600 hover:underline">
-                Return to Dashboard <ArrowRight className="ml-1 h-4 w-4" />
+                {t('return')} <ArrowRight className="ml-1 h-4 w-4" />
             </Link>
         </div>
     );
@@ -134,14 +136,14 @@ export default function AnalysisPage() {
                     <div>
                         <div className="flex items-center gap-2 text-sm font-medium text-teal-600 mb-2">
                             <span className="px-2.5 py-0.5 rounded-full bg-teal-50 border border-teal-100">
-                                {data.category || 'General'}
+                                {data.category || t('general')}
                             </span>
                             <span className="text-slate-400">•</span>
-                            <span className="text-slate-500">Verified Analysis</span>
+                            <span className="text-slate-500">{t('verified')}</span>
                         </div>
                         <h1 className="text-3xl font-bold text-slate-900 mb-2">{data.title}</h1>
                         <p className="text-slate-500 max-w-2xl">
-                            AI-powered breakdown of requirements, gaps, and personalization strategy.
+                            {t('subtitle')}
                         </p>
                     </div>
 
@@ -166,7 +168,7 @@ export default function AnalysisPage() {
                                     <span className="text-lg font-bold text-slate-900">{data.match_score}%</span>
                                 </div>
                             </div>
-                            <span className="text-xs font-medium text-slate-500 mt-1">Match Score</span>
+                            <span className="text-xs font-medium text-slate-500 mt-1">{t('matchScore')}</span>
                         </div>
                     </div>
                 </div>
@@ -178,7 +180,7 @@ export default function AnalysisPage() {
                         fileName={`Analysis-${data.id.slice(0, 8)}.pdf`}
                         className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
-                        <Download className="mr-2 h-4 w-4" /> Save as PDF
+                        <Download className="mr-2 h-4 w-4" /> {t('saveAsPDF')}
                     </PDFDownloadWrapper>
 
                     <button
@@ -186,7 +188,7 @@ export default function AnalysisPage() {
                         onClick={handleShareReport}
                         className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
-                        <Share2 className="mr-2 h-4 w-4" /> Share Report
+                        <Share2 className="mr-2 h-4 w-4" /> {t('shareReport')}
                     </button>
                     <div className="flex-1" />
 
@@ -199,7 +201,7 @@ export default function AnalysisPage() {
                         fileName={`Tailored-CV-${data.id.slice(0, 8)}.pdf`}
                         className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-6 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm transition-all hover:shadow-md"
                     >
-                        <FileText className="mr-2 h-4 w-4" /> Generate Tailored CV
+                        <FileText className="mr-2 h-4 w-4" /> {t('generateCV')}
                     </PDFDownloadWrapper>
                 </div>
             </div>
@@ -212,10 +214,10 @@ export default function AnalysisPage() {
                         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                             <h3 className="font-bold text-slate-900 flex items-center gap-2">
                                 <CheckCircle className="h-5 w-5 text-teal-600" />
-                                Required Skills Breakdown
+                                {t('skills.title')}
                             </h3>
                             <span className="text-xs font-medium bg-white px-2 py-1 rounded border border-slate-200 text-slate-500">
-                                {data.skills.length} detected
+                                {data.skills.length} {t('skills.detected')}
                             </span>
                         </div>
                         <div className="divide-y divide-slate-100">
@@ -226,11 +228,11 @@ export default function AnalysisPage() {
                                             <h4 className="font-semibold text-slate-900">{skill.name}</h4>
                                             {skill.must && (
                                                 <span className="px-2 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-bold uppercase tracking-wider border border-teal-100">
-                                                    Required
+                                                    {t('skills.required')}
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="flex gap-0.5" title={`Priority: ${skill.priority}/5`}>
+                                        <div className="flex gap-0.5" title={`${t('skills.priority')}: ${skill.priority}/5`}>
                                             {[...Array(5)].map((_, j) => (
                                                 <div key={j} className={`h-1.5 w-3 rounded-full ${j < skill.priority ? 'bg-teal-500' : 'bg-slate-200'}`} />
                                             ))}
@@ -246,7 +248,7 @@ export default function AnalysisPage() {
                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                         <h3 className="font-bold text-slate-900 flex items-center gap-2 mb-6">
                             <BookOpen className="h-5 w-5 text-indigo-600" />
-                            3-Day Learning Sprint
+                            {t('roadmap.title')}
                         </h3>
 
                         <div className="relative pl-4 space-y-8 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
@@ -262,7 +264,7 @@ export default function AnalysisPage() {
                                         {tasks.map((task, j) => (
                                             <div key={j} className="flex gap-3 text-sm">
                                                 <div className="flex-shrink-0 w-12 pt-0.5">
-                                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Day {task.day}</span>
+                                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t('roadmap.day')} {task.day}</span>
                                                 </div>
                                                 <p className="text-slate-700">{task.task}</p>
                                             </div>
@@ -281,7 +283,7 @@ export default function AnalysisPage() {
                         <div className="px-5 py-4 bg-red-50/50 border-b border-red-100">
                             <h3 className="font-bold text-red-900 flex items-center gap-2">
                                 <AlertTriangle className="h-5 w-5 text-red-600" />
-                                Skill Gaps
+                                {t('gaps.title')}
                             </h3>
                         </div>
                         <div className="p-5 space-y-4">
@@ -291,13 +293,13 @@ export default function AnalysisPage() {
                                     <p className="text-xs text-slate-500 mb-3">{gap.reason}</p>
                                     <div className="flex items-center gap-1.5 text-xs font-medium text-red-600 bg-red-50 w-fit px-2 py-1 rounded">
                                         <Calendar className="h-3 w-3" />
-                                        Expected: {gap.recommended_days} days
+                                        {t('gaps.expected')}: {gap.recommended_days} {t('gaps.days')}
                                     </div>
                                 </div>
                             ))}
                             {data.gaps.length === 0 && (
                                 <div className="text-center py-4 text-green-600 bg-green-50 rounded-lg text-sm font-medium">
-                                    No major gaps detected! 🎉
+                                    {t('gaps.none')}
                                 </div>
                             )}
                         </div>
@@ -308,12 +310,12 @@ export default function AnalysisPage() {
                         <div className="px-5 py-4 border-b border-slate-700/50">
                             <h3 className="font-bold flex items-center gap-2">
                                 <FileText className="h-5 w-5 text-teal-400" />
-                                Tailored CV Bullets
+                                {t('cv.title')}
                             </h3>
                         </div>
                         <div className="p-5 space-y-4">
                             <p className="text-xs text-slate-400">
-                                Click to copy these enhancements for your resume:
+                                {t('cv.subtitle')}
                             </p>
                             {data.cv_suggestions.map((suggestion, i) => (
                                 <button
@@ -339,7 +341,7 @@ export default function AnalysisPage() {
                                 }}
                                 className="w-full mt-2 py-2 text-xs font-semibold text-center text-teal-400 hover:text-teal-300 border border-teal-500/30 rounded hover:bg-teal-500/10 transition-colors"
                             >
-                                {copiedIndex === 999 ? 'Copied All!' : 'Copy All Suggestions'}
+                                {copiedIndex === 999 ? t('cv.allCopied') : t('cv.copyAll')}
                             </button>
                         </div>
                     </div>

@@ -162,14 +162,43 @@
     },
     "analysis": {
         "title": "Analyseergebnisse",
+        "verified": "Verifizierte Analyse",
+        "subtitle": "KI-gestützte Aufschlüsselung von Anforderungen, Lücken und Personalisierungsstrategie.",
         "matchScore": "Übereinstimmungswert",
-        "skills": "Erforderliche Fähigkeiten",
-        "gaps": "Kompetenzlücken",
-        "roadmap": "Lern-Roadmap",
-        "cvSuggestions": "Lebenslauf-Vorschläge",
+        "shareReport": "Bericht Teilen",
+        "shareTitle": "Talio Analyse",
+        "shareText": "Schauen Sie sich meine Jobanalyse für {title} an. Übereinstimmungswert: {score}%",
+        "copied": "Kopiert!",
+        "clipboard": "Link in die Zwischenablage kopiert!",
+        "loading": "Ihre personalisierte Analyse wird geladen...",
+        "notFound": "Analyse Nicht Gefunden",
+        "notFoundDesc": "Wir konnten die gesuchte Analyse nicht finden.",
+        "return": "Zurück zum Dashboard",
+        "general": "Allgemein",
+        "skills": {
+            "title": "Aufschlüsselung der Erforderlichen Fähigkeiten",
+            "detected": "erkannt",
+            "required": "Erforderlich",
+            "priority": "Priorität"
+        },
+        "roadmap": {
+            "title": "3-Tage-Lernsprint",
+            "day": "Tag"
+        },
+        "gaps": {
+            "title": "Kompetenzlücken",
+            "expected": "Erwartet",
+            "days": "Tage",
+            "none": "Keine größeren Lücken erkannt! 🎉"
+        },
+        "cv": {
+            "title": "Maßgeschneiderte Lebenslauf-Punkte",
+            "subtitle": "Klicken Sie, um diese Verbesserungen für Ihren Lebenslauf zu kopieren:",
+            "copyAll": "Alle Vorschläge Kopieren",
+            "allCopied": "Alles Kopiert!"
+        },
         "generateCV": "Maßgeschneiderten Lebenslauf Generieren",
-        "saveAsPDF": "Als PDF Speichern",
-        "share": "Teilen"
+        "saveAsPDF": "Als PDF Speichern"
     },
     "billing": {
         "title": "Abrechnung und Abonnement",

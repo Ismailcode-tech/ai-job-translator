@@ -162,14 +162,43 @@
     },
     "analysis": {
         "title": "Resultados del Análisis",
+        "verified": "Análisis Verificado",
+        "subtitle": "Desglose de requisitos, brechas y estrategia de personalización impulsada por IA.",
         "matchScore": "Puntuación de Coincidencia",
-        "skills": "Habilidades Requeridas",
-        "gaps": "Brechas de Habilidades",
-        "roadmap": "Hoja de Ruta de Aprendizaje",
-        "cvSuggestions": "Sugerencias de CV",
+        "shareReport": "Compartir Informe",
+        "shareTitle": "Análisis de Talio",
+        "shareText": "Mira mi análisis de trabajo para {title}. Puntuación de Coincidencia: {score}%",
+        "copied": "¡Copiado!",
+        "clipboard": "¡Enlace copiado al portapapeles!",
+        "loading": "Cargando tu análisis personalizado...",
+        "notFound": "Análisis No Encontrado",
+        "notFoundDesc": "No pudimos encontrar el análisis que buscas.",
+        "return": "Volver al Panel",
+        "general": "General",
+        "skills": {
+            "title": "Desglose de Habilidades Requeridas",
+            "detected": "detectadas",
+            "required": "Requerido",
+            "priority": "Prioridad"
+        },
+        "roadmap": {
+            "title": "Sprint de Aprendizaje de 3 Días",
+            "day": "Día"
+        },
+        "gaps": {
+            "title": "Brechas de Habilidades",
+            "expected": "Esperado",
+            "days": "días",
+            "none": "¡No se detectaron brechas importantes! 🎉"
+        },
+        "cv": {
+            "title": "Viñetas de CV Personalizadas",
+            "subtitle": "Haz clic para copiar estas mejoras para tu currículum:",
+            "copyAll": "Copiar Todas las Sugerencias",
+            "allCopied": "¡Todo Copiado!"
+        },
         "generateCV": "Generar CV Personalizado",
-        "saveAsPDF": "Guardar como PDF",
-        "share": "Compartir"
+        "saveAsPDF": "Guardar como PDF"
     },
     "billing": {
         "title": "Facturación y Suscripción",

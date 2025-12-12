@@ -162,14 +162,43 @@
     },
     "analysis": {
         "title": "Analysis Results",
+        "verified": "Verified Analysis",
+        "subtitle": "AI-powered breakdown of requirements, gaps, and personalization strategy.",
         "matchScore": "Match Score",
-        "skills": "Required Skills",
-        "gaps": "Skill Gaps",
-        "roadmap": "Learning Roadmap",
-        "cvSuggestions": "CV Suggestions",
+        "shareReport": "Share Report",
+        "shareTitle": "Talio Analysis",
+        "shareText": "Check out my job analysis for {title}. Match Score: {score}%",
+        "copied": "Copied!",
+        "clipboard": "Link copied to clipboard!",
+        "loading": "Loading your personalized analysis...",
+        "notFound": "Analysis Not Found",
+        "notFoundDesc": "We couldn't find the analysis you're looking for.",
+        "return": "Return to Dashboard",
+        "general": "General",
+        "skills": {
+            "title": "Required Skills Breakdown",
+            "detected": "detected",
+            "required": "Required",
+            "priority": "Priority"
+        },
+        "roadmap": {
+            "title": "3-Day Learning Sprint",
+            "day": "Day"
+        },
+        "gaps": {
+            "title": "Skill Gaps",
+            "expected": "Expected",
+            "days": "days",
+            "none": "No major gaps detected! 🎉"
+        },
+        "cv": {
+            "title": "Tailored CV Bullets",
+            "subtitle": "Click to copy these enhancements for your resume:",
+            "copyAll": "Copy All Suggestions",
+            "allCopied": "Copied All!"
+        },
         "generateCV": "Generate Tailored CV",
-        "saveAsPDF": "Save as PDF",
-        "share": "Share"
+        "saveAsPDF": "Save as PDF"
     },
     "billing": {
         "title": "Billing & Subscription",

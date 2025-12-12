@@ -162,14 +162,43 @@
     },
     "analysis": {
         "title": "Résultats de l'Analyse",
+        "verified": "Analyse Vérifiée",
+        "subtitle": "Analyse détaillée des exigences, des lacunes et stratégie de personnalisation alimentée par l'IA.",
         "matchScore": "Score de Correspondance",
-        "skills": "Compétences Requises",
-        "gaps": "Lacunes en Compétences",
-        "roadmap": "Feuille de Route d'Apprentissage",
-        "cvSuggestions": "Suggestions de CV",
+        "shareReport": "Partager le Rapport",
+        "shareTitle": "Analyse Talio",
+        "shareText": "Découvrez mon analyse d'emploi pour {title}. Score de Correspondance: {score}%",
+        "copied": "Copié !",
+        "clipboard": "Lien copié dans le presse-papiers !",
+        "loading": "Chargement de votre analyse personnalisée...",
+        "notFound": "Analyse Non Trouvée",
+        "notFoundDesc": "Nous n'avons pas pu trouver l'analyse que vous recherchez.",
+        "return": "Retour au Tableau de Bord",
+        "general": "Général",
+        "skills": {
+            "title": "Répartition des Compétences Requises",
+            "detected": "détectées",
+            "required": "Requis",
+            "priority": "Priorité"
+        },
+        "roadmap": {
+            "title": "Sprint d'Apprentissage de 3 Jours",
+            "day": "Jour"
+        },
+        "gaps": {
+            "title": "Lacunes en Compétences",
+            "expected": "Prévu",
+            "days": "jours",
+            "none": "Aucune lacune majeure détectée ! 🎉"
+        },
+        "cv": {
+            "title": "Points Clés du CV Personnalisé",
+            "subtitle": "Cliquez pour copier ces améliorations pour votre CV :",
+            "copyAll": "Copier Toutes les Suggestions",
+            "allCopied": "Tout est Copié !"
+        },
         "generateCV": "Générer un CV Personnalisé",
-        "saveAsPDF": "Enregistrer en PDF",
-        "share": "Partager"
+        "saveAsPDF": "Enregistrer en PDF"
     },
     "billing": {
         "title": "Facturation et Abonnement",
