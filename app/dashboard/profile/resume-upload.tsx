@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Upload, FileText, Trash2, Download, Loader2, X, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { uploadResume, deleteResume, getResumeUrl } from './upload-actions';
+import { useTranslations } from 'next-intl';
 
 interface ResumeUploadProps {
     initialResumeUrl?: string | null;
 }
 
 export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
+    const t = useTranslations('profile.resumeSection');
     const router = useRouter();
     const [isUploading, setIsUploading] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -21,12 +23,12 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
     async function handleUpload(file: File) {
         // Client-side validation
         if (file.size > 5 * 1024 * 1024) {
-            setMessage({ type: 'error', text: 'File size must be less than 5MB' });
+            setMessage({ type: 'error', text: t('fileSizeError') });
             return;
         }
 
         if (file.type !== 'application/pdf') {
-            setMessage({ type: 'error', text: 'Only PDF files are allowed' });
+            setMessage({ type: 'error', text: t('fileTypeError') });
             return;
         }
 
@@ -58,7 +60,7 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
             console.error('[Client] Upload failed with exception:', error);
             setMessage({
                 type: 'error',
-                text: error.message || 'An unexpected error occurred. Please try again.'
+                text: error.message || t('uploadError', { default: 'An unexpected error occurred.' })
             });
         } finally {
             console.log('[Client] Upload process complete, resetting loading state');
@@ -67,7 +69,7 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
     }
 
     async function handleDelete() {
-        if (!confirm('Are you sure you want to delete your resume?')) {
+        if (!confirm(t('deleteConfirm'))) {
             return;
         }
 
@@ -118,7 +120,7 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
         if (file && file.type === 'application/pdf') {
             handleUpload(file);
         } else {
-            setMessage({ type: 'error', text: 'Please drop a PDF file' });
+            setMessage({ type: 'error', text: t('dropError') });
         }
     }
 
@@ -130,8 +132,8 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                     <FileText className="h-5 w-5" />
                 </div>
                 <div>
-                    <h3 className="text-lg font-bold text-slate-900">Resume / CV</h3>
-                    <p className="text-sm text-slate-500">Upload your resume to enable tailored CV generation.</p>
+                    <h3 className="text-lg font-bold text-slate-900">{t('title')}</h3>
+                    <p className="text-sm text-slate-500">{t('subtitle')}</p>
                 </div>
             </div>
 
@@ -152,8 +154,8 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                             <FileText className="h-6 w-6" />
                         </div>
                         <div className="flex-1 z-10">
-                            <p className="font-bold text-slate-900">Current Resume</p>
-                            <p className="text-sm text-slate-500">resume.pdf • Ready for analysis</p>
+                            <p className="font-bold text-slate-900">{t('current')}</p>
+                            <p className="text-sm text-slate-500">resume.pdf • {t('ready')}</p>
                         </div>
                         <div className="z-10">
                             <CheckCircle className="h-6 w-6 text-teal-500" />
@@ -167,7 +169,7 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                             className="flex-1 h-11 border-slate-200 hover:bg-slate-50 hover:text-slate-900"
                         >
                             <Download className="mr-2 h-4 w-4" />
-                            Download
+                            {t('download')}
                         </Button>
                         <Button
                             onClick={handleDelete}
@@ -178,12 +180,12 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                             {isDeleting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Deleting...
+                                    {t('deleting')}
                                 </>
                             ) : (
                                 <>
                                     <Trash2 className="mr-2 h-4 w-4" />
-                                    Remove File
+                                    {t('remove')}
                                 </>
                             )}
                         </Button>
@@ -216,21 +218,21 @@ export default function ResumeUpload({ initialResumeUrl }: ResumeUploadProps) {
                             </div>
 
                             <h4 className="text-lg font-bold text-slate-900 mb-2">
-                                {isDragging ? 'Drop it right here!' : 'Upload your Resume'}
+                                {isDragging ? t('dropTitle') : t('uploadTitle')}
                             </h4>
                             <p className="text-slate-500 mb-6 max-w-sm mx-auto">
-                                <span className="font-semibold text-teal-600 cursor-pointer hover:underline" onClick={() => document.getElementById('resume-upload')?.click()}>Click to browse</span> or drag and drop your PDF file here.
+                                <span className="font-semibold text-teal-600 cursor-pointer hover:underline" onClick={() => document.getElementById('resume-upload')?.click()}>{t('browse')}</span> {t('dragText')}.
                             </p>
 
                             <p className="text-xs text-slate-400 font-medium">
-                                PDF format only • Max 5MB
+                                {t('format')}
                             </p>
                         </div>
 
                         {isUploading && (
                             <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center z-20 backdrop-blur-sm rounded-xl">
                                 <Loader2 className="h-10 w-10 text-teal-600 animate-spin mb-3" />
-                                <p className="font-bold text-slate-900">Uploading your resume...</p>
+                                <p className="font-bold text-slate-900">{t('uploading')}</p>
                             </div>
                         )}
                     </div>

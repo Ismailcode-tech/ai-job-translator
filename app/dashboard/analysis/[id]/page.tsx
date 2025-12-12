@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { AnalysisReportPDF } from '@/components/pdf/AnalysisReportPDF';
 import { TailoredCVPDF } from '@/components/pdf/TailoredCVPDF';
 import PDFDownloadWrapper from '@/components/pdf/PDFDownloadWrapper';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 // Define types for our data
 interface Skill {
@@ -45,6 +45,7 @@ interface AnalysisData {
 
 export default function AnalysisPage() {
     const t = useTranslations('analysis');
+    const tPdf = useTranslations('pdf');
     const params = useParams();
     const [data, setData] = useState<AnalysisData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -176,7 +177,22 @@ export default function AnalysisPage() {
                 {/* Actions */}
                 <div className="relative z-10 mt-8 flex flex-wrap gap-3 pt-6 border-t border-slate-100">
                     <PDFDownloadWrapper
-                        document={<AnalysisReportPDF data={data} />}
+                        document={<AnalysisReportPDF data={{
+                            ...data,
+                            translations: {
+                                title: tPdf('report.title'),
+                                subtitle: tPdf('report.subtitle'),
+                                matchScore: tPdf('report.matchScore'),
+                                matchScoreDesc: tPdf('report.matchScoreDesc'),
+                                requiredSkills: tPdf('report.requiredSkills'),
+                                mustHave: tPdf('report.mustHave'),
+                                skillGaps: tPdf('report.skillGaps'),
+                                estTime: tPdf('report.estTime'),
+                                days: tPdf('report.days'),
+                                noGaps: tPdf('report.noGaps'),
+                                roadmap: tPdf('report.roadmap')
+                            }
+                        }} />}
                         fileName={`Analysis-${data.id.slice(0, 8)}.pdf`}
                         className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
@@ -196,7 +212,20 @@ export default function AnalysisPage() {
                         document={<TailoredCVPDF data={{
                             jobTitle: data.title,
                             cv_suggestions: data.cv_suggestions,
-                            skills: data.skills
+                            skills: data.skills,
+                            translations: {
+                                namePlaceholder: tPdf('cv.namePlaceholder'),
+                                professionalProfile: tPdf('cv.professionalProfile'),
+                                profileTemplate: tPdf('cv.profileTemplate'),
+                                coreCompetencies: tPdf('cv.coreCompetencies'),
+                                relevantExperience: tPdf('cv.relevantExperience'),
+                                aiDisclaimer: tPdf('cv.aiDisclaimer'),
+                                placeholderRole: tPdf('cv.placeholderRole'),
+                                placeholderDesc: tPdf('cv.placeholderDesc'),
+                                education: tPdf('cv.education'),
+                                degreePlaceholder: tPdf('cv.degreePlaceholder'),
+                                universityPlaceholder: tPdf('cv.universityPlaceholder')
+                            }
                         }} />}
                         fileName={`Tailored-CV-${data.id.slice(0, 8)}.pdf`}
                         className="inline-flex items-center justify-center rounded-lg bg-teal-600 px-6 py-2 text-sm font-medium text-white hover:bg-teal-700 shadow-sm transition-all hover:shadow-md"

@@ -19,6 +19,26 @@
             "cta": "Get Started Free",
             "demo": "See Demo"
         },
+        "howItWorks": {
+            "title": "From Job Ad to Interview in",
+            "stepsSpan": "4 Steps",
+            "step1": {
+                "title": "Parse Your Resume",
+                "description": "Upload your PDF CV. Our AI instantly extracts your skills and experience to build your profile."
+            },
+            "step2": {
+                "title": "Analyze Job Fit",
+                "description": "Paste any job description. We compare it against your profile to calculate a Match Score."
+            },
+            "step3": {
+                "title": "Get Strategic Insights",
+                "description": "Identify missing keywords and follow a personalized 3-Day Learning Roadmap."
+            },
+            "step4": {
+                "title": "Download Tailored Docs",
+                "description": "Generate an ATS-optimized CV and a comprehensive Job Analysis Report instantly."
+            }
+        },
         "features": {
             "title": "How It Works",
             "analysis": {
@@ -137,8 +157,37 @@
         "topSkills": "Top Skills",
         "topSkillsHelper": "Separate skills with commas. These help prioritize analysis results.",
         "uploadResume": "Upload Resume",
-        "deleteResume": "Delete Resume",
-        "saveChanges": "Save Changes"
+        "saveChanges": "Save Changes",
+        "headerTitle": "Profile Settings",
+        "headerDesc": "Manage your personal details, professional skills, and resume to get the most accurate AI job analysis.",
+        "resumeSection": {
+            "title": "Resume / CV",
+            "subtitle": "Upload your resume to enable tailored CV generation.",
+            "current": "Current Resume",
+            "ready": "Ready for analysis",
+            "download": "Download",
+            "remove": "Remove File",
+            "deleting": "Deleting...",
+            "dropTitle": "Drop it right here!",
+            "uploadTitle": "Upload your Resume",
+            "dragText": "drag and drop your PDF file here",
+            "browse": "Click to browse",
+            "format": "PDF format only • Max 5MB",
+            "uploading": "Uploading your resume...",
+            "deleteConfirm": "Are you sure you want to delete your resume?",
+            "fileSizeError": "File size must be less than 5MB",
+            "fileTypeError": "Only PDF files are allowed",
+            "dropError": "Please drop a PDF file"
+        }
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "analyses": "My Analyses",
+        "profile": "Profile",
+        "billing": "Billing",
+        "settings": "Settings",
+        "admin": "Admin",
+        "signOut": "Sign Out"
     },
     "auth": {
         "login": {
@@ -202,10 +251,108 @@
     },
     "billing": {
         "title": "Billing & Subscription",
-        "subtitle": "Manage your plan and payment details",
+        "subtitle": "Manage your plan and billing details",
         "currentPlan": "Current Plan",
-        "perMonth": "/ month",
-        "upgrade": "Upgrade",
-        "features": "Features"
+        "upgradeTo": "Upgrade to",
+        "month": "/ month",
+        "popular": "POPULAR",
+        "processing": "Processing...",
+        "upgradeBtn": "Upgrade to {plan}",
+        "paymentMethod": "Payment Method",
+        "paymentDesc": "Payment details will appear here after you subscribe to a plan.",
+        "plans": {
+            "free": {
+                "name": "Free",
+                "features": {
+                    "analyses": "3 Analyses / month",
+                    "cv": "Basic CV suggestions",
+                    "support": "Standard support"
+                }
+            },
+            "starter": {
+                "name": "Starter",
+                "features": {
+                    "analyses": "15 Analyses / month",
+                    "roadmap": "Full Learning Roadmap",
+                    "pdf": "PDF Downloads",
+                    "support": "Priority Support"
+                }
+            },
+            "pro": {
+                "name": "Pro",
+                "features": {
+                    "analyses": "Unlimited Analyses",
+                    "bulk": "Bulk uploads",
+                    "csv": "CSV Export",
+                    "api": "API Access"
+                }
+            }
+        }
+    },
+    "pdf": {
+        "report": {
+            "title": "Job Analysis Report",
+            "subtitle": "General",
+            "matchScore": "Match Score",
+            "matchScoreDesc": "Based on AI analysis of requirements vs profile.",
+            "requiredSkills": "Required Skills Breakdown",
+            "mustHave": "Must Have",
+            "skillGaps": "Skill Gaps",
+            "estTime": "Est. time to learn",
+            "days": "days",
+            "noGaps": "No major skill gaps detected.",
+            "roadmap": "3-Day Learning Sprint"
+        },
+        "cv": {
+            "namePlaceholder": "YOUR NAME",
+            "professionalProfile": "Professional Profile",
+            "profileTemplate": "Results-oriented professional aiming for the {jobTitle} position. Skills in {skills}. Passionate about delivering high-quality solutions.",
+            "coreCompetencies": "Core Competencies",
+            "relevantExperience": "Relevant Experience (Tailored)",
+            "aiDisclaimer": "* These points are AI-generated based on the job requirements. Copy these into your experience section.",
+            "placeholderRole": "Previous Role | Company Name",
+            "placeholderDesc": "Led development of core features using React and TypeScript.",
+            "education": "Education",
+            "degreePlaceholder": "Degree Name",
+            "universityPlaceholder": "University Name"
+        }
+    },
+    "verifyEmail": {
+        "invalidLink": "Invalid link. Please sign up again.",
+        "goToSignup": "Go to Signup",
+        "title": "Verify your email",
+        "sentTo": "We sent a verification code to",
+        "labelCode": "Verification Code",
+        "buttonVerify": "Verify Email",
+        "verifying": "Verifying...",
+        "didNotReceive": "Didn't receive the code?",
+        "resend": "Resend code",
+        "sending": "Sending...",
+        "success": "Email verified successfully! Redirecting...",
+        "sent": "Verification code sent! Please check your email."
+    },
+    "analyses": {
+        "title": "My Analyses",
+        "subtitle": "History of all your job scans",
+        "newAnalysis": "New Analysis",
+        "searchPlaceholder": "Search analyses...",
+        "filterAll": "All Status",
+        "filterComplete": "Complete",
+        "filterProcessing": "Processing",
+        "emptyTitle": "No analyses found",
+        "emptyDesc": "Try adjusting your search or create a new analysis.",
+        "createFirst": "Create Your First Analysis",
+        "table": {
+            "jobTitle": "Job Title",
+            "date": "Date",
+            "matchScore": "Match Score",
+            "status": "Status",
+            "action": "Action",
+            "view": "View"
+        },
+        "status": {
+            "complete": "Complete",
+            "processing": "Processing"
+        }
     }
 }

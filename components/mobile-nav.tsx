@@ -6,8 +6,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
 import Link from "next/link";
 import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Shield } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export function MobileNav({ userEmail }: { userEmail: string }) {
+    const t = useTranslations('nav');
     const [open, setOpen] = useState(false);
 
     return (
@@ -29,29 +31,29 @@ export function MobileNav({ userEmail }: { userEmail: string }) {
                 <nav className="flex-1 p-4 space-y-1">
                     <Link href="/dashboard" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                         <LayoutDashboard className="w-5 h-5 mr-3" />
-                        Dashboard
+                        {t('dashboard')}
                     </Link>
                     <Link href="/dashboard/analyses" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                         <FileText className="w-5 h-5 mr-3" />
-                        My Analyses
+                        {t('analyses')}
                     </Link>
                     <Link href="/dashboard/profile" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                         <User className="w-5 h-5 mr-3" />
-                        Profile
+                        {t('profile')}
                     </Link>
                     <Link href="/dashboard/billing" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                         <CreditCard className="w-5 h-5 mr-3" />
-                        Billing
+                        {t('billing')}
                     </Link>
                     <Link href="/dashboard/settings" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted rounded-lg transition-colors">
                         <Settings className="w-5 h-5 mr-3" />
-                        Settings
+                        {t('settings')}
                     </Link>
 
                     {['ismailhadjlarbi71@gmail.com', 'ismailhadjlarbi2007@gmail.com'].includes(userEmail) && (
                         <Link href="/admin" onClick={() => setOpen(false)} className="flex items-center px-4 py-3 text-primary hover:bg-primary/10 rounded-lg transition-colors font-medium">
                             <Shield className="w-5 h-5 mr-3" />
-                            Admin
+                            {t('admin')}
                         </Link>
                     )}
                 </nav>

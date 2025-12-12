@@ -19,6 +19,26 @@
             "cta": "Commencer Gratuitement",
             "demo": "Voir la Démo"
         },
+        "howItWorks": {
+            "title": "De l'annonce à l'entretien en",
+            "stepsSpan": "4 Étapes",
+            "step1": {
+                "title": "Analysez votre CV",
+                "description": "Téléchargez votre PDF. Notre IA extrait vos compétences pour créer votre profil instantanément."
+            },
+            "step2": {
+                "title": "Analysez l'Offre",
+                "description": "Collez une annonce. Nous la comparons à votre profil pour calculer un Score de Correspondance."
+            },
+            "step3": {
+                "title": "Obtenez des Insights",
+                "description": "Identifiez les mots-clés manquants et suivez un Plan d'Apprentissage personnalisé de 3 jours."
+            },
+            "step4": {
+                "title": "Téléchargez vos Docs",
+                "description": "Générez un CV optimisé ATS et un Rapport d'Analyse complet en un clic."
+            }
+        },
         "features": {
             "title": "Comment Ça Marche",
             "analysis": {
@@ -137,8 +157,37 @@
         "topSkills": "Compétences Principales",
         "topSkillsHelper": "Séparez les compétences par des virgules. Celles-ci aident à prioriser les résultats d'analyse.",
         "uploadResume": "Télécharger le CV",
-        "deleteResume": "Supprimer le CV",
-        "saveChanges": "Enregistrer les Modifications"
+        "saveChanges": "Enregistrer les Modifications",
+        "headerTitle": "Paramètres du Profil",
+        "headerDesc": "Gérez vos données personnelles, compétences professionnelles et CV pour obtenir l'analyse d'emploi par IA la plus précise.",
+        "resumeSection": {
+            "title": "CV",
+            "subtitle": "Téléchargez votre CV pour permettre la génération de CV personnalisés.",
+            "current": "CV Actuel",
+            "ready": "Prêt pour l'analyse",
+            "download": "Télécharger",
+            "remove": "Supprimer le Fichier",
+            "deleting": "Suppression...",
+            "dropTitle": "Déposez-le ici !",
+            "uploadTitle": "Téléchargez votre CV",
+            "dragText": "glissez et déposez votre fichier PDF ici",
+            "browse": "Cliquez pour parcourir",
+            "format": "Format PDF uniquement • Max 5 Mo",
+            "uploading": "Téléchargement de votre CV...",
+            "deleteConfirm": "Êtes-vous sûr de vouloir supprimer votre CV ?",
+            "fileSizeError": "La taille du fichier doit être inférieure à 5 Mo",
+            "fileTypeError": "Seuls les fichiers PDF sont autorisés",
+            "dropError": "Veuillez déposer un fichier PDF"
+        }
+    },
+    "nav": {
+        "dashboard": "Tableau de Bord",
+        "analyses": "Mes Analyses",
+        "profile": "Profil",
+        "billing": "Facturation",
+        "settings": "Paramètres",
+        "admin": "Admin",
+        "signOut": "Déconnexion"
     },
     "auth": {
         "login": {
@@ -202,10 +251,108 @@
     },
     "billing": {
         "title": "Facturation et Abonnement",
-        "subtitle": "Gérez votre plan et vos détails de paiement",
-        "currentPlan": "Plan Actuel",
-        "perMonth": "/ mois",
-        "upgrade": "Mettre à Niveau",
-        "features": "Fonctionnalités"
+        "subtitle": "Gérez votre abonnement et vos informations de facturation",
+        "currentPlan": "Forfait Actuel",
+        "upgradeTo": "Passer à",
+        "month": "/ mois",
+        "popular": "POPULAIRE",
+        "processing": "Traitement...",
+        "upgradeBtn": "Passer à {plan}",
+        "paymentMethod": "Moyen de Paiement",
+        "paymentDesc": "Les détails de paiement apparaîtront ici après votre abonnement à un forfait.",
+        "plans": {
+            "free": {
+                "name": "Gratuit",
+                "features": {
+                    "analyses": "3 Analyses / mois",
+                    "cv": "Suggestions de CV de base",
+                    "support": "Support standard"
+                }
+            },
+            "starter": {
+                "name": "Starter",
+                "features": {
+                    "analyses": "15 Analyses / mois",
+                    "roadmap": "Feuille de route complète",
+                    "pdf": "Téléchargements PDF",
+                    "support": "Support Prioritaire"
+                }
+            },
+            "pro": {
+                "name": "Pro",
+                "features": {
+                    "analyses": "Analyses Illimitées",
+                    "bulk": "Téléchargements en masse",
+                    "csv": "Export CSV",
+                    "api": "Accès API"
+                }
+            }
+        }
+    },
+    "pdf": {
+        "report": {
+            "title": "Rapport d'Analyse d'Emploi",
+            "subtitle": "Général",
+            "matchScore": "Score de Correspondance",
+            "matchScoreDesc": "Basé sur l'analyse IA des exigences vs profil.",
+            "requiredSkills": "Répartition des Compétences Requises",
+            "mustHave": "Indispensable",
+            "skillGaps": "Lacunes en Compétences",
+            "estTime": "Temps estimé d'apprentissage",
+            "days": "jours",
+            "noGaps": "Aucune lacune majeure détectée.",
+            "roadmap": "Sprint d'Apprentissage de 3 Jours"
+        },
+        "cv": {
+            "namePlaceholder": "VOTRE NOM",
+            "professionalProfile": "Profil Professionnel",
+            "profileTemplate": "Professionnel axé sur les résultats visant le poste de {jobTitle}. Compétences en {skills}. Passionné par la livraison de solutions de haute qualité.",
+            "coreCompetencies": "Compétences Clés",
+            "relevantExperience": "Expérience Pertinente (Personnalisée)",
+            "aiDisclaimer": "* Ces points sont générés par l'IA en fonction des exigences du poste. Copiez-les dans votre section expérience.",
+            "placeholderRole": "Rôle Précédent | Nom de l'Entreprise",
+            "placeholderDesc": "A dirigé le développement de fonctionnalités principales en utilisant React et TypeScript.",
+            "education": "Éducation",
+            "degreePlaceholder": "Nom du Diplôme",
+            "universityPlaceholder": "Nom de l'Université"
+        }
+    },
+    "verifyEmail": {
+        "invalidLink": "Lien invalide. Veuillez vous inscrire à nouveau.",
+        "goToSignup": "Aller à l'inscription",
+        "title": "Vérifiez votre e-mail",
+        "sentTo": "Nous avons envoyé un code de vérification à",
+        "labelCode": "Code de Vérification",
+        "buttonVerify": "Vérifier l'email",
+        "verifying": "Vérification...",
+        "didNotReceive": "Vous n'avez pas reçu le code ?",
+        "resend": "Renvoyer le code",
+        "sending": "Envoi...",
+        "success": "Email vérifié avec succès ! Redirection...",
+        "sent": "Code de vérification envoyé ! Veuillez vérifier votre email."
+    },
+    "analyses": {
+        "title": "Mes Analyses",
+        "subtitle": "Historique de tous vos scans d'emploi",
+        "newAnalysis": "Nouvelle Analyse",
+        "searchPlaceholder": "Rechercher des analyses...",
+        "filterAll": "Tous les Statuts",
+        "filterComplete": "Terminé",
+        "filterProcessing": "En cours",
+        "emptyTitle": "Aucune analyse trouvée",
+        "emptyDesc": "Essayez d'ajuster votre recherche ou créez une nouvelle analyse.",
+        "createFirst": "Créez Votre Première Analyse",
+        "table": {
+            "jobTitle": "Titre du Poste",
+            "date": "Date",
+            "matchScore": "Score",
+            "status": "Statut",
+            "action": "Action",
+            "view": "Voir"
+        },
+        "status": {
+            "complete": "Terminé",
+            "processing": "En cours"
+        }
     }
 }

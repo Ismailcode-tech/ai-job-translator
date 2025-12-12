@@ -92,6 +92,7 @@ interface AnalysisData {
     gaps: any[];
     roadmap: Record<string, any[]>;
     category?: string;
+    translations: any;
 }
 
 export const AnalysisReportPDF = ({ data }: { data: AnalysisData }) => (
@@ -101,24 +102,24 @@ export const AnalysisReportPDF = ({ data }: { data: AnalysisData }) => (
             {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.title}>{data.title}</Text>
-                <Text style={styles.subtitle}>Job Analysis Report • {data.category || 'General'}</Text>
+                <Text style={styles.subtitle}>{data.translations.title} • {data.category || data.translations.subtitle}</Text>
             </View>
 
             {/* Match Score */}
             <View style={styles.section}>
-                <Text>Match Score</Text>
+                <Text>{data.translations.matchScore}</Text>
                 <Text style={styles.score}>{data.match_score}%</Text>
-                <Text style={{ fontSize: 9, color: '#94a3b8' }}>Based on AI analysis of requirements vs profile.</Text>
+                <Text style={{ fontSize: 9, color: '#94a3b8' }}>{data.translations.matchScoreDesc}</Text>
             </View>
 
             {/* Skills */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Required Skills Breakdown</Text>
+                <Text style={styles.sectionTitle}>{data.translations.requiredSkills}</Text>
                 {data.skills.map((skill, i) => (
                     <View key={i} style={styles.skillRow}>
                         <View style={{ width: '30%' }}>
                             <Text style={{ fontWeight: 'bold' }}>{skill.name}</Text>
-                            {skill.must && <Text style={{ color: '#ef4444', fontSize: 8 }}>Must Have</Text>}
+                            {skill.must && <Text style={{ color: '#ef4444', fontSize: 8 }}>{data.translations.mustHave}</Text>}
                         </View>
                         <Text style={styles.skillDesc}>{skill.explanation}</Text>
                     </View>
@@ -127,20 +128,20 @@ export const AnalysisReportPDF = ({ data }: { data: AnalysisData }) => (
 
             {/* Gaps */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Skill Gaps</Text>
+                <Text style={styles.sectionTitle}>{data.translations.skillGaps}</Text>
                 {data.gaps.map((gap, i) => (
                     <View key={i} style={{ marginBottom: 6 }}>
                         <Text style={{ fontWeight: 'bold', color: '#b91c1c' }}>{gap.skill}</Text>
                         <Text style={{ fontSize: 9 }}>{gap.reason}</Text>
-                        <Text style={{ fontSize: 8, color: '#64748b' }}>Est. time to learn: {gap.recommended_days} days</Text>
+                        <Text style={{ fontSize: 8, color: '#64748b' }}>{data.translations.estTime}: {gap.recommended_days} {data.translations.days}</Text>
                     </View>
                 ))}
-                {data.gaps.length === 0 && <Text style={{ color: '#16a34a' }}>No major skill gaps detected.</Text>}
+                {data.gaps.length === 0 && <Text style={{ color: '#16a34a' }}>{data.translations.noGaps}</Text>}
             </View>
 
             {/* Roadmap */}
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>3-Day Learning Sprint</Text>
+                <Text style={styles.sectionTitle}>{data.translations.roadmap}</Text>
                 {Object.entries(data.roadmap).map(([topic, tasks], i) => (
                     <View key={i} style={{ marginBottom: 10 }}>
                         <Text style={{ fontWeight: 'bold', marginBottom: 2 }}>{topic}</Text>

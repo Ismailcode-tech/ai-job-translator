@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Upload, ArrowRight, Clock, CheckCircle, AlertCircle, Sparkles, FileText } from 'lucide-react';
 import { getDashboardData } from './actions';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 interface DashboardData {
     user: {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FileText, Clock, ArrowRight, Search } from 'lucide-react';
 import { getAnalyses } from '../actions';
+import { useTranslations } from 'next-intl';
 
 interface Job {
     id: string;
@@ -15,6 +16,7 @@ interface Job {
 }
 
 export default function AnalysesPage() {
+    const t = useTranslations('analyses');
     const [analyses, setAnalyses] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('All Status');
@@ -51,11 +53,11 @@ export default function AnalysesPage() {
         <div className="space-y-8">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900">My Analyses</h1>
-                    <p className="text-slate-600">History of all your job scans</p>
+                    <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
+                    <p className="text-slate-600">{t('subtitle')}</p>
                 </div>
                 <Link href="/dashboard" className="rounded-lg bg-teal-600 px-4 py-2 text-sm font-medium text-white hover:bg-teal-700 transition-colors">
-                    New Analysis
+                    {t('newAnalysis')}
                 </Link>
             </div>
 
@@ -65,7 +67,7 @@ export default function AnalysesPage() {
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                     <input
                         type="text"
-                        placeholder="Search analyses..."
+                        placeholder={t('searchPlaceholder')}
                         className="w-full rounded-lg border border-slate-200 pl-10 pr-4 py-2 text-sm focus:border-teal-500 focus:outline-none"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -76,9 +78,9 @@ export default function AnalysesPage() {
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}
                 >
-                    <option>All Status</option>
-                    <option>Complete</option>
-                    <option>Processing</option>
+                    <option value="All Status">{t('filterAll')}</option>
+                    <option value="Complete">{t('filterComplete')}</option>
+                    <option value="Processing">{t('filterProcessing')}</option>
                 </select>
             </div>
 
@@ -86,10 +88,10 @@ export default function AnalysesPage() {
             {filteredAnalyses.length === 0 ? (
                 <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-sm">
                     <FileText className="mx-auto h-12 w-12 text-slate-300 mb-4" />
-                    <h3 className="text-lg font-medium text-slate-900 mb-2">No analyses found</h3>
-                    <p className="text-slate-600 mb-6">Try adjusting your search or create a new analysis.</p>
+                    <h3 className="text-lg font-medium text-slate-900 mb-2">{t('emptyTitle')}</h3>
+                    <p className="text-slate-600 mb-6">{t('emptyDesc')}</p>
                     <Link href="/dashboard" className="inline-flex items-center rounded-lg bg-teal-600 px-6 py-3 text-sm font-medium text-white hover:bg-teal-700 transition-colors">
-                        Create Your First Analysis
+                        {t('createFirst')}
                     </Link>
                 </div>
             ) : (
@@ -98,11 +100,11 @@ export default function AnalysesPage() {
                         <table className="w-full text-left text-sm">
                             <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                                 <tr>
-                                    <th className="px-6 py-3">Job Title</th>
-                                    <th className="px-6 py-3">Date</th>
-                                    <th className="px-6 py-3">Match Score</th>
-                                    <th className="px-6 py-3">Status</th>
-                                    <th className="px-6 py-3 text-right">Action</th>
+                                    <th className="px-6 py-3">{t('table.jobTitle')}</th>
+                                    <th className="px-6 py-3">{t('table.date')}</th>
+                                    <th className="px-6 py-3">{t('table.matchScore')}</th>
+                                    <th className="px-6 py-3">{t('table.status')}</th>
+                                    <th className="px-6 py-3 text-right">{t('table.action')}</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-100">
@@ -130,17 +132,17 @@ export default function AnalysesPage() {
                                         <td className="px-6 py-4">
                                             {job.status === 'complete' ? (
                                                 <span className="inline-flex items-center rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
-                                                    Complete
+                                                    {t('status.complete')}
                                                 </span>
                                             ) : (
                                                 <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
-                                                    Processing
+                                                    {t('status.processing')}
                                                 </span>
                                             )}
                                         </td>
                                         <td className="px-6 py-4 text-right">
                                             <Link href={`/dashboard/analysis/${job.id}`} className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                                                View <ArrowRight className="ml-1 h-4 w-4" />
+                                                {t('table.view')} <ArrowRight className="ml-1 h-4 w-4" />
                                             </Link>
                                         </td>
                                     </tr>

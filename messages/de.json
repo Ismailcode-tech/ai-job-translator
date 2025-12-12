@@ -19,6 +19,26 @@
             "cta": "Kostenlos Starten",
             "demo": "Demo Ansehen"
         },
+        "howItWorks": {
+            "title": "Von der Anzeige zum Vorstellungsgespräch in",
+            "stepsSpan": "4 Schritten",
+            "step1": {
+                "title": "Lebenslauf analysieren",
+                "description": "Laden Sie Ihr PDF hoch. Unsere KI extrahiert Ihre Fähigkeiten, um Ihr Profil sofort zu erstellen."
+            },
+            "step2": {
+                "title": "Job-Passung prüfen",
+                "description": "Stellenanzeige einfügen. Wir vergleichen sie mit Ihrem Profil für Ihren Match-Score."
+            },
+            "step3": {
+                "title": "Strategische Einblicke",
+                "description": "Finden Sie fehlende Keywords und folgen Sie einem 3-Tage-Lernplan."
+            },
+            "step4": {
+                "title": "Dokumente laden",
+                "description": "Erstellen Sie sofort einen ATS-optimierten Lebenslauf und einen umfassenden Analysebericht."
+            }
+        },
         "features": {
             "title": "Wie Es Funktioniert",
             "analysis": {
@@ -137,8 +157,37 @@
         "topSkills": "Top-Fähigkeiten",
         "topSkillsHelper": "Trennen Sie Fähigkeiten durch Kommas. Diese helfen, Analyseergebnisse zu priorisieren.",
         "uploadResume": "Lebenslauf Hochladen",
-        "deleteResume": "Lebenslauf Löschen",
-        "saveChanges": "Änderungen Speichern"
+        "saveChanges": "Änderungen Speichern",
+        "headerTitle": "Profileinstellungen",
+        "headerDesc": "Verwalten Sie Ihre persönlichen Daten, beruflichen Fähigkeiten und Ihren Lebenslauf, um die genaueste KI-Jobanalyse zu erhalten.",
+        "resumeSection": {
+            "title": "Lebenslauf / CV",
+            "subtitle": "Laden Sie Ihren Lebenslauf hoch, um die Erstellung maßgeschneiderter Lebensläufe zu ermöglichen.",
+            "current": "Aktueller Lebenslauf",
+            "ready": "Bereit zur Analyse",
+            "download": "Herunterladen",
+            "remove": "Datei Entfernen",
+            "deleting": "Löschen...",
+            "dropTitle": "Hier ablegen!",
+            "uploadTitle": "Lebenslauf Hochladen",
+            "dragText": "ziehen Sie Ihre PDF-Datei hierher und legen Sie sie ab",
+            "browse": "Klicken zum Durchsuchen",
+            "format": "Nur PDF-Format • Max 5 MB",
+            "uploading": "Lebenslauf wird hochgeladen...",
+            "deleteConfirm": "Sind Sie sicher, dass Sie Ihren Lebenslauf löschen möchten?",
+            "fileSizeError": "Die Dateigröße muss weniger als 5 MB betragen",
+            "fileTypeError": "Nur PDF-Dateien sind zulässig",
+            "dropError": "Bitte legen Sie eine PDF-Datei ab"
+        }
+    },
+    "nav": {
+        "dashboard": "Dashboard",
+        "analyses": "Meine Analysen",
+        "profile": "Profil",
+        "billing": "Abrechnung",
+        "settings": "Einstellungen",
+        "admin": "Admin",
+        "signOut": "Abmelden"
     },
     "auth": {
         "login": {
@@ -202,10 +251,108 @@
     },
     "billing": {
         "title": "Abrechnung und Abonnement",
-        "subtitle": "Verwalten Sie Ihren Plan und Zahlungsdetails",
+        "subtitle": "Verwalten Sie Ihr Abonnement und Ihre Abrechnungsdaten",
         "currentPlan": "Aktueller Plan",
-        "perMonth": "/ Monat",
-        "upgrade": "Upgrade",
-        "features": "Funktionen"
+        "upgradeTo": "Upgrade auf",
+        "month": "/ Monat",
+        "popular": "BELIEBT",
+        "processing": "Verarbeitung...",
+        "upgradeBtn": "Upgrade auf {plan}",
+        "paymentMethod": "Zahlungsmethode",
+        "paymentDesc": "Zahlungsdetails werden hier angezeigt, nachdem Sie ein Abonnement abgeschlossen haben.",
+        "plans": {
+            "free": {
+                "name": "Kostenlos",
+                "features": {
+                    "analyses": "3 Analysen / Monat",
+                    "cv": "Grundlegende Lebenslauf-Vorschläge",
+                    "support": "Standard-Support"
+                }
+            },
+            "starter": {
+                "name": "Starter",
+                "features": {
+                    "analyses": "15 Analysen / Monat",
+                    "roadmap": "Vollständige Lern-Roadmap",
+                    "pdf": "PDF-Downloads",
+                    "support": "Prioritäts-Support"
+                }
+            },
+            "pro": {
+                "name": "Pro",
+                "features": {
+                    "analyses": "Unbegrenzte Analysen",
+                    "bulk": "Massenuploads",
+                    "csv": "CSV-Export",
+                    "api": "API-Zugriff"
+                }
+            }
+        }
+    },
+    "pdf": {
+        "report": {
+            "title": "Jobanalyse-Bericht",
+            "subtitle": "Allgemein",
+            "matchScore": "Übereinstimmungsquote",
+            "matchScoreDesc": "Basierend auf KI-Analyse von Anforderungen vs. Profil.",
+            "requiredSkills": "Aufschlüsselung der erforderlichen Fähigkeiten",
+            "mustHave": "Muss haben",
+            "skillGaps": "Fähigkeitslücken",
+            "estTime": "Geschätzte Zeit zum Lernen",
+            "days": "Tage",
+            "noGaps": "Keine größeren Fähigkeitslücken entdeckt.",
+            "roadmap": "3-Tage-Lernsprint"
+        },
+        "cv": {
+            "namePlaceholder": "IHR NAME",
+            "professionalProfile": "Berufliches Profil",
+            "profileTemplate": "Ergebnisorientierter Profi, der die Position {jobTitle} anstrebt. Fähigkeiten in {skills}. Leidenschaftlich bei der Bereitstellung hochwertiger Lösungen.",
+            "coreCompetencies": "Kernkompetenzen",
+            "relevantExperience": "Relevante Erfahrung (Maßgeschneidert)",
+            "aiDisclaimer": "* Diese Punkte wurden von KI basierend auf den Stellenanforderungen generiert. Kopieren Sie diese in Ihren Erfahrungsbereich.",
+            "placeholderRole": "Vorherige Rolle | Firmenname",
+            "placeholderDesc": "Leitete die Entwicklung von Kernfunktionen mit React und TypeScript.",
+            "education": "Ausbildung",
+            "degreePlaceholder": "Abschlussbezeichnung",
+            "universityPlaceholder": "Universitätsname"
+        }
+    },
+    "verifyEmail": {
+        "invalidLink": "Ungültiger Link. Bitte registrieren Sie sich erneut.",
+        "goToSignup": "Zur Registrierung",
+        "title": "E-Mail verifizieren",
+        "sentTo": "Wir haben einen Verifizierungscode gesendet an",
+        "labelCode": "Verifizierungscode",
+        "buttonVerify": "E-Mail verifizieren",
+        "verifying": "Verifizierung...",
+        "didNotReceive": "Code nicht erhalten?",
+        "resend": "Code erneut senden",
+        "sending": "Senden...",
+        "success": "E-Mail erfolgreich verifiziert! Weiterleitung...",
+        "sent": "Verifizierungscode gesendet! Bitte überprüfen Sie Ihre E-Mail."
+    },
+    "analyses": {
+        "title": "Meine Analysen",
+        "subtitle": "Historie aller Job-Scans",
+        "newAnalysis": "Neue Analyse",
+        "searchPlaceholder": "Analysen suchen...",
+        "filterAll": "Alle Status",
+        "filterComplete": "Abgeschlossen",
+        "filterProcessing": "In Bearbeitung",
+        "emptyTitle": "Keine Analysen gefunden",
+        "emptyDesc": "Versuchen Sie Ihre Suche anzupassen oder erstellen Sie eine neue Analyse.",
+        "createFirst": "Erste Analyse erstellen",
+        "table": {
+            "jobTitle": "Jobtitel",
+            "date": "Datum",
+            "matchScore": "Übereinstimmung",
+            "status": "Status",
+            "action": "Aktion",
+            "view": "Ansehen"
+        },
+        "status": {
+            "complete": "Abgeschlossen",
+            "processing": "In Bearbeitung"
+        }
     }
 }

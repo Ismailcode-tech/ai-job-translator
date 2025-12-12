@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { LayoutDashboard, FileText, User, CreditCard, Settings, LogOut, Shield, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/utils/supabase/server';
@@ -11,6 +12,7 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
+    const t = await getTranslations('nav');
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -46,30 +48,30 @@ export default async function DashboardLayout({
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     <Link href="/dashboard" className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-all duration-200 group">
                         <LayoutDashboard className="w-5 h-5 mr-3 group-hover:text-primary transition-colors" />
-                        Dashboard
+                        {t('dashboard')}
                     </Link>
                     <Link href="/dashboard/analyses" className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-all duration-200 group">
                         <FileText className="w-5 h-5 mr-3 group-hover:text-primary transition-colors" />
-                        My Analyses
+                        {t('analyses')}
                     </Link>
                     <Link href="/dashboard/profile" className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-all duration-200 group">
                         <User className="w-5 h-5 mr-3 group-hover:text-primary transition-colors" />
-                        Profile
+                        {t('profile')}
                     </Link>
                     <Link href="/dashboard/billing" className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-all duration-200 group">
                         <CreditCard className="w-5 h-5 mr-3 group-hover:text-primary transition-colors" />
-                        Billing
+                        {t('billing')}
                     </Link>
                     <Link href="/dashboard/settings" className="flex items-center px-4 py-3 text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg transition-all duration-200 group">
                         <Settings className="w-5 h-5 mr-3 group-hover:text-primary transition-colors" />
-                        Settings
+                        {t('settings')}
                     </Link>
 
                     {/* Admin Link - Only visible to specific emails */}
                     {['ismailhadjlarbi71@gmail.com', 'ismailhadjlarbi2007@gmail.com'].includes(user.email || '') && (
                         <Link href="/admin" className="flex items-center px-4 py-3 text-primary bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors font-medium mt-4">
                             <Shield className="w-5 h-5 mr-3" />
-                            Admin
+                            {t('admin')}
                         </Link>
                     )}
                 </nav>
@@ -91,7 +93,7 @@ export default async function DashboardLayout({
                     <form action={signOut}>
                         <Button variant="ghost" className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10">
                             <LogOut className="w-5 h-5 mr-3" />
-                            Sign Out
+                            {t('signOut')}
                         </Button>
                     </form>
                 </div>

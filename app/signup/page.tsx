@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Github, Mail, Lock, User, ArrowRight, Loader2, MapPin } from 'lucide-react';
 import { signup } from '../login/actions';
 import { useState } from 'react';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 export default function SignupPage() {
     const t = useTranslations('auth.signup');

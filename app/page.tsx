@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, CheckCircle, FileText, Sparkles, BarChart, Menu } from 'lucide-react';
+import { ArrowRight, CheckCircle, FileText, Sparkles, BarChart, Menu, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 export default function LandingPage() {
   const t = useTranslations('landing');
@@ -156,34 +156,40 @@ export default function LandingPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
-              From Job Ad to Interview in <span className="text-gradient">3 Steps</span>
+              {t('landing.howItWorks.title')} <span className="text-gradient">{t('landing.howItWorks.stepsSpan')}</span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              Our AI handles the heavy lifting so you can focus on preparing for the interview.
+              {t('landing.hero.subtitle')}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
             {/* Connecting Line (Desktop) */}
-            <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
+            <div className="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
 
             {[
               {
                 step: "01",
-                title: "Paste Job Description",
-                desc: "Copy the job ad from LinkedIn or Indeed and paste it into Talio.",
-                icon: <FileText className="h-6 w-6 text-indigo-500" />
+                title: t('landing.howItWorks.step1.title'),
+                desc: t('landing.howItWorks.step1.description'),
+                icon: <Upload className="h-6 w-6 text-blue-500" />
               },
               {
                 step: "02",
-                title: "Get AI Analysis",
-                desc: "We extract keywords, identify gaps, and generate a learning plan.",
-                icon: <Sparkles className="h-6 w-6 text-purple-500" />
+                title: t('landing.howItWorks.step2.title'),
+                desc: t('landing.howItWorks.step2.description'),
+                icon: <FileText className="h-6 w-6 text-indigo-500" />
               },
               {
                 step: "03",
-                title: "Apply with Confidence",
-                desc: "Download a tailored CV and cover letter optimized for ATS.",
+                title: t('landing.howItWorks.step3.title'),
+                desc: t('landing.howItWorks.step3.description'),
+                icon: <Sparkles className="h-6 w-6 text-purple-500" />
+              },
+              {
+                step: "04",
+                title: t('landing.howItWorks.step4.title'),
+                desc: t('landing.howItWorks.step4.description'),
                 icon: <CheckCircle className="h-6 w-6 text-pink-500" />
               }
             ].map((item, i) => (

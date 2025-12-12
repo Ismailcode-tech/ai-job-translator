@@ -74,6 +74,7 @@ interface CVData {
         email: string;
         phone?: string;
     };
+    translations: any;
 }
 
 export const TailoredCVPDF = ({ data }: { data: CVData }) => (
@@ -82,22 +83,22 @@ export const TailoredCVPDF = ({ data }: { data: CVData }) => (
 
             {/* Header with User Info */}
             <View style={styles.header}>
-                <Text style={styles.name}>{data.user?.name || 'YOUR NAME'}</Text>
+                <Text style={styles.name}>{data.user?.name || data.translations.namePlaceholder}</Text>
                 <Text style={styles.contact}>
                     {data.user?.email || 'email@example.com'} | {data.user?.phone || '(123) 456-7890'} | Location
                 </Text>
             </View>
 
             {/* Professional Summary */}
-            <Text style={styles.sectionTitle}>Professional Profile</Text>
+            <Text style={styles.sectionTitle}>{data.translations.professionalProfile}</Text>
             <Text style={{ marginBottom: 10 }}>
-                Results-oriented professional aiming for the {data.jobTitle} position.
-                Skills in {data.skills.slice(0, 3).map(s => s.name).join(', ')}.
-                Passionate about delivering high-quality solutions.
+                {data.translations.profileTemplate
+                    .replace('{jobTitle}', data.jobTitle)
+                    .replace('{skills}', data.skills.slice(0, 3).map(s => s.name).join(', '))}
             </Text>
 
             {/* Core Competencies (Matched Skills) */}
-            <Text style={styles.sectionTitle}>Core Competencies</Text>
+            <Text style={styles.sectionTitle}>{data.translations.coreCompetencies}</Text>
             <View style={styles.skillSection}>
                 {data.skills.filter(s => s.must).map((skill, i) => (
                     <Text key={i} style={styles.skillTag}>{skill.name}</Text>
@@ -108,9 +109,9 @@ export const TailoredCVPDF = ({ data }: { data: CVData }) => (
             </View>
 
             {/* Tailored Experience Bullets */}
-            <Text style={styles.sectionTitle}>Relevant Experience (Tailored)</Text>
+            <Text style={styles.sectionTitle}>{data.translations.relevantExperience}</Text>
             <Text style={{ fontSize: 9, color: '#6b7280', marginBottom: 6, fontStyle: 'italic' }}>
-                * These points are AI-generated based on the job requirements. Copy these into your experience section.
+                {data.translations.aiDisclaimer}
             </Text>
 
             {data.cv_suggestions.map((point, i) => (
@@ -122,19 +123,19 @@ export const TailoredCVPDF = ({ data }: { data: CVData }) => (
 
             {/* Placeholder Experience */}
             <View style={{ marginTop: 10 }}>
-                <Text style={{ fontWeight: 'bold' }}>Previous Role | Company Name</Text>
+                <Text style={{ fontWeight: 'bold' }}>{data.translations.placeholderRole}</Text>
                 <Text style={{ fontSize: 9, color: '#4b5563', marginBottom: 4 }}>Date - Date</Text>
                 <View style={styles.bulletPoint}>
                     <Text style={styles.bullet}>•</Text>
-                    <Text style={styles.text}>Led development of core features using React and TypeScript.</Text>
+                    <Text style={styles.text}>{data.translations.placeholderDesc}</Text>
                 </View>
             </View>
 
             {/* Education */}
-            <Text style={styles.sectionTitle}>Education</Text>
+            <Text style={styles.sectionTitle}>{data.translations.education}</Text>
             <View>
-                <Text style={{ fontWeight: 'bold' }}>Degree Name</Text>
-                <Text>University Name</Text>
+                <Text style={{ fontWeight: 'bold' }}>{data.translations.degreePlaceholder}</Text>
+                <Text>{data.translations.universityPlaceholder}</Text>
             </View>
 
         </Page>

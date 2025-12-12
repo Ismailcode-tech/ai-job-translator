@@ -19,6 +19,26 @@
             "cta": "Comenzar Gratis",
             "demo": "Ver Demo"
         },
+        "howItWorks": {
+            "title": "Del anuncio a la entrevista en",
+            "stepsSpan": "4 Pasos",
+            "step1": {
+                "title": "Analiza tu CV",
+                "description": "Sube tu PDF. Nuestra IA extrae tus habilidades para crear tu perfil al instante."
+            },
+            "step2": {
+                "title": "Analiza la Oferta",
+                "description": "Pega un anuncio. Lo comparamos con tu perfil para calcular tu Puntuación de Coincidencia."
+            },
+            "step3": {
+                "title": "Obtén Insights",
+                "description": "Identifica palabras clave faltantes y sigue una Hoja de Ruta de Aprendizaje de 3 días."
+            },
+            "step4": {
+                "title": "Descarga tus Documentos",
+                "description": "Genera un CV optimizado para ATS y un Informe de Análisis completo al instante."
+            }
+        },
         "features": {
             "title": "Cómo Funciona",
             "analysis": {
@@ -137,8 +157,37 @@
         "topSkills": "Habilidades Principales",
         "topSkillsHelper": "Separa las habilidades con comas. Estas ayudan a priorizar los resultados del análisis.",
         "uploadResume": "Subir Currículum",
-        "deleteResume": "Eliminar Currículum",
-        "saveChanges": "Guardar Cambios"
+        "saveChanges": "Guardar Cambios",
+        "headerTitle": "Configuración del Perfil",
+        "headerDesc": "Administra tus datos personales, habilidades profesionales y currículum para obtener el análisis de trabajo de IA más preciso.",
+        "resumeSection": {
+            "title": "Currículum / CV",
+            "subtitle": "Sube tu currículum para habilitar la generación de CV personalizados.",
+            "current": "Currículum Actual",
+            "ready": "Listo para análisis",
+            "download": "Descargar",
+            "remove": "Eliminar Archivo",
+            "deleting": "Eliminando...",
+            "dropTitle": "¡Suéltalo aquí!",
+            "uploadTitle": "Sube tu Currículum",
+            "dragText": "arrastra y suelta tu archivo PDF aquí",
+            "browse": "Haz clic para buscar",
+            "format": "Solo formato PDF • Máx 5MB",
+            "uploading": "Subiendo tu currículum...",
+            "deleteConfirm": "¿Estás seguro de que deseas eliminar tu currículum?",
+            "fileSizeError": "El tamaño del archivo debe ser inferior a 5MB",
+            "fileTypeError": "Solo se permiten archivos PDF",
+            "dropError": "Por favor, suelta un archivo PDF"
+        }
+    },
+    "nav": {
+        "dashboard": "Panel",
+        "analyses": "Mis Análisis",
+        "profile": "Perfil",
+        "billing": "Facturación",
+        "settings": "Configuración",
+        "admin": "Admin",
+        "signOut": "Cerrar Sesión"
     },
     "auth": {
         "login": {
@@ -202,10 +251,108 @@
     },
     "billing": {
         "title": "Facturación y Suscripción",
-        "subtitle": "Administra tu plan y detalles de pago",
+        "subtitle": "Administra tu plan y detalles de facturación",
         "currentPlan": "Plan Actual",
-        "perMonth": "/ mes",
-        "upgrade": "Actualizar",
-        "features": "Características"
+        "upgradeTo": "Mejorar a",
+        "month": "/ mes",
+        "popular": "POPULAR",
+        "processing": "Procesando...",
+        "upgradeBtn": "Mejorar a {plan}",
+        "paymentMethod": "Método de Pago",
+        "paymentDesc": "Los detalles de pago aparecerán aquí después de suscribirte a un plan.",
+        "plans": {
+            "free": {
+                "name": "Gratis",
+                "features": {
+                    "analyses": "3 Análisis / mes",
+                    "cv": "Sugerencias básicas de CV",
+                    "support": "Soporte estándar"
+                }
+            },
+            "starter": {
+                "name": "Starter",
+                "features": {
+                    "analyses": "15 Análisis / mes",
+                    "roadmap": "Hoja de Ruta de Aprendizaje Completa",
+                    "pdf": "Descargas PDF",
+                    "support": "Soporte Prioritario"
+                }
+            },
+            "pro": {
+                "name": "Pro",
+                "features": {
+                    "analyses": "Análisis Ilimitados",
+                    "bulk": "Cargas masivas",
+                    "csv": "Exportación CSV",
+                    "api": "Acceso API"
+                }
+            }
+        }
+    },
+    "pdf": {
+        "report": {
+            "title": "Informe de Análisis de Trabajo",
+            "subtitle": "General",
+            "matchScore": "Puntuación de Coincidencia",
+            "matchScoreDesc": "Basado en análisis de IA de requisitos vs perfil.",
+            "requiredSkills": "Desglose de Habilidades Requeridas",
+            "mustHave": "Imprescindible",
+            "skillGaps": "Brechas de Habilidades",
+            "estTime": "Tiempo est. de aprendizaje",
+            "days": "días",
+            "noGaps": "No se detectaron brechas importantes.",
+            "roadmap": "Sprint de Aprendizaje de 3 Días"
+        },
+        "cv": {
+            "namePlaceholder": "TU NOMBRE",
+            "professionalProfile": "Perfil Profesional",
+            "profileTemplate": "Profesional orientado a resultados aspirando al puesto de {jobTitle}. Habilidades en {skills}. Apasionado por entregar soluciones de alta calidad.",
+            "coreCompetencies": "Competencias Principales",
+            "relevantExperience": "Experiencia Relevante (Personalizada)",
+            "aiDisclaimer": "* Estos puntos son generados por IA basados en los requisitos del trabajo. Copia esto en tu sección de experiencia.",
+            "placeholderRole": "Rol Anterior | Nombre de la Empresa",
+            "placeholderDesc": "Lideró el desarrollo de características principales usando React y TypeScript.",
+            "education": "Educación",
+            "degreePlaceholder": "Nombre del Título",
+            "universityPlaceholder": "Nombre de la Universidad"
+        }
+    },
+    "verifyEmail": {
+        "invalidLink": "Enlace inválido. Por favor regístrate de nuevo.",
+        "goToSignup": "Ir al Registro",
+        "title": "Verifica tu correo",
+        "sentTo": "Enviamos un código de verificación a",
+        "labelCode": "Código de Verificación",
+        "buttonVerify": "Verificar Correo",
+        "verifying": "Verificando...",
+        "didNotReceive": "¿No recibiste el código?",
+        "resend": "Reenviar código",
+        "sending": "Enviando...",
+        "success": "¡Correo verificado con éxito! Redirigiendo...",
+        "sent": "¡Código de verificación enviado! Por favor revisa tu correo."
+    },
+    "analyses": {
+        "title": "Mis Análisis",
+        "subtitle": "Historial de todos tus análisis",
+        "newAnalysis": "Nuevo Análisis",
+        "searchPlaceholder": "Buscar análisis...",
+        "filterAll": "Todos los Estados",
+        "filterComplete": "Completado",
+        "filterProcessing": "Procesando",
+        "emptyTitle": "No se encontraron análisis",
+        "emptyDesc": "Prueba a ajustar tu búsqueda o crea un nuevo análisis.",
+        "createFirst": "Crea tu Primer Análisis",
+        "table": {
+            "jobTitle": "Título del Puesto",
+            "date": "Fecha",
+            "matchScore": "Puntuación",
+            "status": "Estado",
+            "action": "Acción",
+            "view": "Ver"
+        },
+        "status": {
+            "complete": "Completado",
+            "processing": "Procesando"
+        }
     }
 }

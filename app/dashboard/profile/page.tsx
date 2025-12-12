@@ -3,7 +3,10 @@ import ProfileForm from './profile-form';
 import { redirect } from 'next/navigation';
 import { UserCog } from 'lucide-react';
 
+import { getTranslations } from 'next-intl/server';
+
 export default async function ProfilePage() {
+    const t = await getTranslations('profile');
     const data = await getProfile();
 
     if (!data) {
@@ -19,9 +22,9 @@ export default async function ProfilePage() {
                 </div>
 
                 <div className="relative z-10">
-                    <h1 className="text-3xl font-bold text-slate-900 mb-2">Profile Settings</h1>
+                    <h1 className="text-3xl font-bold text-slate-900 mb-2">{t('headerTitle')}</h1>
                     <p className="text-slate-500 max-w-2xl">
-                        Manage your personal details, professional skills, and resume to get the most accurate AI job analysis.
+                        {t('headerDesc')}
                     </p>
                 </div>
             </div>

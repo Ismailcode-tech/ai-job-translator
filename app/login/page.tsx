@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Github, Mail, Lock, ArrowRight, Loader2 } from 'lucide-react';
 import { login } from './actions';
 import { useState } from 'react';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 export default function LoginPage() {
     const t = useTranslations('auth.login');

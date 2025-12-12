@@ -8,7 +8,7 @@ import ChangePasswordModal from './change-password-modal';
 import ChangeEmailModal from './change-email-modal';
 import DeleteAccountModal from './delete-account-modal';
 import { createClient } from '@/utils/supabase/client';
-import { useTranslations } from '@/lib/i18n-client';
+import { useTranslations } from 'next-intl';
 
 export default function SettingsPage() {
     const t = useTranslations('settings');

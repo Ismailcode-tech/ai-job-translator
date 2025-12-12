@@ -7,8 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Mail, ArrowRight, Loader2, CheckCircle } from 'lucide-react';
 import { verifyEmail, resendVerificationEmail } from '../login/actions';
+import { useTranslations } from 'next-intl';
 
 function VerifyEmailContent() {
+    const t = useTranslations('verifyEmail');
     const searchParams = useSearchParams();
     const router = useRouter();
     const email = searchParams.get('email') || '';
@@ -31,7 +33,7 @@ function VerifyEmailContent() {
             setMessage({ type: 'error', text: result.error });
             setIsLoading(false);
         } else {
-            setMessage({ type: 'success', text: 'Email verified successfully! Redirecting...' });
+            setMessage({ type: 'success', text: t('success') });
             setTimeout(() => {
                 router.push('/dashboard');
             }, 2000);
@@ -48,7 +50,7 @@ function VerifyEmailContent() {
         if (result?.error) {
             setMessage({ type: 'error', text: result.error });
         } else {
-            setMessage({ type: 'success', text: 'Verification code sent! Please check your email.' });
+            setMessage({ type: 'success', text: t('sent') });
         }
         setIsResending(false);
     }
@@ -56,9 +58,9 @@ function VerifyEmailContent() {
     if (!email) {
         return (
             <div className="text-center">
-                <p className="text-red-500">Invalid link. Please sign up again.</p>
+                <p className="text-red-500">{t('invalidLink')}</p>
                 <Button onClick={() => router.push('/signup')} className="mt-4">
-                    Go to Signup
+                    {t('goToSignup')}
                 </Button>
             </div>
         );
@@ -71,16 +73,16 @@ function VerifyEmailContent() {
                     <Mail className="h-6 w-6 text-blue-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                    Verify your email
+                    {t('title')}
                 </h2>
                 <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                    We sent a verification code to <span className="font-medium text-gray-900 dark:text-white">{email}</span>
+                    {t('sentTo')} <span className="font-medium text-gray-900 dark:text-white">{email}</span>
                 </p>
             </div>
 
             <form onSubmit={handleVerify} className="mt-8 space-y-6">
                 <div>
-                    <Label htmlFor="code">Verification Code</Label>
+                    <Label htmlFor="code">{t('labelCode')}</Label>
                     <Input
                         id="code"
                         name="code"
@@ -105,11 +107,11 @@ function VerifyEmailContent() {
                     {isLoading ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Verifying...
+                            {t('verifying')}
                         </>
                     ) : (
                         <>
-                            Verify Email
+                            {t('buttonVerify')}
                             <ArrowRight className="ml-2 h-4 w-4" />
                         </>
                     )}
@@ -118,13 +120,13 @@ function VerifyEmailContent() {
 
             <div className="mt-6 text-center">
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Didn't receive the code?{' '}
+                    {t('didNotReceive')}{' '}
                     <button
                         onClick={handleResend}
                         disabled={isResending}
                         className="font-medium text-blue-600 hover:text-blue-500 disabled:opacity-50"
                     >
-                        {isResending ? 'Sending...' : 'Resend code'}
+                        {isResending ? t('sending') : t('resend')}
                     </button>
                 </p>
             </div>
