@@ -156,10 +156,10 @@ export default function LandingPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
-              {t('landing.howItWorks.title')} <span className="text-gradient">{t('landing.howItWorks.stepsSpan')}</span>
+              {t('howItWorks.title')} <span className="text-gradient">{t('howItWorks.stepsSpan')}</span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              {t('landing.hero.subtitle')}
+              {t('hero.subtitle')}
             </p>
           </div>
 
@@ -170,26 +170,26 @@ export default function LandingPage() {
             {[
               {
                 step: "01",
-                title: t('landing.howItWorks.step1.title'),
-                desc: t('landing.howItWorks.step1.description'),
+                title: t('howItWorks.step1.title'),
+                desc: t('howItWorks.step1.description'),
                 icon: <Upload className="h-6 w-6 text-blue-500" />
               },
               {
                 step: "02",
-                title: t('landing.howItWorks.step2.title'),
-                desc: t('landing.howItWorks.step2.description'),
+                title: t('howItWorks.step2.title'),
+                desc: t('howItWorks.step2.description'),
                 icon: <FileText className="h-6 w-6 text-indigo-500" />
               },
               {
                 step: "03",
-                title: t('landing.howItWorks.step3.title'),
-                desc: t('landing.howItWorks.step3.description'),
+                title: t('howItWorks.step3.title'),
+                desc: t('howItWorks.step3.description'),
                 icon: <Sparkles className="h-6 w-6 text-purple-500" />
               },
               {
                 step: "04",
-                title: t('landing.howItWorks.step4.title'),
-                desc: t('landing.howItWorks.step4.description'),
+                title: t('howItWorks.step4.title'),
+                desc: t('howItWorks.step4.description'),
                 icon: <CheckCircle className="h-6 w-6 text-pink-500" />
               }
             ].map((item, i) => (
