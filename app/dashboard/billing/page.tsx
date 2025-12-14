@@ -91,7 +91,7 @@ export default function BillingPage() {
                         </div>
                     </div>
                     <Button
-                        onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_STARTER || 'price_starter_test', 'starter')}
+                        onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_STARTER!, 'starter')}
                         disabled={isLoading !== null}
                         className="w-full bg-primary hover:bg-primary/90"
                     >
@@ -128,7 +128,7 @@ export default function BillingPage() {
                         </div>
                     </div>
                     <Button
-                        onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO || 'price_pro_test', 'pro')}
+                        onClick={() => handleUpgrade(process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO!, 'pro')}
                         disabled={isLoading !== null}
                         className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                     >
