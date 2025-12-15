@@ -18,6 +18,41 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Job description is required' }, { status: 400 });
         }
 
+        // 0. CHECK SUBSCRIPTION LIMITS
+        const { data: subscription } = await supabase
+            .from('subscriptions')
+            .select('plan_id, status, current_period_end')
+            .eq('user_id', user.id)
+            .single();
+
+        const planId = subscription?.status === 'active' ? subscription.plan_id : 'free';
+
+        // Define Limits
+        const LIMITS = {
+            free: 1,
+            starter: 5,
+            pro: 50
+        };
+
+        const limit = LIMITS[planId as keyof typeof LIMITS] || 1;
+
+        // Count usages this month
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
+        const { count } = await supabase
+            .from('job_posts')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .gte('created_at', startOfMonth);
+
+        if ((count || 0) >= limit) {
+            return NextResponse.json({
+                error: `You have reached your monthly limit of ${limit} analyses.`,
+                details: planId === 'free' ? 'Upgrade to Starter for more.' : 'Upgrade to Pro for more.'
+            }, { status: 403 });
+        }
+
         // 1. Save Job Post to Supabase
         const { data: jobData, error: jobError } = await supabase
             .from('job_posts')

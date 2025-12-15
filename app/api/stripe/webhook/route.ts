@@ -23,6 +23,15 @@ export async function POST(req: Request) {
 
     const supabase = await createClient();
 
+    const getPlanId = (priceId: string) => {
+        const starterPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_STARTER;
+        const proPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_PRO;
+
+        if (priceId === starterPriceId) return 'starter';
+        if (priceId === proPriceId) return 'pro';
+        return 'free';
+    };
+
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object as Stripe.Checkout.Session;
 
@@ -34,6 +43,8 @@ export async function POST(req: Request) {
             return new NextResponse('User ID is missing in metadata', { status: 400 });
         }
 
+        const planId = getPlanId(subscription.items.data[0].price.id);
+
         await supabase.from('subscriptions').insert({
             user_id: session.metadata.userId,
             stripe_subscription_id: subscription.id,
@@ -41,6 +52,7 @@ export async function POST(req: Request) {
             current_period_end: new Date(
                 subscription.current_period_end * 1000
             ).toISOString(),
+            plan_id: planId,
         });
     }
 
@@ -59,6 +71,9 @@ export async function POST(req: Request) {
                     current_period_end: new Date(
                         subscription.current_period_end * 1000
                     ).toISOString(),
+                    // We don't necessarily update plan_id here unless we suspect it changed, 
+                    // but usually that comes via a different event (customer.subscription.updated).
+                    // For now, extending the date is sufficient.
                 })
                 .eq('stripe_subscription_id', subscription.id);
         }
