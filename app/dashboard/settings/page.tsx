@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Bell, Lock, Globe, Moon, Mail, Download, Trash2, Sun } from 'lucide-react';
+import { Bell, Lock, Globe, Moon, Mail, Download, Trash2, Sun, Shield, Eye, Settings as SettingsIcon, CreditCard, UserCircle2, Loader2 } from 'lucide-react';
 import { updateEmailNotifications, updateLanguage, exportUserData } from './actions';
 import { toast, Toaster } from 'sonner';
 import ChangePasswordModal from './change-password-modal';
@@ -9,6 +9,10 @@ import ChangeEmailModal from './change-email-modal';
 import DeleteAccountModal from './delete-account-modal';
 import { createClient } from '@/utils/supabase/client';
 import { useTranslations } from 'next-intl';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
 
 export default function SettingsPage() {
     const t = useTranslations('settings');
@@ -55,16 +59,15 @@ export default function SettingsPage() {
         }
     };
 
-    const handleEmailNotificationsToggle = async () => {
-        const newValue = !emailNotifications;
-        setEmailNotifications(newValue);
+    const handleEmailNotificationsToggle = async (checked: boolean) => {
+        setEmailNotifications(checked);
 
-        const result = await updateEmailNotifications(newValue);
+        const result = await updateEmailNotifications(checked);
         if (result.error) {
             toast.error(result.error);
-            setEmailNotifications(!newValue); // Revert on error
+            setEmailNotifications(!checked); // Revert on error
         } else {
-            toast.success(`Email notifications ${newValue ? 'enabled' : 'disabled'}`);
+            toast.success(`Email notifications ${checked ? 'enabled' : 'disabled'}`);
         }
     };
 
@@ -78,18 +81,17 @@ export default function SettingsPage() {
         }
     };
 
-    const handleDarkModeToggle = () => {
-        const newValue = !darkMode;
-        setDarkMode(newValue);
-        localStorage.setItem('darkMode', String(newValue));
+    const handleDarkModeToggle = (checked: boolean) => {
+        setDarkMode(checked);
+        localStorage.setItem('darkMode', String(checked));
 
-        if (newValue) {
+        if (checked) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
 
-        toast.success(`${newValue ? 'Dark' : 'Light'} mode enabled`);
+        toast.success(`${checked ? 'Dark' : 'Light'} mode enabled`);
     };
 
     const handleExportData = async () => {
@@ -105,7 +107,7 @@ export default function SettingsPage() {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `talio-data-export-${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `medyx-data-export-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -116,189 +118,227 @@ export default function SettingsPage() {
 
     if (!user) {
         return (
-            <div className="max-w-3xl">
-                <div className="animate-pulse space-y-4">
-                    <div className="h-8 bg-slate-200 rounded w-1/4"></div>
-                    <div className="h-64 bg-slate-200 rounded"></div>
-                </div>
+            <div className="max-w-4xl mx-auto space-y-8 animate-pulse">
+                <div className="h-10 bg-white/5 rounded-xl w-48"></div>
+                <div className="h-64 bg-white/5 rounded-3xl"></div>
             </div>
         );
     }
 
     return (
-        <>
+        <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500 pb-12">
             <Toaster position="top-right" richColors />
 
-            <div className="max-w-3xl space-y-8">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900">{t('title')}</h1>
-                    <p className="text-slate-600">{t('subtitle')}</p>
-                </div>
-
-                {/* Account Section */}
-                <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">{t('account')}</h2>
-                    <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
-                        {/* Email */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-blue-50 p-2 text-blue-600">
-                                    <Mail className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('email.title')}</h3>
-                                    <p className="text-sm text-slate-500">{user.email}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setIsEmailModalOpen(true)}
-                                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-                            >
-                                {t('email.change')}
-                            </button>
-                        </div>
-
-                        {/* Password */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-amber-50 p-2 text-amber-600">
-                                    <Lock className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('password.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('password.lastChanged')}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setIsPasswordModalOpen(true)}
-                                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
-                            >
-                                {t('password.change')}
-                            </button>
-                        </div>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                        <SettingsIcon className="w-6 h-6 text-white" />
                     </div>
-                </div>
-
-                {/* Preferences Section */}
-                <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">{t('preferences')}</h2>
-                    <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
-                        {/* Email Notifications */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-teal-50 p-2 text-teal-600">
-                                    <Bell className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('notifications.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('notifications.description')}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={handleEmailNotificationsToggle}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${emailNotifications ? 'bg-teal-600' : 'bg-slate-200'
-                                    }`}
-                            >
-                                <span
-                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${emailNotifications ? 'translate-x-6' : 'translate-x-1'
-                                        }`}
-                                />
-                            </button>
-                        </div>
-
-                        {/* Language */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-purple-50 p-2 text-purple-600">
-                                    <Globe className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('language.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('language.description')}</p>
-                                </div>
-                            </div>
-                            <select
-                                value={language}
-                                onChange={(e) => handleLanguageChange(e.target.value)}
-                                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500"
-                            >
-                                <option value="en">English</option>
-                                <option value="es">Spanish</option>
-                                <option value="fr">French</option>
-                                <option value="de">German</option>
-                            </select>
-                        </div>
-
-                        {/* Dark Mode */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-slate-100 p-2 text-slate-600">
-                                    {darkMode ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('darkMode.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('darkMode.description')}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={handleDarkModeToggle}
-                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${darkMode ? 'bg-slate-700' : 'bg-slate-200'
-                                    }`}
-                            >
-                                <span
-                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${darkMode ? 'translate-x-6' : 'translate-x-1'
-                                        }`}
-                                />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Data & Privacy Section */}
-                <div className="space-y-4">
-                    <h2 className="text-lg font-semibold text-slate-900">{t('dataPrivacy')}</h2>
-                    <div className="rounded-xl border border-slate-200 bg-white shadow-sm divide-y divide-slate-100">
-                        {/* Export Data */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-green-50 p-2 text-green-600">
-                                    <Download className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('exportData.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('exportData.description')}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={handleExportData}
-                                disabled={isExporting}
-                                className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                            >
-                                {isExporting ? t('exportData.exporting') : t('exportData.button')}
-                            </button>
-                        </div>
-
-                        {/* Delete Account */}
-                        <div className="p-6 flex items-start justify-between">
-                            <div className="flex gap-4">
-                                <div className="rounded-lg bg-red-50 p-2 text-red-600">
-                                    <Trash2 className="h-5 w-5" />
-                                </div>
-                                <div>
-                                    <h3 className="font-medium text-slate-900">{t('deleteAccount.title')}</h3>
-                                    <p className="text-sm text-slate-500">{t('deleteAccount.description')}</p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setIsDeleteModalOpen(true)}
-                                className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 transition-colors"
-                            >
-                                {t('deleteAccount.button')}
-                            </button>
-                        </div>
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight text-white">{t('title')}</h1>
+                        <p className="text-gray-400 mt-1">{t('subtitle')}</p>
                     </div>
                 </div>
             </div>
+
+            <Tabs defaultValue="account" className="space-y-6">
+                <TabsList className="bg-slate-900/40 border border-white/5 p-1 h-14 rounded-2xl">
+                    <TabsTrigger value="account" className="px-8 rounded-xl data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all font-bold">
+                        {t('account')}
+                    </TabsTrigger>
+                    <TabsTrigger value="preferences" className="px-8 rounded-xl data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all font-bold">
+                        {t('preferences')}
+                    </TabsTrigger>
+                    <TabsTrigger value="privacy" className="px-8 rounded-xl data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all font-bold">
+                        {t('dataPrivacy')}
+                    </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="account" className="space-y-6 outline-none">
+                    <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 overflow-hidden">
+                        <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+                            <CardTitle className="text-white text-xl flex items-center gap-3">
+                                <UserCircle2 className="w-5 h-5 text-indigo-400" />
+                                Account Security
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0 divide-y divide-white/5">
+                            {/* Email */}
+                            <div className="p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-indigo-500/10 p-3 text-indigo-400 border border-indigo-500/10">
+                                        <Mail className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('email.title')}</h3>
+                                        <p className="text-gray-400">{user.email}</p>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={() => setIsEmailModalOpen(true)}
+                                    variant="outline"
+                                    className="bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl px-6 h-11"
+                                >
+                                    {t('email.change')}
+                                </Button>
+                            </div>
+
+                            {/* Password */}
+                            <div className="p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-purple-500/10 p-3 text-purple-400 border border-purple-500/10">
+                                        <Lock className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('password.title')}</h3>
+                                        <p className="text-gray-400">{t('password.lastChanged')}</p>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={() => setIsPasswordModalOpen(true)}
+                                    variant="outline"
+                                    className="bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl px-6 h-11"
+                                >
+                                    {t('password.change')}
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                <TabsContent value="preferences" className="space-y-6 outline-none">
+                    <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 overflow-hidden">
+                        <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+                            <CardTitle className="text-white text-xl flex items-center gap-3">
+                                <Eye className="w-5 h-5 text-indigo-400" />
+                                User Preferences
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0 divide-y divide-white/5">
+                            {/* Email Notifications */}
+                            <div className="p-8 flex items-center justify-between group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-teal-500/10 p-3 text-teal-400 border border-teal-500/10">
+                                        <Bell className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('notifications.title')}</h3>
+                                        <p className="text-gray-400 text-sm hidden sm:block">{t('notifications.description')}</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={emailNotifications}
+                                    onCheckedChange={handleEmailNotificationsToggle}
+                                    className="data-[state=checked]:bg-indigo-600"
+                                />
+                            </div>
+
+                            {/* Language */}
+                            <div className="p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-cyan-500/10 p-3 text-cyan-400 border border-cyan-500/10">
+                                        <Globe className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('language.title')}</h3>
+                                        <p className="text-gray-400 text-sm hidden sm:block">{t('language.description')}</p>
+                                    </div>
+                                </div>
+                                <select
+                                    value={language}
+                                    onChange={(e) => handleLanguageChange(e.target.value)}
+                                    className="bg-white/5 border border-white/10 text-white rounded-xl px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-medium cursor-pointer"
+                                >
+                                    <option value="en" className="bg-slate-900">English</option>
+                                    <option value="es" className="bg-slate-900">Spanish</option>
+                                    <option value="fr" className="bg-slate-900">French</option>
+                                    <option value="de" className="bg-slate-900">German</option>
+                                </select>
+                            </div>
+
+                            {/* Dark Mode */}
+                            <div className="p-8 flex items-center justify-between group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-amber-500/10 p-3 text-amber-400 border border-amber-500/10">
+                                        {darkMode ? <Moon className="h-6 w-6" /> : <Sun className="h-6 w-6" />}
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('darkMode.title')}</h3>
+                                        <p className="text-gray-400 text-sm hidden sm:block">{t('darkMode.description')}</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={darkMode}
+                                    onCheckedChange={handleDarkModeToggle}
+                                    className="data-[state=checked]:bg-indigo-600"
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                <TabsContent value="privacy" className="space-y-6 outline-none">
+                    <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 overflow-hidden">
+                        <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+                            <CardTitle className="text-white text-xl flex items-center gap-3">
+                                <Shield className="w-5 h-5 text-indigo-400" />
+                                {t('dataPrivacy')}
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-0 divide-y divide-white/5">
+                            {/* Export Data */}
+                            <div className="p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-emerald-500/10 p-3 text-emerald-400 border border-emerald-500/10">
+                                        <Download className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('exportData.title')}</h3>
+                                        <p className="text-gray-400 text-sm">{t('exportData.description')}</p>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={handleExportData}
+                                    disabled={isExporting}
+                                    variant="outline"
+                                    className="bg-white/5 border-white/10 hover:bg-white/10 text-white rounded-xl px-6 h-11 disabled:opacity-50"
+                                >
+                                    {isExporting ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            {t('exportData.exporting')}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Download className="mr-2 h-4 w-4" />
+                                            {t('exportData.button')}
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
+
+                            {/* Delete Account */}
+                            <div className="p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group transition-colors hover:bg-white/[0.02]">
+                                <div className="flex gap-5">
+                                    <div className="rounded-2xl bg-rose-500/10 p-3 text-rose-400 border border-rose-500/10">
+                                        <Trash2 className="h-6 w-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-white text-lg">{t('deleteAccount.title')}</h3>
+                                        <p className="text-gray-400 text-sm">{t('deleteAccount.description')}</p>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={() => setIsDeleteModalOpen(true)}
+                                    className="bg-rose-600/10 hover:bg-rose-600 hover:text-white text-rose-500 border border-rose-500/20 rounded-xl px-6 h-11"
+                                >
+                                    {t('deleteAccount.button')}
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+            </Tabs>
 
             {/* Modals */}
             <ChangePasswordModal
@@ -314,6 +354,6 @@ export default function SettingsPage() {
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
             />
-        </>
+        </div>
     );
 }

@@ -1,11 +1,12 @@
 'use client';
 
-import { User, Mail, MapPin, Briefcase, Save, Loader2 } from 'lucide-react';
+import { User, Mail, MapPin, Briefcase, Save, Loader2, UserCircle2, Phone, FileText, Award } from 'lucide-react';
 import { updateProfile } from './actions';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import ResumeUpload from './resume-upload';
 import { useTranslations } from 'next-intl';
 
@@ -36,175 +37,217 @@ export default function ProfileForm({ user, profile }: ProfileFormProps) {
     }
 
     return (
-        <div className="grid gap-8 md:grid-cols-3">
-            {/* Sidebar / Avatar */}
-            <div className="md:col-span-1">
-                <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm sticky top-8">
-                    <div className="mx-auto mb-6 h-32 w-32 rounded-full bg-teal-50 border-4 border-white shadow-lg flex items-center justify-center text-teal-600 text-4xl font-bold ring-2 ring-teal-100">
-                        {profile?.first_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
-                    </div>
-                    <h2 className="text-xl font-bold text-slate-900 mb-1">
-                        {profile?.first_name} {profile?.last_name}
-                    </h2>
-                    <p className="text-sm font-medium text-slate-500 mb-4">{profile?.target_role || 'User'}</p>
-                    <div className="w-full h-px bg-slate-100 my-4" />
-                    <div className="text-xs text-slate-400">
-                        Profile Completion
-                        <div className="mt-2 h-2 w-full rounded-full bg-slate-100 overflow-hidden">
-                            <div className="h-full bg-teal-500 rounded-full" style={{ width: '80%' }} />
+        <div className="grid gap-8 lg:grid-cols-3">
+            {/* Sidebar / Avatar Preview */}
+            <div className="lg:col-span-1">
+                <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 sticky top-8 shadow-xl">
+                    <CardContent className="p-8 text-center">
+                        <div className="mx-auto mb-6 h-32 w-32 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-600 p-1 shadow-xl shadow-cyan-500/20">
+                            <div className="h-full w-full rounded-full bg-slate-900 flex items-center justify-center text-white text-4xl font-bold border-4 border-slate-900">
+                                {profile?.first_name?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <h2 className="text-xl font-bold text-white mb-1">
+                            {profile?.first_name} {profile?.last_name || ''}
+                        </h2>
+                        <p className="text-sm font-medium text-gray-400 mb-6">{profile?.target_role || 'Individual Partner'}</p>
+
+                        <div className="space-y-4 text-left">
+                            <div className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                                Profile Identity Locked
+                            </div>
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+                                <div className="flex items-center gap-3 text-sm text-gray-300 font-medium">
+                                    <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                                    Name hidden
+                                </div>
+                                <div className="flex items-center gap-3 text-sm text-gray-300 font-medium">
+                                    <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                                    Email protected
+                                </div>
+                                <div className="flex items-center gap-3 text-sm text-gray-300 font-medium">
+                                    <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                                    Phone number hidden
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
 
-            {/* Main Form */}
-            <div className="md:col-span-2 space-y-6">
-                <form action={handleSubmit}>
-                    {/* Personal Information Card */}
-                    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-50">
-                            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
-                                <User className="h-5 w-5" />
-                            </div>
-                            <h3 className="text-lg font-bold text-slate-900">{t('personalInfo')}</h3>
-                        </div>
+            {/* Main Form Fields */}
+            <div className="lg:col-span-2 space-y-8">
+                <form action={handleSubmit} className="space-y-8">
 
-                        <div className="space-y-6">
+                    {/* Professional Profile - Moved to top as per design */}
+                    <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 overflow-hidden shadow-xl">
+                        <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+                            <div className="flex items-center gap-4">
+                                <div className="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
+                                    <Briefcase className="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <CardTitle className="text-white text-xl">Professional Information</CardTitle>
+                                    <CardDescription className="text-gray-400">This information is shown anonymously to companies</CardDescription>
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-8 space-y-6">
                             <div className="grid gap-6 md:grid-cols-2">
-                                <div className="space-y-2">
-                                    <Label htmlFor="firstName">{t('firstName')}</Label>
-                                    <div className="relative mt-1">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <User className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                        <Input
-                                            id="firstName"
-                                            name="firstName"
-                                            defaultValue={profile?.first_name || ''}
-                                            className="pl-10"
-                                            placeholder="John"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="lastName">{t('lastName')}</Label>
-                                    <div className="relative mt-1">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <User className="h-5 w-5 text-gray-400" />
-                                        </div>
-                                        <Input
-                                            id="lastName"
-                                            name="lastName"
-                                            defaultValue={profile?.last_name || ''}
-                                            className="pl-10"
-                                            placeholder="Doe"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="email">{t('emailAddress')}</Label>
-                                <div className="relative mt-1">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Mail className="h-5 w-5 text-gray-400" />
-                                    </div>
-                                    <Input
-                                        id="email"
-                                        type="email"
-                                        defaultValue={user?.email || ''}
-                                        className="pl-10 bg-gray-50 text-gray-500"
-                                        disabled
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="location">{t('location')}</Label>
-                                <div className="relative mt-1">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <MapPin className="h-5 w-5 text-gray-400" />
-                                    </div>
-                                    <Input
-                                        id="location"
-                                        name="location"
-                                        defaultValue={profile?.location || ''}
-                                        className="pl-10"
-                                        placeholder="e.g. New York, USA"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Skills & Preferences Card */}
-                    <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-50">
-                            <div className="p-2 bg-purple-50 text-purple-600 rounded-lg">
-                                <Briefcase className="h-5 w-5" />
-                            </div>
-                            <h3 className="text-lg font-bold text-slate-900">{t('professionalProfile')}</h3>
-                        </div>
-
-                        <div className="space-y-6">
-                            <div className="space-y-2">
-                                <Label htmlFor="targetRole">{t('targetRole')}</Label>
-                                <div className="relative mt-1">
-                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <Briefcase className="h-5 w-5 text-gray-400" />
-                                    </div>
+                                <div className="space-y-3">
+                                    <Label htmlFor="targetRole" className="text-gray-300 font-medium ml-1">Current Title</Label>
                                     <Input
                                         id="targetRole"
                                         name="targetRole"
                                         defaultValue={profile?.target_role || ''}
-                                        className="pl-10"
-                                        placeholder="e.g. Senior Frontend Developer"
+                                        className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                        placeholder="Senior Developer"
                                     />
                                 </div>
-                                <p className="text-xs text-slate-500">{t('targetRoleHelper')}</p>
+                                <div className="space-y-3">
+                                    <Label htmlFor="yearsOfExperience" className="text-gray-300 font-medium ml-1">Years of Experience</Label>
+                                    <Input
+                                        id="yearsOfExperience"
+                                        name="yearsOfExperience"
+                                        type="number"
+                                        min="0"
+                                        max="60"
+                                        step="1"
+                                        defaultValue={profile?.years_of_experience || ''}
+                                        className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                        placeholder="5"
+                                    />
+                                </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <Label htmlFor="skills" className="text-slate-700 font-medium">{t('topSkills')}</Label>
-                                <textarea
+                            <div className="space-y-3">
+                                <Label htmlFor="skills" className="text-gray-300 font-medium ml-1">Skills</Label>
+                                <Input
                                     id="skills"
                                     name="skills"
-                                    rows={3}
                                     defaultValue={profile?.skills?.join(', ') || ''}
-                                    className="w-full rounded-lg border border-slate-200 p-3 text-sm focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 focus:outline-none transition-all resize-none"
-                                    placeholder="e.g. React, TypeScript, Node.js, AWS..."
+                                    className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                    placeholder="React, Node.js, TypeScript, AWS, MongoDB"
                                 />
-                                <p className="text-xs text-slate-500">{t('topSkillsHelper')}</p>
                             </div>
-                        </div>
-                    </div>
 
-                    <div className="my-6">
+                            <div className="space-y-3">
+                                <Label htmlFor="professionalSummary" className="text-gray-300 font-medium ml-1">Professional Summary</Label>
+                                <textarea
+                                    id="professionalSummary"
+                                    name="professionalSummary"
+                                    rows={4}
+                                    defaultValue={profile?.professional_summary || ''}
+                                    className="w-full rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white focus:ring-cyan-500/50 focus:border-cyan-500 focus:outline-none transition-all resize-none shadow-inner placeholder:text-gray-600"
+                                    placeholder="Experienced full-stack developer passionate about building scalable web applications."
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Personal Information */}
+                    <Card className="bg-slate-900/40 backdrop-blur-md border-white/5 overflow-hidden shadow-xl">
+                        <CardHeader className="border-b border-white/5 bg-white/5 px-8 py-6">
+                            <div className="flex items-center gap-4">
+                                <div className="p-2.5 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">
+                                    <UserCircle2 className="h-6 w-6" />
+                                </div>
+                                <div>
+                                    <CardTitle className="text-white text-xl">{t('personalInfo')}</CardTitle>
+                                    <CardDescription className="text-gray-400">Basic identification details (Private)</CardDescription>
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent className="p-8 space-y-6">
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <div className="space-y-3">
+                                    <Label htmlFor="firstName" className="text-gray-300 font-medium ml-1">{t('firstName')}</Label>
+                                    <Input
+                                        id="firstName"
+                                        name="firstName"
+                                        defaultValue={profile?.first_name || ''}
+                                        className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                        placeholder="John"
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <Label htmlFor="lastName" className="text-gray-300 font-medium ml-1">{t('lastName')}</Label>
+                                    <Input
+                                        id="lastName"
+                                        name="lastName"
+                                        defaultValue={profile?.last_name || ''}
+                                        className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                        placeholder="Doe"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="grid gap-6 md:grid-cols-2">
+                                <div className="space-y-3">
+                                    <Label htmlFor="email" className="text-gray-300 font-medium ml-1">{t('emailAddress')}</Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        defaultValue={user?.email || ''}
+                                        className="bg-white/5 border-white/10 text-gray-500 h-12 rounded-xl cursor-not-allowed opacity-60"
+                                        disabled
+                                    />
+                                </div>
+                                <div className="space-y-3">
+                                    <Label htmlFor="phone" className="text-gray-300 font-medium ml-1">Phone Number</Label>
+                                    <Input
+                                        id="phone"
+                                        name="phone"
+                                        type="tel"
+                                        pattern="[0-9+ \(\)-]*"
+                                        title="Please enter a valid phone number (digits, spaces, parentheses, and hyphens allowed)"
+                                        defaultValue={profile?.phone || ''}
+                                        className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                        placeholder="+1 (555) 000-0000"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                <Label htmlFor="location" className="text-gray-300 font-medium ml-1">{t('location')}</Label>
+                                <Input
+                                    id="location"
+                                    name="location"
+                                    defaultValue={profile?.location || ''}
+                                    className="bg-white/5 border-white/10 text-white h-12 rounded-xl focus:ring-cyan-500/50 focus:border-cyan-500 placeholder:text-gray-600"
+                                    placeholder="e.g. New York, USA"
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Resume Upload */}
+                    <div className="lg:col-span-2">
                         <ResumeUpload initialResumeUrl={profile?.resume_url} />
                     </div>
 
+                    {/* Feedback Messages */}
                     {message && (
-                        <div className={`p-4 rounded-xl mb-6 flex items-center gap-3 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+                        <div className={`p-4 rounded-2xl animate-in slide-in-from-top-2 flex items-center gap-3 font-medium border ${message.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
+                            {message.type === 'success' ? <Save className="w-5 h-5" /> : <Loader2 className="w-5 h-5 scroll-m-0" />}
                             {message.text}
                         </div>
                     )}
 
-                    <div className="flex justify-end pt-4">
+                    {/* Simple Save Button as in design */}
+                    <div className="pb-10">
                         <Button
                             type="submit"
                             disabled={isLoading}
-                            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-6 h-auto text-base font-semibold shadow-lg shadow-teal-600/20 transition-all hover:scale-[1.02]"
+                            className="bg-[#0f172a] hover:bg-[#1e293b] text-white px-8 py-6 h-auto text-sm font-bold rounded-xl border border-white/10 shadow-lg transition-all"
                         >
                             {isLoading ? (
                                 <>
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    {tCommon('loading')}
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Saving...
                                 </>
                             ) : (
-                                <>
-                                    <Save className="mr-2 h-5 w-5" />
-                                    {t('saveChanges')}
-                                </>
+                                'Save Changes'
                             )}
                         </Button>
                     </div>

@@ -56,11 +56,8 @@ export async function analyzeJob(jobText: string, userProfile?: any) {
   `;
 
   const modelsToTry = [
-    'gemini-2.5-flash',
     'gemini-2.0-flash',
-    'gemini-2.0-flash-exp',
-    'gemini-flash-latest',
-    'gemini-1.5-flash'
+    'gemini-flash-latest'
   ];
   let lastError = null;
 
@@ -90,7 +87,12 @@ export async function extractSkillsFromResume(resumeText: string) {
   }
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+  // Use fallback models here too
+  const modelsToTry = [
+    'gemini-2.0-flash-lite',
+    'gemini-flash-latest'
+  ];
 
   const prompt = `
     You are an expert recruiter. Extract key information from the following resume text and output JSON only.
@@ -109,16 +111,24 @@ export async function extractSkillsFromResume(resumeText: string) {
     }
   `;
 
-  try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log('Gemini Raw Response:', text.substring(0, 100));
-    return parseResponse(text);
-  } catch (error) {
-    console.error('Gemini Resume Extraction Failed:', error);
-    return { skills: [], target_role: '' };
+  let lastError = null;
+
+  for (const modelName of modelsToTry) {
+    try {
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log('Gemini Raw Response:', text.substring(0, 100));
+      return parseResponse(text);
+    } catch (error: any) {
+      console.warn(`Resume extraction with ${modelName} failed:`, error.message);
+      lastError = error;
+    }
   }
+
+  console.error('Gemini Resume Extraction Failed:', lastError);
+  return { skills: [], target_role: '' };
 }
 
 export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
@@ -132,10 +142,8 @@ export async function extractSkillsFromPDF(pdfBuffer: ArrayBuffer) {
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const modelsToTry = [
-    'gemini-2.5-flash',
-    'gemini-2.0-flash',
-    'gemini-2.0-flash-exp',
-    'gemini-flash-latest',
+    'gemini-2.0-flash-lite',
+    'gemini-flash-latest'
   ];
 
   const prompt = `

@@ -14,92 +14,93 @@
     },
     "landing": {
         "hero": {
-            "title": "Translate Job Descriptions to Your Perfect CV",
-            "subtitle": "AI-powered analysis that decodes job requirements, identifies skill gaps, and generates tailored CVs in seconds",
-            "cta": "Get Started Free",
-            "demo": "See Demo"
+            "title": "The First AI Mediator for Talent & Companies",
+            "subtitle": "MEDYX removes the noise. Talent gets a private agent. Companies get pre-vetted matches. No headhunters. No spam.",
+            "cta": "For Talent: Get Matched",
+            "demo": "For Companies: Post Job"
         },
         "howItWorks": {
-            "title": "From Job Ad to Interview in",
-            "stepsSpan": "4 Steps",
+            "title": "A Fairer Way to Hire",
+            "stepsSpan": "For Everyone",
             "step1": {
-                "title": "Parse Your Resume",
-                "description": "Upload your PDF CV. Our AI instantly extracts your skills and experience to build your profile."
+                "title": "Create Profile",
+                "description": "Talent builds a private profile. Companies post requirements. No public databases."
             },
             "step2": {
-                "title": "Analyze Job Fit",
-                "description": "Paste any job description. We compare it against your profile to calculate a Match Score."
+                "title": "AI Mediation",
+                "description": "Our AI analyzes fit instantly. Companies see anonymized scores. Talent sees opportunities."
             },
             "step3": {
-                "title": "Get Strategic Insights",
-                "description": "Identify missing keywords and follow a personalized 3-Day Learning Roadmap."
+                "title": "Request & Consent",
+                "description": "Companies request contact. Talent reviews the offer and grants privacy consent."
             },
             "step4": {
-                "title": "Download Tailored Docs",
-                "description": "Generate an ATS-optimized CV and a comprehensive Job Analysis Report instantly."
+                "title": "Direct Connection",
+                "description": "Once matched, the curtain lifts. Chat directly. No middlemen fees."
             }
         },
         "features": {
-            "title": "How It Works",
+            "title": "Why MEDYX Mediator?",
             "analysis": {
-                "title": "Smart Analysis",
-                "description": "Paste any job description and get instant AI-powered insights"
+                "title": "Privacy First",
+                "description": "Your data is locked by default. You control who sees your name & details."
             },
             "gaps": {
-                "title": "Identify Gaps",
-                "description": "See exactly what skills you need to learn"
+                "title": "Explainable AI",
+                "description": "Don't just get a 'No'. Understand your Match Score and gaps instantly."
             },
             "roadmap": {
-                "title": "Learning Roadmap",
-                "description": "Get a personalized 3-day plan to close skill gaps"
+                "title": "Smart Upskilling",
+                "description": "Get a 3-Day Plan to bridge the gap for your dream role."
             },
             "cv": {
-                "title": "Tailored CV",
-                "description": "Generate a perfectly matched CV in one click"
+                "title": "Verified Matches",
+                "description": "Companies only see candidates who truly fit the requirements."
             }
         },
         "pricing": {
-            "title": "Simple Pricing",
+            "title": "Fair Pricing",
             "free": {
-                "name": "Free",
+                "name": "Talent (Individual)",
                 "price": "$0",
                 "features": [
-                    "3 analyses per month",
-                    "Basic skill matching",
-                    "CV generation"
+                    "Private Profile",
+                    "Unlimited Job Analysis",
+                    "Learning Roadmaps",
+                    "Control your Consent"
                 ]
             },
             "pro": {
-                "name": "Pro",
-                "price": "$9.99",
+                "name": "Company (Brokerage)",
+                "price": "$5",
                 "features": [
-                    "Unlimited analyses",
-                    "Advanced insights",
-                    "Priority support",
-                    "Export to PDF"
+                    "Post Jobs",
+                    "View Anonymized Matches",
+                    "Pay only per Contact Request",
+                    "Enterprise Contracts available"
                 ]
             }
         }
     },
     "dashboard": {
-        "title": "Dashboard",
+        "title": "Control Room",
         "welcome": "Welcome back",
-        "subtitle": "Here's what's happening with your job search.",
-        "totalAnalyses": "Total Analyses",
-        "avgMatch": "Avg. Match",
-        "newJobAnalysis": "New Job Analysis",
-        "newJobSubtitle": "Paste a job description to get AI-powered insights.",
-        "placeholder": "Paste the job description here (e.g. from LinkedIn, Indeed)...",
+        "subtitle": "Overview of your mediation pipeline.",
+        "totalAnalyses": "Total Opportunities",
+        "avgMatch": "Avg. Match Score",
+        "newJobAnalysis": "New Opportunity",
+        "newJobSubtitle": "Submit a job description to find matches.",
+        "placeholder": "Paste job requirements here...",
         "autoDetect": "Auto-detect category",
-        "analyzeJob": "Analyze Job",
-        "analyzing": "Analyzing...",
-        "recentAnalyses": "Recent Analyses",
-        "viewAll": "View all",
-        "match": "Match",
+        "analyzeJob": "Submit Opportunity",
+        "analyzing": "Matching...",
+        "recentAnalyses": "Recent Decisions",
+        "viewAll": "View Pipeline",
+        "match": "Match Score",
         "processing": "Processing",
-        "noAnalyses": "No analyses yet",
-        "noAnalysesSubtitle": "Paste a job description above to create your first analysis.",
-        "loadingDashboard": "Loading dashboard..."
+        "noAnalyses": "No opportunities yet",
+        "noAnalysesSubtitle": "Submit your first opportunity to start matching.",
+        "loadingDashboard": "Loading control room..."
     },
     "settings": {
         "title": "Settings",
@@ -181,8 +182,8 @@
         }
     },
     "nav": {
-        "dashboard": "Dashboard",
-        "analyses": "My Analyses",
+        "dashboard": "Control Room",
+        "analyses": "Pipeline",
         "profile": "Profile",
         "billing": "Billing",
         "settings": "Settings",
@@ -215,7 +216,7 @@
         "subtitle": "AI-powered breakdown of requirements, gaps, and personalization strategy.",
         "matchScore": "Match Score",
         "shareReport": "Share Report",
-        "shareTitle": "Talio Analysis",
+        "shareTitle": "MEDYX Analysis",
         "shareText": "Check out my job analysis for {title}. Match Score: {score}%",
         "copied": "Copied!",
         "clipboard": "Link copied to clipboard!",

@@ -21,7 +21,7 @@ export async function getDashboardData() {
     const { data: recentJobs } = await supabase
         .from('job_posts')
         .select('*, analyses(match_score)')
-        .eq('user_id', user.id)
+        .eq('company_id', user.id)
         .order('created_at', { ascending: false })
         .limit(3);
 
@@ -29,12 +29,12 @@ export async function getDashboardData() {
     const { count: totalAnalyses } = await supabase
         .from('job_posts')
         .select('*', { count: 'exact', head: true })
-        .eq('user_id', user.id);
+        .eq('company_id', user.id);
 
     const { data: jobsWithScores } = await supabase
         .from('job_posts')
         .select('analyses(match_score)')
-        .eq('user_id', user.id);
+        .eq('company_id', user.id);
 
     let totalScore = 0;
     let scoredJobsCount = 0;
@@ -90,7 +90,7 @@ export async function getAnalyses() {
     const { data: jobs } = await supabase
         .from('job_posts')
         .select('*, analyses(match_score)')
-        .eq('user_id', user.id)
+        .eq('company_id', user.id)
         .order('created_at', { ascending: false });
 
     return jobs?.map(job => ({

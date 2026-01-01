@@ -1,148 +1,214 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle, FileText, Sparkles, BarChart, Menu, Upload } from 'lucide-react';
+import { Logo } from '@/components/Logo';
+import { Footer } from '@/components/Footer';
+import { Shield, Lock, Zap, Users, CheckCircle, ArrowRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useTranslations } from 'next-intl';
 
 export default function LandingPage() {
-  const t = useTranslations('landing');
-  const tCommon = useTranslations('common');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary/30">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-md">
-        <div className="container mx-auto flex h-16 items-center justify-between px-6">
-          <div className="flex items-center gap-2 font-bold text-2xl tracking-tighter text-primary">
-            <div className="bg-gradient-to-tr from-indigo-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-primary/20">
-              <Sparkles className="h-5 w-5 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-indigo-950/20 to-gray-950 text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="relative z-50 bg-gray-950/30 backdrop-blur-lg border-b border-gray-800/50 sticky top-0">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Logo />
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              <button onClick={() => scrollToSection('how-it-works')} className="text-gray-300 hover:text-cyan-400 transition-colors">
+                How It Works
+              </button>
+              <button onClick={() => scrollToSection('for-individuals')} className="text-gray-300 hover:text-cyan-400 transition-colors">
+                For Individuals
+              </button>
+              <button onClick={() => scrollToSection('for-companies')} className="text-gray-300 hover:text-cyan-400 transition-colors">
+                For Companies
+              </button>
+              <button onClick={() => scrollToSection('security')} className="text-gray-300 hover:text-cyan-400 transition-colors">
+                Security
+              </button>
             </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">Talio</span>
-          </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-            <Link href="#features" className="hover:text-primary transition-colors">Features</Link>
-            <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
-            <Link href="/dashboard" className="hover:text-primary transition-colors">Dashboard</Link>
-          </div>
+            <div className="hidden md:flex items-center gap-4">
+              <Link href="/login">
+                <Button variant="outline" className="border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300 rounded-xl px-6 transition-all">
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold rounded-xl px-6 shadow-lg shadow-indigo-500/20 transition-all hover:scale-105 active:scale-95">
+                  Get Started
+                </Button>
+              </Link>
+            </div>
 
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="hidden md:block text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-              Log in
-            </Link>
-            <Link href="/signup">
-              <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/25 rounded-full px-6">
-                Get Started
-              </Button>
-            </Link>
-            {/* Mobile Menu Trigger (Placeholder for now) */}
-            <button className="md:hidden p-2 text-muted-foreground">
-              <Menu className="h-6 w-6" />
+            {/* Mobile Menu Button */}
+            <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-4 py-4 border-t border-gray-800 animate-in fade-in slide-in-from-top-4 duration-200">
+              <div className="flex flex-col gap-4">
+                <button onClick={() => scrollToSection('how-it-works')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors">
+                  How It Works
+                </button>
+                <button onClick={() => scrollToSection('for-individuals')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors">
+                  For Individuals
+                </button>
+                <button onClick={() => scrollToSection('for-companies')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors">
+                  For Companies
+                </button>
+                <button onClick={() => scrollToSection('security')} className="text-left text-gray-300 hover:text-cyan-400 transition-colors">
+                  Security
+                </button>
+                <Link href="/login">
+                  <Button variant="outline" className="w-full border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 rounded-xl py-6 font-bold">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button className="w-full bg-gradient-to-r from-indigo-600 to-cyan-600 font-bold rounded-xl py-6 shadow-lg shadow-indigo-500/20">
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-20 pb-32 lg:pt-40">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-primary/20 rounded-full blur-[120px] -z-10 opacity-50 animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-purple-500/10 rounded-full blur-[100px] -z-10" />
+      <section className="relative container mx-auto px-6 py-24 md:py-32">
+        <div className="text-center max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
+            AI-Powered Professional Mediator
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-300 mb-8">
+            Connecting individuals and companies through anonymized AI matching, consent-based contact, and credit-based access.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => scrollToSection('how-it-works')}
+              className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl hover:bg-white/20 transition-all flex items-center justify-center gap-2 font-bold group"
+            >
+              See How It Works
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            <Link href="/signup?type=individual" className="w-full sm:w-auto">
+              <Button className="px-8 py-7 bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-lg rounded-2xl shadow-xl shadow-cyan-600/20 w-full transition-all hover:scale-[1.02] active:scale-[0.98]">
+                Join as Individual
+              </Button>
+            </Link>
+            <Link href="/signup?type=company" className="w-full sm:w-auto">
+              <Button className="px-8 py-7 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-lg rounded-2xl shadow-xl shadow-indigo-600/20 w-full transition-all hover:scale-[1.02] active:scale-[0.98]">
+                Join as Company
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-        <div className="container mx-auto px-6">
-          <div className="grid gap-16 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="max-w-2xl animate-fade-in-up">
-              <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary mb-6 backdrop-blur-sm">
-                <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                Now using Gemini 1.5 Pro
+      {/* How It Works Section */}
+      <section id="how-it-works" className="relative container mx-auto px-6 py-24 scroll-mt-20">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-indigo-300 to-cyan-300 bg-clip-text text-transparent">
+          How MEDYX Works
+        </h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[
+            { icon: Shield, title: '1. Anonymized Matching', desc: 'Our AI analyzes profiles while keeping identities completely anonymous until consent is granted.' },
+            { icon: CheckCircle, title: '2. Consent-Based Contact', desc: 'Individuals control who can see their information. No contact without explicit consent.' },
+            { icon: Zap, title: '3. Credit System', desc: 'Companies use credits to request connections, ensuring quality interactions and fair access.' }
+          ].map((step, i) => (
+            <div
+              key={i}
+              className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8 hover:border-cyan-500/50 transition-all"
+            >
+              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-lg flex items-center justify-center mb-4">
+                <step.icon className="w-7 h-7 text-white" />
               </div>
-              <h1 className="text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl mb-8 leading-[1.1]">
-                {t('hero.title').split(' ').slice(0, 2).join(' ')} <br />
-                <span className="text-gradient">{t('hero.title').split(' ').slice(2).join(' ')}</span>
-              </h1>
-              <p className="text-xl text-muted-foreground mb-10 leading-relaxed max-w-lg">
-                {t('hero.subtitle')}
+              <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+              <p className="text-gray-400">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* For Individuals Section */}
+      <section id="for-individuals" className="relative bg-gradient-to-b from-transparent via-cyan-950/10 to-transparent py-24 scroll-mt-20">
+        <div className="container mx-auto px-6">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-300 to-indigo-300 bg-clip-text text-transparent">
+                For Individuals
+              </h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Control your privacy. Get matched with opportunities that truly fit you.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/dashboard" className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary/20 hover:bg-primary/90 hover:scale-105 transition-all duration-300">
-                  {t('hero.cta')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link href="#demo" className="inline-flex items-center justify-center rounded-full border border-border bg-background/50 backdrop-blur-sm px-8 py-4 text-base font-semibold text-foreground hover:bg-muted transition-all">
-                  {t('hero.demo')}
-                </Link>
-              </div>
-
+              <ul className="space-y-4">
+                {[
+                  'Complete privacy until you grant consent',
+                  'AI-powered matching based on your skills and preferences',
+                  'Transparent consent management',
+                  'See who wants to connect before revealing your identity',
+                  'No spam or unwanted contact'
+                ].map((benefit, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
+                    <span className="text-gray-300">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link href="/signup?type=individual" className="inline-block mt-8">
+                <Button className="bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold rounded-xl px-8 py-6 shadow-lg shadow-cyan-600/20 transition-all hover:scale-105">
+                  Join as Individual
+                </Button>
+              </Link>
             </div>
-
-            {/* Glassmorphism Card Preview */}
-            <div className="relative mx-auto w-full max-w-lg lg:max-w-none perspective-1000">
-              <div className="relative rounded-2xl bg-white/5 border border-white/10 p-2 shadow-2xl backdrop-blur-xl transform rotate-y-12 hover:rotate-y-0 transition-transform duration-700 ease-out">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-2xl pointer-events-none" />
-                <div className="rounded-xl bg-background/80 p-6 h-[400px] flex flex-col">
-                  {/* Mock UI Header */}
-                  {/* Header */}
-                  <div className="flex items-center justify-between mb-8 border-b border-border pb-4">
-                    <div>
-                      <h3 className="font-bold text-lg text-foreground">Senior Frontend Developer</h3>
-                      <p className="text-sm text-muted-foreground">TechCorp Inc.</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                      <span className="text-xs font-medium text-green-500">Live Analysis</span>
-                    </div>
+            <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8 hover:border-cyan-500/50 transition-all">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-indigo-500"></div>
+                  <div>
+                    <div className="h-3 w-32 bg-gray-700 rounded mb-2"></div>
+                    <div className="h-2 w-24 bg-gray-800 rounded"></div>
                   </div>
-
-                  {/* Mock UI Content */}
-                  <div className="space-y-6 flex-1">
-                    {/* Score Section */}
-                    <div className="flex items-center gap-8 mb-8">
-                      <div className="relative h-24 w-24 flex items-center justify-center">
-                        {/* Circular Progress Background */}
-                        <svg className="h-full w-full -rotate-90" viewBox="0 0 36 36">
-                          <path className="text-muted/20" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" />
-                          <path className="text-primary drop-shadow-[0_0_10px_rgba(124,58,237,0.5)]" strokeDasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                        </svg>
-                        <div className="absolute flex flex-col items-center">
-                          <span className="text-2xl font-bold text-foreground">85%</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium text-muted-foreground mb-1">Match Score</div>
-                        <div className="text-2xl font-bold text-foreground">Excellent</div>
-                        <p className="text-xs text-muted-foreground mt-1">You're a strong candidate!</p>
-                      </div>
-                    </div>
-
-                    {/* Skills Section */}
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between text-sm mb-2">
-                          <span className="font-medium text-muted-foreground">Key Skills Found</span>
-                          <span className="text-primary">4/5</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {['React', 'TypeScript', 'Tailwind', 'Next.js'].map((skill) => (
-                            <span key={skill} className="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium border border-primary/20 flex items-center gap-1">
-                              <CheckCircle className="h-3 w-3" /> {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="pt-4 border-t border-border">
-                        <div className="flex justify-between text-sm mb-2">
-                          <span className="font-medium text-muted-foreground">Missing Keywords</span>
-                          <span className="text-red-500">1 Critical</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <span className="px-2 py-1 rounded-md bg-red-500/10 text-red-500 text-xs font-medium border border-red-500/20 flex items-center gap-1">
-                            <Sparkles className="h-3 w-3" /> GraphQL
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-2 w-full bg-gray-700 rounded"></div>
+                  <div className="h-2 w-5/6 bg-gray-700 rounded"></div>
+                  <div className="h-2 w-4/6 bg-gray-700 rounded"></div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1 h-10 bg-cyan-500/20 border border-cyan-500/50 rounded-lg flex items-center justify-center text-cyan-400 text-sm">
+                    Grant Consent
+                  </div>
+                  <div className="flex-1 h-10 bg-gray-700/20 border border-gray-700 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+                    Reject
                   </div>
                 </div>
               </div>
@@ -151,175 +217,133 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it Works Section */}
-      <section id="demo" className="py-24 bg-muted/50 relative overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
-              {t('howItWorks.title')} <span className="text-gradient">{t('howItWorks.stepsSpan')}</span>
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {t('hero.subtitle')}
-            </p>
+      {/* For Companies Section */}
+      <section id="for-companies" className="relative container mx-auto px-6 py-24 scroll-mt-20">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-8 hover:border-indigo-500/50 transition-all order-2 md:order-1">
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-400">AI Match Score</div>
+                <div className="text-xl font-bold text-indigo-400">94%</div>
+              </div>
+              <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div className="h-full w-[94%] bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
+              </div>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div className="flex justify-between">
+                  <span>Skills Match</span>
+                  <span className="text-green-400">Excellent</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Experience Level</span>
+                  <span className="text-cyan-400">Perfect Fit</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Location</span>
+                  <span className="text-purple-400">Compatible</span>
+                </div>
+              </div>
+              <div className="pt-4 border-t border-gray-700">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-400">Request Contact</span>
+                  <span className="text-sm text-indigo-400">1 Credit</span>
+                </div>
+              </div>
+            </div>
           </div>
+          <div className="order-1 md:order-2">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
+              For Companies
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Find the perfect candidates with AI-powered matching and transparent consent.
+            </p>
+            <ul className="space-y-4">
+              {[
+                'Access pre-qualified candidates matched to your needs',
+                'Explainable AI shows why each match was suggested',
+                'Credit-based system ensures quality over quantity',
+                'Only pay for actual connections',
+                'Complete transparency in the matching process'
+              ].map((benefit, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <CheckCircle className="w-6 h-6 text-indigo-400 flex-shrink-0 mt-1" />
+                  <span className="text-gray-300">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+            <Link href="/signup?type=company" className="inline-block mt-8">
+              <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-xl px-8 py-6 shadow-lg shadow-indigo-600/20 transition-all hover:scale-105">
+                Join as Company
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
-            {/* Connecting Line (Desktop) */}
-            <div className="hidden lg:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
-
+      {/* Security Section */}
+      <section id="security" className="relative bg-gradient-to-b from-transparent via-indigo-950/10 to-transparent py-24 scroll-mt-20">
+        <div className="container mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 bg-gradient-to-r from-indigo-300 to-cyan-300 bg-clip-text text-transparent">
+            Trust & Security First
+          </h2>
+          <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
+            Your privacy and security are our top priorities. MEDYX is built on enterprise-grade security and GDPR compliance.
+          </p>
+          <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {[
-              {
-                step: "01",
-                title: t('howItWorks.step1.title'),
-                desc: t('howItWorks.step1.description'),
-                icon: <Upload className="h-6 w-6 text-blue-500" />
-              },
-              {
-                step: "02",
-                title: t('howItWorks.step2.title'),
-                desc: t('howItWorks.step2.description'),
-                icon: <FileText className="h-6 w-6 text-indigo-500" />
-              },
-              {
-                step: "03",
-                title: t('howItWorks.step3.title'),
-                desc: t('howItWorks.step3.description'),
-                icon: <Sparkles className="h-6 w-6 text-purple-500" />
-              },
-              {
-                step: "04",
-                title: t('howItWorks.step4.title'),
-                desc: t('howItWorks.step4.description'),
-                icon: <CheckCircle className="h-6 w-6 text-pink-500" />
-              }
+              { icon: Shield, title: 'End-to-End Encryption', desc: 'All data is encrypted in transit and at rest' },
+              { icon: Lock, title: 'GDPR Compliant', desc: 'Full compliance with EU data protection regulations' },
+              { icon: Users, title: 'Consent-Based', desc: 'No data sharing without explicit user consent' },
+              { icon: Zap, title: 'Audit Trail', desc: 'Complete transparency in all data access and usage' }
             ].map((item, i) => (
-              <div key={i} className="relative flex flex-col items-center text-center">
-                <div className="w-24 h-24 rounded-2xl bg-background border border-border shadow-lg flex items-center justify-center mb-6 relative group hover:scale-110 transition-transform duration-300">
-                  <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">
-                    {item.step}
-                  </div>
-                  {item.icon}
+              <div
+                key={i}
+                className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-center hover:border-indigo-500/50 transition-all"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                <p className="text-muted-foreground max-w-xs mx-auto">{item.desc}</p>
+                <h3 className="font-bold mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-400">{item.desc}</p>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/security">
+              <Button variant="outline" className="border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/10 hover:text-indigo-300 rounded-xl px-8 py-6 transition-all">
+                Learn More About Security
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-32 bg-muted/30 relative">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-6">
-              Everything you need to <span className="text-gradient">land the job</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Stop guessing what the hiring manager wants. Our AI decodes the requirements and gives you a step-by-step plan.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <FileText className="h-8 w-8 text-indigo-500" />,
-                title: "Skill Extraction",
-                desc: "Instantly see the 'must-have' vs 'nice-to-have' skills, with simple explanations for each.",
-                color: "indigo"
-              },
-              {
-                icon: <BarChart className="h-8 w-8 text-purple-500" />,
-                title: "Gap Analysis",
-                desc: "Compare your profile against the job. We highlight exactly what you're missing and how to learn it.",
-                color: "purple"
-              },
-              {
-                icon: <Sparkles className="h-8 w-8 text-pink-500" />,
-                title: "Tailored CVs",
-                desc: "Get bullet points rewritten to match the job description's keywords and tone.",
-                color: "pink"
-              }
-            ].map((feature, i) => (
-              <div key={i} className="group relative rounded-3xl border border-border bg-background p-10 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
-                <div className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-${feature.color}-500/10 text-${feature.color}-500 group-hover:scale-110 transition-transform duration-300`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
+      {/* CTA Section */}
+      <section className="relative container mx-auto px-6 py-24">
+        <div className="bg-gradient-to-r from-indigo-900/50 via-purple-900/50 to-cyan-900/50 backdrop-blur-sm border border-indigo-500/50 rounded-2xl p-12 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            Ready to Get Started?
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals and companies using MEDYX to make better connections.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Link href="/signup?type=individual">
+              <Button className="px-10 py-8 bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-black text-xl rounded-2xl shadow-2xl shadow-cyan-600/30 w-full sm:w-auto transition-all hover:scale-105 active:scale-95">
+                Join as Individual
+              </Button>
+            </Link>
+            <Link href="/signup?type=company">
+              <Button className="px-10 py-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-xl rounded-2xl shadow-2xl shadow-indigo-600/30 w-full sm:w-auto transition-all hover:scale-105 active:scale-95">
+                Join as Company
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-32">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl mb-6">
-              Simple, transparent pricing
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Start for free, upgrade when you're ready to apply at scale.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { name: "Free", price: "$0", features: ["3 Analyses / month", "Basic CV suggestions", "Standard support"] },
-              { name: "Starter", price: "$5", features: ["15 Analyses / month", "Full Learning Roadmap", "PDF Downloads", "Priority support"], popular: true },
-              { name: "Pro", price: "$10", features: ["Unlimited Analyses", "Bulk uploads", "CSV Export", "API Access"] }
-            ].map((plan, i) => (
-              <div key={i} className={`relative rounded-3xl p-10 transition-all duration-300 ${plan.popular ? 'bg-background border-2 border-primary shadow-2xl shadow-primary/10 scale-105 z-10' : 'bg-muted/30 border border-border hover:bg-muted/50'}`}>
-                {plan.popular && (
-                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-white shadow-lg">
-                    Most Popular
-                  </span>
-                )}
-                <h3 className="text-xl font-bold text-foreground">{plan.name}</h3>
-                <div className="mt-6 flex items-baseline text-foreground">
-                  <span className="text-5xl font-extrabold tracking-tight">{plan.price}</span>
-                  <span className="ml-2 text-lg font-medium text-muted-foreground">/month</span>
-                </div>
-                <ul className="mt-8 space-y-5">
-                  {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-center text-base text-muted-foreground">
-                      <div className="mr-3 h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle className="h-4 w-4 text-primary" />
-                      </div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/signup" className="w-full">
-                  <button className={`mt-10 w-full rounded-xl px-4 py-4 text-base font-bold transition-all duration-300 ${plan.popular ? 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/25' : 'bg-white dark:bg-white/10 text-foreground border border-border hover:bg-muted'}`}>
-                    {plan.name === 'Free' ? 'Get Started' : 'Subscribe'}
-                  </button>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-background border-t border-border py-16">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2 font-bold text-xl text-foreground">
-            <div className="bg-gradient-to-tr from-indigo-500 to-purple-600 p-2 rounded-lg shadow-lg shadow-primary/20">
-              <Sparkles className="h-5 w-5 text-white" />
-            </div>
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600">Talio</span>
-          </div>
-          <div className="text-sm text-muted-foreground">
-            © 2024 Talio. All rights reserved.
-          </div>
-          <div className="flex gap-8 text-sm font-medium text-muted-foreground">
-            <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
-            <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

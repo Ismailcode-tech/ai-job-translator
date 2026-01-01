@@ -43,7 +43,7 @@ export async function POST(request: Request) {
         const { count } = await supabase
             .from('job_posts')
             .select('*', { count: 'exact', head: true })
-            .eq('user_id', user.id)
+            .eq('company_id', user.id)
             .gte('created_at', startOfMonth);
 
         if ((count || 0) >= limit) {
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
         const { data: jobData, error: jobError } = await supabase
             .from('job_posts')
             .insert([{
-                user_id: user.id,
+                company_id: user.id,
                 title: 'New Analysis', // Temporary title, will be updated by AI
                 original_text: text,
                 source: 'manual',
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
             }, { status: 500 });
         }
 
-        // 3. Save Analysis to Supabase
+        // 3. Save Analysis to Supabase (Legacy Table - keeping for history/dashboards)
         const { error: analysisError } = await supabase
             .from('analyses')
             .insert([{
@@ -114,6 +114,36 @@ export async function POST(request: Request) {
         if (analysisError) {
             console.error('Supabase Analysis Error:', analysisError);
         }
+
+        // --- MEDIATOR PLATFORM INJECTION (PHASE 2 & 8) ---
+        // Create a 'suggested' match in the Broker Ledger.
+        try {
+            const { MediatorService } = await import('@/lib/mediator/service');
+            const { AISafety } = await import('@/lib/ai/safety');
+
+            // Construct a "reason" string from the analysis
+            const aiReasonRaw = `Match Score: ${analysis.match_score}. Key Skills: ${analysis.skills.slice(0, 3).join(', ')}.`;
+
+            // PHASE 8: AI SAFETY & VALIDATION
+            const { isValid, safeReason } = AISafety.validateMatch(analysis.match_score, aiReasonRaw);
+
+            if (isValid) {
+                await MediatorService.createMatchProposal(
+                    jobData.id,
+                    user.id,
+                    analysis.match_score,
+                    safeReason // Scrubbed reason
+                );
+            } else {
+                console.warn('AI Match rejected due to low confidence.', { score: analysis.match_score });
+                // Optionally log rejection in audit logs or db
+            }
+
+        } catch (mediatorError) {
+            console.error('Mediator Service Error:', mediatorError);
+            // Non-blocking for now, but critical for Phase 2
+        }
+        // ---------------------------------------------
 
         // 4. Update Job Post with Title, Status, and Category
         await supabase
@@ -149,7 +179,7 @@ export async function GET() {
     const { data, error } = await supabase
         .from('job_posts')
         .select('*, analyses(*)')
-        .eq('user_id', user.id)
+        .eq('company_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10);
 

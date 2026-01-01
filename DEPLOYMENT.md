@@ -33,6 +33,7 @@ Congratulations! Your application is ready for the real world. Here is your step
 4.  **Environment Variables**: You MUST add all the variables from your `.env.local` to Vercel.
     -   `NEXT_PUBLIC_SUPABASE_URL`
     -   `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+    -   `SUPABASE_SERVICE_ROLE_KEY` (Required for the Matching Engine)
     -   `GEMINI_API_KEY`
     -   `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` (Use Live keys for real money!)
     -   `STRIPE_SECRET_KEY` (Use Live keys!)

@@ -14,92 +14,93 @@
     },
     "landing": {
         "hero": {
-            "title": "Traduce Descripciones de Trabajo a tu CV Perfecto",
-            "subtitle": "Análisis impulsado por IA que decodifica requisitos laborales, identifica brechas de habilidades y genera CVs personalizados en segundos",
-            "cta": "Comenzar Gratis",
-            "demo": "Ver Demo"
+            "title": "El Primer Mediador de IA para Talento y Empresas",
+            "subtitle": "MEDYX elimina el ruido. El talento obtiene un agente privado. Las empresas obtienen coincidencias pre-verificadas. Sin intermediarios. Sin spam.",
+            "cta": "Para Talento: Ver Coincidencias",
+            "demo": "Para Empresas: Publicar Vacante"
         },
         "howItWorks": {
-            "title": "Del anuncio a la entrevista en",
-            "stepsSpan": "4 Pasos",
+            "title": "Un Proceso de Selección Más Justo",
+            "stepsSpan": "Para Todos",
             "step1": {
-                "title": "Analiza tu CV",
-                "description": "Sube tu PDF. Nuestra IA extrae tus habilidades para crear tu perfil al instante."
+                "title": "Crea tu Perfil",
+                "description": "El talento construye un perfil privado. Las empresas publican requisitos. Sin bases de datos públicas."
             },
             "step2": {
-                "title": "Analiza la Oferta",
-                "description": "Pega un anuncio. Lo comparamos con tu perfil para calcular tu Puntuación de Coincidencia."
+                "title": "Mediación por IA",
+                "description": "Nuestra IA analiza el encaje al instante. Las empresas ven puntuaciones anónimas."
             },
             "step3": {
-                "title": "Obtén Insights",
-                "description": "Identifica palabras clave faltantes y sigue una Hoja de Ruta de Aprendizaje de 3 días."
+                "title": "Solicitud y Consentimiento",
+                "description": "Las empresas solicitan contacto. El talento revisa la oferta y concede su privacidad."
             },
             "step4": {
-                "title": "Descarga tus Documentos",
-                "description": "Genera un CV optimizado para ATS y un Informe de Análisis completo al instante."
+                "title": "Conexión Directa",
+                "description": "Una vez emparejados, se levanta el telón. Habla directamente. Sin comisiones."
             }
         },
         "features": {
-            "title": "Cómo Funciona",
+            "title": "¿Por qué MEDYX Mediator?",
             "analysis": {
-                "title": "Análisis Inteligente",
-                "description": "Pega cualquier descripción de trabajo y obtén información instantánea impulsada por IA"
+                "title": "Privacidad Primero",
+                "description": "Tus datos están bloqueados por defecto. Tú controlas quién ve tu nombre y detalles."
             },
             "gaps": {
-                "title": "Identificar Brechas",
-                "description": "Ve exactamente qué habilidades necesitas aprender"
+                "title": "IA Explicable",
+                "description": "No solo recibas un 'No'. Entiende tu Puntuación de Coincidencia y brechas al instante."
             },
             "roadmap": {
-                "title": "Hoja de Ruta de Aprendizaje",
-                "description": "Obtén un plan personalizado de 3 días para cerrar brechas de habilidades"
+                "title": "Upskilling Inteligente",
+                "description": "Obtén un plan de 3 días para cerrar la brecha hacia tu puesto ideal."
             },
             "cv": {
-                "title": "CV Personalizado",
-                "description": "Genera un CV perfectamente adaptado en un clic"
+                "title": "Coincidencias Verificadas",
+                "description": "Las empresas solo ven candidatos que realmente encajan con sus requisitos."
             }
         },
         "pricing": {
-            "title": "Precios Simples",
+            "title": "Precios Transparentes",
             "free": {
-                "name": "Gratis",
+                "name": "Talento (Individual)",
                 "price": "$0",
                 "features": [
-                    "3 análisis por mes",
-                    "Coincidencia básica de habilidades",
-                    "Generación de CV"
+                    "Perfil Privado",
+                    "Análisis de Trabajo Ilimitado",
+                    "Hojas de Ruta de Aprendizaje",
+                    "Control de tu Privacidad"
                 ]
             },
             "pro": {
-                "name": "Pro",
-                "price": "$9.99",
+                "name": "Empresa (Brokerage)",
+                "price": "$5",
                 "features": [
-                    "Análisis ilimitados",
-                    "Información avanzada",
-                    "Soporte prioritario",
-                    "Exportar a PDF"
+                    "Publicar Vacantes",
+                    "Ver Coincidencias Anónimas",
+                    "Pago por Solicitud de Contacto",
+                    "Contratos Enterprise disponibles"
                 ]
             }
         }
     },
     "dashboard": {
-        "title": "Panel",
+        "title": "Centro de Control",
         "welcome": "Bienvenido de nuevo",
-        "subtitle": "Esto es lo que está pasando con tu búsqueda de empleo.",
-        "totalAnalyses": "Análisis Totales",
+        "subtitle": "Vista general de tu flujo de mediación.",
+        "totalAnalyses": "Oportunidades Totales",
         "avgMatch": "Coincidencia Promedio",
-        "newJobAnalysis": "Nuevo Análisis de Trabajo",
-        "newJobSubtitle": "Pega una descripción de trabajo para obtener información impulsada por IA.",
-        "placeholder": "Pega la descripción del trabajo aquí (ej. de LinkedIn, Indeed)...",
+        "newJobAnalysis": "Nueva Oportunidad",
+        "newJobSubtitle": "Pega una descripción de trabajo para iniciar el matching con IA.",
+        "placeholder": "Pega los requisitos del trabajo aquí...",
         "autoDetect": "Detectar categoría automáticamente",
-        "analyzeJob": "Analizar Trabajo",
-        "analyzing": "Analizando...",
-        "recentAnalyses": "Análisis Recientes",
-        "viewAll": "Ver todo",
+        "analyzeJob": "Enviar Oportunidad",
+        "analyzing": "Matching en curso...",
+        "recentAnalyses": "Decisiones Recientes",
+        "viewAll": "Ver Pipeline",
         "match": "Coincidencia",
         "processing": "Procesando",
-        "noAnalyses": "Aún no hay análisis",
-        "noAnalysesSubtitle": "Pega una descripción de trabajo arriba para crear tu primer análisis.",
-        "loadingDashboard": "Cargando panel..."
+        "noAnalyses": "Aún no hay oportunidades",
+        "noAnalysesSubtitle": "Envía tu primera oportunidad para comenzar el matching.",
+        "loadingDashboard": "Cargando centro de control..."
     },
     "settings": {
         "title": "Configuración",
@@ -155,14 +156,14 @@
         "targetRole": "Rol Objetivo",
         "targetRoleHelper": "También se usa como tu título de búsqueda de empleo predeterminado.",
         "topSkills": "Habilidades Principales",
-        "topSkillsHelper": "Separa las habilidades con comas. Estas ayudan a priorizar los resultados del análisis.",
+        "topSkillsHelper": "Separa las habilidades con comas. Estas ayudan a priorizar los resultados.",
         "uploadResume": "Subir Currículum",
         "saveChanges": "Guardar Cambios",
         "headerTitle": "Configuración del Perfil",
-        "headerDesc": "Administra tus datos personales, habilidades profesionales y currículum para obtener el análisis de trabajo de IA más preciso.",
+        "headerDesc": "Administra tus datos personales, habilidades profesionales y currículum para un análisis de IA preciso.",
         "resumeSection": {
             "title": "Currículum / CV",
-            "subtitle": "Sube tu currículum para habilitar la generación de CV personalizados.",
+            "subtitle": "Sube tu currículum para habilitar la generación personalizada.",
             "current": "Currículum Actual",
             "ready": "Listo para análisis",
             "download": "Descargar",
@@ -181,8 +182,8 @@
         }
     },
     "nav": {
-        "dashboard": "Panel",
-        "analyses": "Mis Análisis",
+        "dashboard": "Centro de Control",
+        "analyses": "Pipeline",
         "profile": "Perfil",
         "billing": "Facturación",
         "settings": "Configuración",
@@ -201,7 +202,7 @@
         },
         "signup": {
             "title": "Crear Cuenta",
-            "subtitle": "Comienza a analizar trabajos gratis",
+            "subtitle": "Comienza a traducir trabajos gratis",
             "name": "Nombre Completo",
             "email": "Correo",
             "password": "Contraseña",
@@ -215,8 +216,8 @@
         "subtitle": "Desglose de requisitos, brechas y estrategia de personalización impulsada por IA.",
         "matchScore": "Puntuación de Coincidencia",
         "shareReport": "Compartir Informe",
-        "shareTitle": "Análisis de Talio",
-        "shareText": "Mira mi análisis de trabajo para {title}. Puntuación de Coincidencia: {score}%",
+        "shareTitle": "Análisis MEDYX",
+        "shareText": "Mira mi análisis de trabajo para {title}. Coincidencia: {score}%",
         "copied": "¡Copiado!",
         "clipboard": "¡Enlace copiado al portapapeles!",
         "loading": "Cargando tu análisis personalizado...",
@@ -241,7 +242,7 @@
             "none": "¡No se detectaron brechas importantes! 🎉"
         },
         "cv": {
-            "title": "Viñetas de CV Personalizadas",
+            "title": "Mejoras de CV Personalizadas",
             "subtitle": "Haz clic para copiar estas mejoras para tu currículum:",
             "copyAll": "Copiar Todas las Sugerencias",
             "allCopied": "¡Todo Copiado!"
@@ -259,12 +260,12 @@
         "processing": "Procesando...",
         "upgradeBtn": "Mejorar a {plan}",
         "paymentMethod": "Método de Pago",
-        "paymentDesc": "Los detalles de pago aparecerán aquí después de suscribirte a un plan.",
+        "paymentDesc": "Los detalles de pago aparecerán aquí después de suscribirte.",
         "plans": {
             "free": {
                 "name": "Gratis",
                 "features": {
-                    "analyses": "3 Análisis / mes",
+                    "analyses": "Análisis ilimitados",
                     "cv": "Sugerencias básicas de CV",
                     "support": "Soporte estándar"
                 }
@@ -272,8 +273,8 @@
             "starter": {
                 "name": "Starter",
                 "features": {
-                    "analyses": "15 Análisis / mes",
-                    "roadmap": "Hoja de Ruta de Aprendizaje Completa",
+                    "analyses": "Analísis prioritarios",
+                    "roadmap": "Hoja de Ruta Completa",
                     "pdf": "Descargas PDF",
                     "support": "Soporte Prioritario"
                 }
@@ -306,12 +307,12 @@
         "cv": {
             "namePlaceholder": "TU NOMBRE",
             "professionalProfile": "Perfil Profesional",
-            "profileTemplate": "Profesional orientado a resultados aspirando al puesto de {jobTitle}. Habilidades en {skills}. Apasionado por entregar soluciones de alta calidad.",
+            "profileTemplate": "Profesional orientado a resultados aspirando al puesto de {jobTitle}. Habilidades en {skills}. Apasionado por entregar alta calidad.",
             "coreCompetencies": "Competencias Principales",
             "relevantExperience": "Experiencia Relevante (Personalizada)",
-            "aiDisclaimer": "* Estos puntos son generados por IA basados en los requisitos del trabajo. Copia esto en tu sección de experiencia.",
+            "aiDisclaimer": "* Puntos generados por IA para tu sección de experiencia.",
             "placeholderRole": "Rol Anterior | Nombre de la Empresa",
-            "placeholderDesc": "Lideró el desarrollo de características principales usando React y TypeScript.",
+            "placeholderDesc": "Lideró el desarrollo con React y TypeScript.",
             "education": "Educación",
             "degreePlaceholder": "Nombre del Título",
             "universityPlaceholder": "Nombre de la Universidad"
@@ -332,20 +333,20 @@
         "sent": "¡Código de verificación enviado! Por favor revisa tu correo."
     },
     "analyses": {
-        "title": "Mis Análisis",
-        "subtitle": "Historial de todos tus análisis",
-        "newAnalysis": "Nuevo Análisis",
-        "searchPlaceholder": "Buscar análisis...",
+        "title": "Mi Pipeline",
+        "subtitle": "Historial de todos tus análisis de oportunidades",
+        "newAnalysis": "Nueva Oportunidad",
+        "searchPlaceholder": "Buscar oportunidades...",
         "filterAll": "Todos los Estados",
         "filterComplete": "Completado",
         "filterProcessing": "Procesando",
-        "emptyTitle": "No se encontraron análisis",
-        "emptyDesc": "Prueba a ajustar tu búsqueda o crea un nuevo análisis.",
-        "createFirst": "Crea tu Primer Análisis",
+        "emptyTitle": "No se encontraron oportunidades",
+        "emptyDesc": "Prueba a ajustar tu búsqueda o crea una nueva.",
+        "createFirst": "Busca tu Primera Oportunidad",
         "table": {
-            "jobTitle": "Título del Puesto",
+            "jobTitle": "Puesto",
             "date": "Fecha",
-            "matchScore": "Puntuación",
+            "matchScore": "Coincidencia",
             "status": "Estado",
             "action": "Acción",
             "view": "Ver"

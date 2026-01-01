@@ -75,15 +75,30 @@ export async function updateProfile(formData: FormData) {
     const location = formData.get('location') as string;
     const targetRole = formData.get('targetRole') as string;
     const skills = formData.get('skills') as string;
+    const phone = formData.get('phone') as string;
+    const professionalSummary = formData.get('professionalSummary') as string;
+    const yearsOfExperienceStr = formData.get('yearsOfExperience') as string;
 
     const name = `${firstName} ${lastName}`.trim();
+
+    // Parse years of experience safely
+    let yearsOfExperience: number | null = null;
+    if (yearsOfExperienceStr) {
+        const parsed = parseInt(yearsOfExperienceStr);
+        if (!isNaN(parsed)) {
+            yearsOfExperience = parsed;
+        }
+    }
 
     const updates = {
         id: user.id,
         name,
         location,
+        phone,
         preferred_job_categories: [targetRole], // Mapping targetRole to this array
         skills: skills ? skills.split(',').map(s => s.trim()) : [],
+        years_of_experience: yearsOfExperience,
+        professional_summary: professionalSummary,
         updated_at: new Date().toISOString(),
     };
 
