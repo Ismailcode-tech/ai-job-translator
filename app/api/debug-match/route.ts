@@ -4,10 +4,24 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
-    const jobId = searchParams.get('jobId');
+    let jobId = searchParams.get('jobId');
 
     if (!jobId) {
-        return NextResponse.json({ error: 'Missing jobId' }, { status: 400 });
+        console.log('[DebugAPI] No jobId provided. Fetching latest job...');
+        const supabase = await createClient();
+        const { data: latestJob } = await supabase
+            .from('job_posts')
+            .select('id, title')
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
+
+        if (latestJob) {
+            jobId = latestJob.id;
+            console.log(`[DebugAPI] Found latest job: ${latestJob.title} (${jobId})`);
+        } else {
+            return NextResponse.json({ error: 'No jobs found in database to debug.' }, { status: 404 });
+        }
     }
 
     try {
