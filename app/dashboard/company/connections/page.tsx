@@ -52,6 +52,7 @@ export default async function ConnectionsPage() {
                 phone,
                 location,
                 bio,
+                resume_url,
                 preferred_job_categories
             ),
             job_posts (
@@ -169,13 +170,24 @@ export default async function ConnectionsPage() {
                                             </div>
 
                                             <div className="flex gap-3 mt-2">
-                                                <Button variant="outline" className="flex-1 bg-white/5 border-white/10 hover:bg-white/10 border-0 h-12 rounded-xl font-black text-xs uppercase tracking-widest text-gray-300">
-                                                    View CV
-                                                </Button>
-                                                <Button className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white h-12 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20">
-                                                    <MessageSquare className="w-4 h-4 mr-2" />
-                                                    Message
-                                                </Button>
+                                                {candidate.resume_url ? (
+                                                    <Link href={candidate.resume_url} target="_blank" className="flex-1">
+                                                        <Button variant="outline" className="w-full bg-white/5 border-white/10 hover:bg-white/10 border-0 h-12 rounded-xl font-black text-xs uppercase tracking-widest text-gray-300">
+                                                            View CV
+                                                        </Button>
+                                                    </Link>
+                                                ) : (
+                                                    <Button variant="outline" disabled className="flex-1 bg-white/5 border-white/10 border-0 h-12 rounded-xl font-black text-xs uppercase tracking-widest text-gray-500 cursor-not-allowed">
+                                                        No CV
+                                                    </Button>
+                                                )}
+
+                                                <Link href={`mailto:${candidate.email}`} className="flex-1">
+                                                    <Button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white h-12 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20">
+                                                        <MessageSquare className="w-4 h-4 mr-2" />
+                                                        Message
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </div>
