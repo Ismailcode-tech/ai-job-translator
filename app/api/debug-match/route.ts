@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
         // We need to pass the client? MediatorService creates its own admin client if env vars are present.
         // We can trust it to do so.
 
-        const { matches, debugLog } = await MediatorService.matchJobToCandidates(jobId);
+        const { matches, debugLog } = await MediatorService.matchJobToCandidates(jobId!);
 
         return NextResponse.json({
             success: true,
