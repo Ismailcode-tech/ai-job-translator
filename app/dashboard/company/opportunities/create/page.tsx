@@ -17,13 +17,13 @@ export default function CreateOpportunityPage() {
     async function handleSubmit(formData: FormData) {
         setIsLoading(true);
         try {
-            await createOpportunity(formData);
-            // Action handles redirect
-        } catch (error: any) {
-            // Check if it's a redirect error manually since isRedirectError might not be available
-            if (error?.digest?.startsWith('NEXT_REDIRECT')) {
-                throw error;
+            const result = await createOpportunity(formData);
+            if (result && result.error) {
+                console.error(result.error);
+                alert(`Failed to create opportunity: ${result.error}`);
             }
+            // If no error, the action redirects, so we don't need to do anything here.
+        } catch (error: any) {
             console.error(error);
             alert(`Failed to create opportunity: ${error.message}`);
             setIsLoading(false);

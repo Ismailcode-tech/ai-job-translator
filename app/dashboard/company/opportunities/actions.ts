@@ -9,7 +9,7 @@ export async function createOpportunity(formData: FormData) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) throw new Error('Unauthorized');
+    if (!user) return { error: 'Unauthorized' };
 
     const title = formData.get('title') as string;
     const description = formData.get('description') as string;
@@ -28,25 +28,20 @@ export async function createOpportunity(formData: FormData) {
             employment_type: type,
             salary_range,
             source: 'manual',
-            status: 'active' // Auto-activate for now
+            status: 'active'
         })
         .select()
         .single();
 
     if (error) {
         console.error('Create Opportunity Error:', error);
-        throw new Error(error.message);
+        return { error: error.message };
     }
 
-    // Auto-trigger Matching Engine
-    // We don't await this to avoid blocking the UI response, 
-    // BUT since Vercel Server Actions might kill the process, we SHOULD await it or use Inngest/Background jobs.
-    // For this MVP environment, we await it to ensure it runs.
     try {
         await MediatorService.matchJobToCandidates(data.id);
     } catch (matchError) {
         console.error('Auto-match failed:', matchError);
-        // Don't fail the request, just log it.
     }
 
     revalidatePath('/dashboard/company/opportunities');
