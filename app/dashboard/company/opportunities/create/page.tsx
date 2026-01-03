@@ -25,7 +25,7 @@ export default function CreateOpportunityPage() {
                 throw error;
             }
             console.error(error);
-            alert('Failed to create opportunity. Please check all fields.');
+            alert(`Failed to create opportunity: ${error.message}`);
             setIsLoading(false);
         }
     }
