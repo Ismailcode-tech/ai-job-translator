@@ -44,3 +44,28 @@ export async function activateAccount() {
 
     return { success: true };
 }
+
+export async function sendMessage(formData: FormData) {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return { error: 'Unauthorized' };
+
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+
+    // TODO: Integrate with Resend/SendGrid/NodeMailer here.
+    // For now, we simulate sending by logging to the server console.
+    console.log(`[MOCK EMAIL SEND]`);
+    console.log(`To: ${email}`);
+    console.log(`From: Company (via Medyx Platform)`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Body: ${message}`);
+    console.log(`------------------------`);
+
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    return { success: true };
+}

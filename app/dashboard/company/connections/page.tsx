@@ -17,6 +17,7 @@ import {
     ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
+import { MessageDialog } from './message-dialog';
 
 export const dynamic = 'force-dynamic';
 
@@ -182,12 +183,10 @@ export default async function ConnectionsPage() {
                                                     </Button>
                                                 )}
 
-                                                <Link href={`mailto:${candidate.email}`} className="flex-1">
-                                                    <Button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white h-12 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20">
-                                                        <MessageSquare className="w-4 h-4 mr-2" />
-                                                        Message
-                                                    </Button>
-                                                </Link>
+                                                <MessageDialog
+                                                    candidateEmail={candidate.email}
+                                                    candidateName={fullName}
+                                                />
                                             </div>
                                         </div>
                                     </div>
