@@ -21,7 +21,7 @@ import {
     Shield
 } from 'lucide-react';
 
-export default async function PipelinePage({ searchParams }: { searchParams: { status?: string } }) {
+export default async function PipelinePage({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -33,7 +33,8 @@ export default async function PipelinePage({ searchParams }: { searchParams: { s
         return <ActivationOverlay />;
     }
 
-    const activeTab = searchParams.status || 'suggested';
+    const params = await searchParams;
+    const activeTab = params.status || 'suggested';
 
     // Fetch all matches for the current company to calculate counts
     // In a larger app, we might do separate count queries

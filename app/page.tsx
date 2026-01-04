@@ -6,6 +6,7 @@ import { Logo } from '@/components/Logo';
 import { Footer } from '@/components/Footer';
 import { Shield, Lock, Zap, Users, CheckCircle, ArrowRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-indigo-950/20 to-gray-950 text-white">
+    <div className="min-h-screen bg-white dark:bg-gray-950 bg-gradient-to-br from-gray-50 via-indigo-50/20 to-gray-50 dark:from-gray-950 dark:via-indigo-950/20 dark:to-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 opacity-30">
@@ -52,6 +53,7 @@ export default function LandingPage() {
             </div>
 
             <div className="hidden md:flex items-center gap-4">
+              <ModeToggle />
               <Link href="/login">
                 <Button variant="outline" className="border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/10 hover:text-cyan-300 rounded-xl px-6 transition-all">
                   Sign In
